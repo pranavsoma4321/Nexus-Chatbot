@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusBot - Your AI Assistant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="../static/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* Responsive Design */
+    @media (max-width: 1400px) {
+      .container-custom { max-width: 1200px; }
+    }
+    
+    @media (max-width: 1200px) {
+      .container-custom { max-width: 992px; }
+      .hero-gradient-text { font-size: 2.5rem; }
+    }
+    
+    @media (max-width: 992px) {
+      .container-custom { max-width: 768px; }
+      .hero-gradient-text { font-size: 2rem; }
+      .grid.md\:grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
+      .grid.lg\:grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+    
+    @media (max-width: 768px) {
+      .container-custom { max-width: 576px; }
+      .hero-gradient-text { font-size: 1.75rem; }
+      .text-4xl { font-size: 1.5rem; }
+      .text-3xl { font-size: 1.25rem; }
+      .text-2xl { font-size: 1.125rem; }
+      .px-6 { padding-left: 1rem; padding-right: 1rem; }
+      .px-12 { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .py-20 { padding-top: 3rem; padding-bottom: 3rem; }
+      .grid.md\:grid-cols-2 { grid-template-columns: 1fr; }
+      .grid.md\:grid-cols-3 { grid-template-columns: 1fr; }
+      .grid.lg\:grid-cols-3 { grid-template-columns: 1fr; }
+      .grid.sm\:grid-cols-2 { grid-template-columns: 1fr; }
+      .flex.justify-center.gap-4 { flex-direction: column; gap: 1rem; }
+      .max-w-4xl { max-width: 100%; }
+      .max-w-7xl { max-width: 100%; }
+      .max-w-5xl { max-width: 100%; }
+      .max-w-2xl { max-width: 100%; }
+    }
+    
+    @media (max-width: 600px) {
+      .container-custom { max-width: 100%; padding: 0 0.75rem; }
+      .hero-gradient-text { font-size: 1.5rem; line-height: 1.2; }
+      .text-lg { font-size: 0.875rem; }
+      .text-xl { font-size: 1rem; }
+      .text-4xl { font-size: 1.25rem; }
+      .text-3xl { font-size: 1.125rem; }
+      .text-2xl { font-size: 1rem; }
+      .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+      .px-6 { padding-left: 0.75rem; padding-right: 0.75rem; }
+      .px-12 { padding-left: 1rem; padding-right: 1rem; }
+      .py-20 { padding-top: 2rem; padding-bottom: 2rem; }
+      .py-4 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+      .mb-8 { margin-bottom: 1.5rem; }
+      .mb-12 { margin-bottom: 2rem; }
+      .mb-16 { margin-bottom: 2rem; }
+      .mt-16 { margin-top: 2rem; }
+      .gap-8 { gap: 1rem; }
+      .gap-6 { gap: 0.75rem; }
+      .gap-4 { gap: 0.5rem; }
+      .h-16 { height: 2.5rem; }
+      .w-16 { width: 2.5rem; }
+      .w-12 { width: 2rem; }
+      .h-12 { height: 2rem; }
+      .w-20 { width: 3rem; }
+      .h-20 { height: 3rem; }
+      .rounded-xl { border-radius: 0.5rem; }
+      .rounded-2xl { border-radius: 0.75rem; }
+      .text-4xl.font-extrabold { font-size: 1.5rem; }
+      .text-2xl.font-bold { font-size: 1.125rem; }
+      .text-xl.font-bold { font-size: 1rem; }
+      .p-8 { padding: 1rem; }
+      .p-6 { padding: 0.75rem; }
+      .p-4 { padding: 0.5rem; }
+    }
+    
+    /* Mobile Menu Improvements */
+    @media (max-width: 768px) {
+      .mobile-menu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+      }
+      
+      .mobile-menu.show {
+        max-height: 400px;
+        transition: max-height 0.3s ease-in;
+      }
+    }
+    
+    /* Touch-friendly buttons */
+    @media (max-width: 768px) {
+      button, a {
+        min-height: 44px;
+        min-width: 44px;
+      }
+    }
+    
+    /* Prevent horizontal scroll */
+    body {
+      overflow-x: hidden;
+    }
+    
+    /* Responsive images */
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    /* Responsive tables */
+    @media (max-width: 768px) {
+      table {
+        font-size: 0.875rem;
+      }
+      
+      th, td {
+        padding: 0.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body class="antialiased">
+
+  <header id="header" class="glass-nav fixed top-0 left-0 right-0 z-50">
+    <div class="w-full mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
+      <!-- Logo -->
+      <h1 class="text-2xl font-bold text-white">
+        <a href="{{ url_for('home') }}">Nexus<span class="text-sky-500">Bot</span></a>
+      </h1>
+
+      <!-- Centered Navigation -->
+      <nav class="hidden md:flex items-center space-x-8 mx-auto">
+        <a href="{{ url_for('bot_builder') }}" class="text-gray-300 hover:text-sky-400 transition-colors duration-300">Create Bot</a>
+        <a href="{{ url_for('templates') }}" class="text-gray-300 hover:text-sky-400 transition-colors duration-300">Templates</a>
+        <a href="{{ url_for('my_bots') }}" class="text-gray-300 hover:text-sky-400 transition-colors duration-300">My Bots</a>
+        <a href="{{ url_for('assignments') }}" class="text-gray-300 hover:text-sky-400 transition-colors duration-300">Assignments</a>
+      </nav>
+
+      <!-- Auth Buttons Container -->
+      <div class="flex gap-3 items-center">
+        <!-- Username Display -->
+        <span id="usernameDisplay" class="hidden md:block text-gray-300 font-medium text-sm"></span>
+
+        <!-- Login Button -->
+        <button id="loginBtn"
+          class="hidden md:block bg-sky-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-sky-600 transition-colors duration-300">
+          Login
+        </button>
+
+        <!-- Logout Button -->
+        <button id="logoutBtn"
+          class="hidden md:block bg-red-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300">
+          Logout
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden">
+        <button id="mobile-menu-button" class="text-white focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4 space-y-2">
+      <a href="{{ url_for('bot_builder') }}" class="block text-gray-300 hover:text-sky-400">Create Bot</a>
+      <a href="{{ url_for('templates') }}" class="block text-gray-300 hover:text-sky-400">Templates</a>
+      <a href="{{ url_for('my_bots') }}" class="block text-gray-300 hover:text-sky-400">My Bots</a>
+      <a href="{{ url_for('assignments') }}" class="block text-gray-300 hover:text-sky-400">Assignments</a>
+      <button id="loginBtnMobile"
+        class="w-full mt-2 bg-sky-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-sky-600 transition-colors duration-300">
+        Login
+      </button>
+      <button id="logoutBtnMobile"
+        class="hidden w-full mt-2 bg-red-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300">
+        Logout
+      </button>
+    </div>
+  </header>
+
+
+
+  <main class="container-custom mx-auto">
+    <!-- Home Section -->
+    <section id="home" class="min-h-screen flex items-center bg-grid pt-20 px-4 sm:px-6">
+      <div class="w-full mx-auto px-4 sm:px-6 text-center">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold hero-gradient-text mb-4 mt-8 sm:mt-12 lg:mt-16">Conversational AI for the Future</h2>
+          <p class="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">Experience the next generation of chatbots.
+            NexusBot offers seamless integration, intelligent conversations, and unparalleled user engagement for your
+            projects.</p>
+          <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4">
+            <a href="#services"
+              class="bg-white text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-gray-200 transition-transform transform hover:scale-105 duration-300 text-center">Build Bot</a>
+            <a href="#features"
+              class="bg-gray-800 text-white font-bold py-3 px-6 rounded-lg border border-gray-600 hover:bg-gray-700 transition-transform transform hover:scale-105 duration-300 text-center">See
+              Features</a>
+          </div>
+        </div>
+        <div class="mt-8 sm:mt-12 lg:mt-16 flex justify-center px-4">
+          <img src="https://placehold.co/800x450/0a0a0a/c084fc?text=AI+Chatbot+Interface" alt="Chatbot Interface"
+            class="rounded-2xl border border-gray-700 shadow-2xl shadow-sky-500/10 max-w-full h-auto">
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 section-fade-in">
+      <div class="w-full mx-auto px-6 lg:px-12">
+        <div class="text-center mb-12">
+          <h3 class="text-3xl md:text-4xl font-bold text-white">Why NexusBot?</h3>
+          <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Learn what makes our chatbot stand out from the rest.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+          <div>
+            <img src="https://placehold.co/600x400/0a0a0a/38bdf8?text=Intelligent+AI+Core" alt="About NexusBot"
+              class="rounded-xl shadow-lg">
+          </div>
+          <div class="text-gray-300 space-y-4">
+            <h4 class="text-2xl font-semibold text-white">Intelligent and Adaptable</h4>
+            <p>NexusBot is built on a powerful Python backend, allowing it to understand context, learn from
+              interactions, and provide accurate, human-like responses. It's designed to be easily customizable for your
+              specific needs.</p>
+            <p>Our mission is to provide a chatbot solution that is not only technologically advanced but also
+              user-friendly and accessible for projects of all scales, especially for students and developers.</p>
+            <ul class="space-y-2 list-inside list-disc text-sky-400">
+              <li><span class="text-gray-300">Natural Language Processing</span></li>
+              <li><span class="text-gray-300">Easy API Integration</span></li>
+              <li><span class="text-gray-300">Scalable Architecture</span></li>
+              <li><span class="text-gray-300">24/7 Availability</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section (Chatbot Types) -->
+    <section id="services" class="py-20 bg-gray-900 section-fade-in">
+      <div class="w-full mx-auto px-6 lg:px-12">
+        <div class="text-center mb-12">
+          <h3 class="text-3xl md:text-4xl font-bold text-white">Choose Your Chatbot</h3>
+          <p class="text-gray-400 mt-4 max-w-2xl mx-auto">We offer specialized chatbot solutions tailored to your
+            project's needs.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <!-- Custom Chatbot -->
+          <div
+            class="service-card bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-sky-500 hover:scale-105 transition-all duration-300 flex flex-col items-center text-center">
+            <div
+              class="service-icon bg-sky-500/10 text-sky-400 rounded-lg w-16 h-16 flex items-center justify-center mb-4 transition-transform duration-300">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V10a2 2 0 012-2h8z"></path>
+              </svg>
+            </div>
+            <a href="{{ url_for('customize_chatbot') }}">
+              <h4 class="text-2xl font-bold text-white mb-3">Custom Conversational Bot</h4>
+              <p class="text-gray-400">Perfect for user engagement, customer support, and brand interaction. Create a
+                unique personality and conversation flow that represents your project.</p>
+            </a>
+
+          </div>
+          
+          <!-- Data-Driven Chatbot -->
+          <a href="{{ url_for('customize_upload') }}"
+            class="service-card bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-violet-500 hover:scale-105 transition-all duration-300 flex flex-col items-center text-center">
+            <div
+              class="service-icon bg-violet-500/10 text-violet-400 rounded-lg w-16 h-16 flex items-center justify-center mb-4 transition-transform duration-300">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V7a2 2 0 012-2h5l2 2h5a2 2 0 012 2v5a2 2 0 01-2 2z">
+                </path>
+              </svg>
+            </div>
+            <h4 class="text-2xl font-bold text-white mb-3">Data-Driven Chatbot</h4>
+            <p class="text-gray-400">Turn your data into interactive conversations. Upload your dataset via Excel, CSV,
+              or other formats, and allow users to query and receive insights instantly.</p>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 section-fade-in">
+      <div class="w-full mx-auto px-6 lg:px-12">
+        <div class="text-center mb-16">
+          <h3 class="text-3xl md:text-4xl font-bold text-white">Get Started in 3 Easy Steps</h3>
+          <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Launch your powerful AI chatbot with a simple and intuitive
+            process.</p>
+        </div>
+        <div class="relative max-w-7xl mx-auto">
+          <!-- Dotted Line for Desktop -->
+          <div class="hidden md:block absolute top-10 left-0 w-full h-0.5 bg-gray-700"></div>
+          <div class="grid md:grid-cols-3 gap-8 relative">
+            <!-- Step 1 -->
+            <a href="choose_model.html" class="step-link block bg-gray-800 p-6 rounded-lg">
+              <div class="text-center">
+                <div class="relative">
+                  <div
+                    class="bg-gray-900 border-2 border-sky-500 w-20 h-20 rounded-full mx-auto flex items-center justify-center text-sky-400 text-3xl font-bold">
+                    1</div>
+                </div>
+                <h4 class="text-xl font-bold text-white mt-6 mb-2">Choose Your Model</h4>
+                <p class="text-gray-400">Select either the Custom or Data-Driven chatbot model based on your project's
+                  goals.</p>
+              </div>
+            </a>
+            <!-- Step 2 -->
+            <a href="customize_upload.html" class="step-link block bg-gray-800 p-6 rounded-lg">
+              <div class="text-center">
+                <div class="relative">
+                  <div
+                    class="bg-gray-900 border-2 border-sky-500 w-20 h-20 rounded-full mx-auto flex items-center justify-center text-sky-400 text-3xl font-bold">
+                    2</div>
+                </div>
+                <h4 class="text-xl font-bold text-white mt-6 mb-2">Customize or Upload</h4>
+                <p class="text-gray-400">Personalize your bot's conversation flow or simply upload your dataset in a
+                  supported format.</p>
+              </div>
+            </a>
+            <!-- Step 3 -->
+            <a href="step3-integrate-launch.html" class="step-link block bg-gray-800 p-6 rounded-lg">
+              <div class="text-center">
+                <div class="relative">
+                  <div
+                    class="bg-gray-900 border-2 border-sky-500 w-20 h-20 rounded-full mx-auto flex items-center justify-center text-sky-400 text-3xl font-bold">
+                    3</div>
+                </div>
+                <h4 class="text-xl font-bold text-white mt-6 mb-2">Integrate & Launch</h4>
+                <p class="text-gray-400">Easily embed the chatbot into your website or application with a few lines of
+                  code.</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-900 section-fade-in">
+      <div class="w-full mx-auto px-6 lg:px-12">
+        <div class="text-center mb-12">
+          <h3 class="text-3xl md:text-4xl font-bold text-white">Core Features</h3>
+          <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Explore the powerful features that make NexusBot the ideal
+            choice.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <!-- Feature 1 -->
+          <div
+            class="feature-card bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-sky-500 transition-all duration-300">
+            <div
+              class="feature-icon bg-sky-500/10 text-sky-400 rounded-lg w-12 h-12 flex items-center justify-center mb-4 transition-transform duration-300">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 5.523-4.477 10-10 10S1 17.523 1 12 5.477 2 11 2s10 4.477 10 10z">
+                </path>
+              </svg>
+            </div>
+            <h4 class="text-xl font-bold text-white mb-2">Multi-Platform Support</h4>
+            <p class="text-gray-400">Integrate NexusBot with websites, mobile apps, and popular messaging platforms with
+              ease.</p>
+          </div>
+          <!-- Feature 2 -->
+          <div
+            class="feature-card bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-sky-500 transition-all duration-300">
+            <div
+              class="feature-icon bg-sky-500/10 text-sky-400 rounded-lg w-12 h-12 flex items-center justify-center mb-4 transition-transform duration-300">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 6V4m0 16v-2m0-10v2m0 6v2M6 12H4m16 0h-2m-10 0h2m6 0h2M9 18l-2-2m10-10l2 2m-2 10l-2-2m-6-6l-2-2">
+                </path>
+              </svg>
+            </div>
+            <h4 class="text-xl font-bold text-white mb-2">Advanced Analytics</h4>
+            <p class="text-gray-400">Gain insights into user interactions and bot performance with a comprehensive
+              analytics dashboard.</p>
+          </div>
+          <!-- Feature 3 -->
+          <div
+            class="feature-card bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-sky-500 transition-all duration-300">
+            <div
+              class="feature-icon bg-sky-500/10 text-sky-400 rounded-lg w-12 h-12 flex items-center justify-center mb-4 transition-transform duration-300">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                </path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+            <h4 class="text-xl font-bold text-white mb-2">Easy Customization</h4>
+            <p class="text-gray-400">Tailor the bot's personality, responses, and appearance to match your brand and
+              project needs.</p>
+          </div>
+          <div
+            class="feature-card bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-sky-500 transition-all duration-300">
+            <div
+              class="feature-icon bg-sky-500/10 text-sky-400 rounded-lg w-12 h-12 flex items-center justify-center mb-4 transition-transform duration-300">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 5.523-4.477 10-10 10S1 17.523 1 12 5.477 2 11 2s10 4.477 10 10z">
+                </path>
+              </svg>
+            </div>
+            <h4 class="text-xl font-bold text-white mb-2">Multi-Platform Support</h4>
+            <p class="text-gray-400">Integrate NexusBot with websites, mobile apps, and popular messaging platforms with
+              ease.</p>
+          </div>
+          <div
+            class="feature-card bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-sky-500 transition-all duration-300">
+            <div
+              class="feature-icon bg-sky-500/10 text-sky-400 rounded-lg w-12 h-12 flex items-center justify-center mb-4 transition-transform duration-300">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 5.523-4.477 10-10 10S1 17.523 1 12 5.477 2 11 2s10 4.477 10 10z">
+                </path>
+              </svg>
+            </div>
+            <h4 class="text-xl font-bold text-white mb-2">Multi-Platform Support</h4>
+            <p class="text-gray-400">Integrate NexusBot with websites, mobile apps, and popular messaging platforms with
+              ease.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 section-fade-in">
+      <div class="w-full mx-auto px-6 lg:px-12">
+        <div class="text-center mb-12">
+          <h3 class="text-3xl md:text-4xl font-bold text-white">What Our Users Say</h3>
+          <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Trusted by students and developers for their innovative
+            projects.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <!-- Testimonial 1 -->
+          <div class="bg-gray-800 p-8 rounded-xl border border-gray-700">
+            <p class="text-gray-300 mb-6">"NexusBot was incredibly easy to set up for our final year project. The
+              data-driven bot saved us weeks of work. Highly recommended!"</p>
+            <div class="flex items-center">
+              <img src="https://placehold.co/48x48/c084fc/ffffff?text=AV" alt="User Avatar"
+                class="w-12 h-12 rounded-full mr-4">
+              <div>
+                <h5 class="text-white font-bold">Alex Vance</h5>
+                <p class="text-sm text-gray-400">Computer Science Student</p>
+              </div>
+            </div>
+          </div>
+          <!-- Testimonial 2 -->
+          <div class="bg-gray-800 p-8 rounded-xl border border-gray-700">
+            <p class="text-gray-300 mb-6">"The customization options are fantastic. We built a customer service bot that
+              perfectly matched our brand's voice. The documentation is clear and helpful."</p>
+            <div class="flex items-center">
+              <img src="https://placehold.co/48x48/38bdf8/ffffff?text=JS" alt="User Avatar"
+                class="w-12 h-12 rounded-full mr-4">
+              <div>
+                <h5 class="text-white font-bold">Jenna Smith</h5>
+                <p class="text-sm text-gray-400">Freelance Developer</p>
+              </div>
+            </div>
+          </div>
+          <!-- Testimonial 3 -->
+          <div class="bg-gray-800 p-8 rounded-xl border border-gray-700">
+            <p class="text-gray-300 mb-6">"As a learning tool, NexusBot is unparalleled. The free tier gave me
+              everything I needed to experiment with AI and NLP for my personal projects."</p>
+            <div class="flex items-center">
+              <img src="https://placehold.co/48x48/818cf8/ffffff?text=MK" alt="User Avatar"
+                class="w-12 h-12 rounded-full mr-4">
+              <div>
+                <h5 class="text-white font-bold">Mike Chen</h5>
+                <p class="text-sm text-gray-400">AI Hobbyist</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-gray-900 section-fade-in">
+      <div class="w-full mx-auto px-6 lg:px-12">
+        <div class="text-center mb-12">
+          <h3 class="text-3xl md:text-4xl font-bold text-white">Flexible Pricing</h3>
+          <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Choose a plan that works for your college project. We have a
+            free tier for students!</p>
+        </div>
+        <div class="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <!-- Pricing Plan 1: Free -->
+          <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 flex flex-col">
+            <h4 class="text-xl font-bold text-white">Student</h4>
+            <p class="text-4xl font-extrabold text-white my-4">Free <span class="text-base font-medium text-gray-400">/
+                month</span></p>
+            <p class="text-gray-400 mb-6 flex-grow">Perfect for individual college projects and learning.</p>
+            <ul class="space-y-3 text-gray-300 mb-8">
+              <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>1 Chatbot</li>
+              <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>5000 messages/month</li>
+              <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>Community Support</li>
+            </ul>
+            <button
+              class="w-full mt-auto bg-gray-700 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-600 transition-colors">Get
+              Started</button>
+          </div>
+          <!-- Pricing Plan 2: Pro -->
+          <div class="bg-sky-500 p-8 rounded-xl border-2 border-sky-400 flex flex-col relative overflow-hidden">
+            <span
+              class="absolute top-0 right-0 bg-white text-gray-900 text-xs font-bold px-3 py-1 rounded-bl-lg">POPULAR</span>
+            <h4 class="text-xl font-bold text-white">Pro</h4>
+            <p class="text-4xl font-extrabold text-white my-4">Free <span class="text-base font-medium text-sky-100">/
+                month</span></p>
+            <p class="text-sky-100 mb-6 flex-grow">For larger projects with more demanding needs.</p>
+            <ul class="space-y-3 text-white mb-8">
+              <li class="flex items-center"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>5 Chatbots</li>
+              <li class="flex items-center"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>10,000 messages/month</li>
+              <li class="flex items-center"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>Priority Support</li>
+            </ul>
+            <button
+              class="w-full mt-auto bg-white text-sky-500 font-bold py-3 px-6 rounded-lg hover:bg-sky-100 transition-colors">Choose
+              Pro</button>
+          </div>
+          <!-- Pricing Plan 3: Enterprise -->
+          <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 flex flex-col">
+            <h4 class="text-xl font-bold text-white">Enterprise</h4>
+            <p class="text-4xl font-extrabold text-white my-4">Custom</p>
+            <p class="text-gray-400 mb-6 flex-grow">Tailored solutions for large-scale applications.</p>
+            <ul class="space-y-3 text-gray-300 mb-8">
+              <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>Unlimited Chatbots</li>
+              <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>Custom message volume</li>
+              <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>Dedicated Support</li>
+            </ul>
+            <button
+              class="w-full mt-auto bg-gray-700 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-600 transition-colors">Contact
+              Us</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 section-fade-in">
+      <div class="w-full mx-auto px-6 lg:px-12">
+        <div class="text-center mb-12">
+          <h3 class="text-3xl md:text-4xl font-bold text-white">Get in Touch</h3>
+          <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Have questions or want to discuss your project? Send us a
+            message.</p>
+        </div>
+        <div class="max-w-2xl mx-auto">
+          <form class="space-y-6">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-300">Name</label>
+              <input type="text" id="name" name="name"
+                class="mt-1 block w-full bg-gray-800 border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-sky-500 focus:border-sky-500">
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+              <input type="email" id="email" name="email"
+                class="mt-1 block w-full bg-gray-800 border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-sky-500 focus:border-sky-500">
+            </div>
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-300">Message</label>
+              <textarea id="message" name="message" rows="4"
+                class="mt-1 block w-full bg-gray-800 border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-sky-500 focus:border-sky-500"></textarea>
+            </div>
+            <div>
+              <button type="submit"
+                class="w-full bg-sky-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-sky-600 transition-colors duration-300">Send
+                Message</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 border-t border-gray-800" id="footer">
+    <div class="w-full mx-auto px-6 lg:px-12 py-8">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+        <h2 class="text-2xl font-bold text-white mb-4 md:mb-0">
+          Nexus<span class="text-sky-400">Bot</span>
+        </h2>
+        <div class="flex space-x-6 mb-4 md:mb-0">
+          <a href="index.html#about" class="text-gray-400 hover:text-white">About</a>
+          <a href="index.html#services" class="text-gray-400 hover:text-white">Services</a>
+          <a href="index.html#features" class="text-gray-400 hover:text-white">Features</a>
+          <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
+        </div>
+        <p class="text-gray-500">&copy; 2024 NexusBot. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="fixed inset-0 z-50 items-center justify-center hidden">
+    <div class="modal-backdrop fixed inset-0"></div>
+    <div class="bg-gray-800 text-white rounded-lg shadow-xl p-8 w-full max-w-md m-4 relative border border-gray-700">
+      <button id="closeModal"
+        class="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+      <h3 class="text-2xl font-bold text-center mb-6">Login to NexusBot</h3>
+      <form>
+        <div class="mb-4">
+          <label for="login-email" class="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
+          <input type="email" id="login-email"
+            class="w-full bg-gray-700 border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            placeholder="you@example.com">
+        </div>
+        <div class="mb-6">
+          <label for="login-password" class="block text-sm font-medium text-gray-300 mb-1">Password</label>
+          <input type="password" id="login-password"
+            class="w-full bg-gray-700 border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            placeholder="••••••••">
+        </div>
+        <button type="submit"
+          class="w-full bg-sky-500 font-semibold py-2 px-4 rounded-lg hover:bg-sky-600 transition-colors duration-300">Login</button>
+        <p class="text-center text-sm text-gray-400 mt-4">
+          Don't have an account? <a href="#" class="text-sky-400 hover:underline">Sign up</a>
+        </p>
+      </form>
+    </div>
+  </div>
+  <script type="module" src="../static/script.js"></script>
+</body>
+
+</html>

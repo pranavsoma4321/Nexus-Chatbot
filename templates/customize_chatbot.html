@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus AI - Professional Chat Assistant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #171717;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .app-container {
+      display: flex;
+      height: 100vh;
+      background: #171717;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: #202123;
+      border-right: 1px solid #2d2d2d;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-header {
+      padding: 2rem 1.5rem;
+      border-bottom: 1px solid #2d2d2d;
+      background: #202123;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: #10a37f;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .sidebar-subtitle {
+      color: #8e8ea0;
+      font-size: 0.875rem;
+      margin-left: 3.25rem;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .chat-history-section {
+      margin-bottom: 1rem;
+    }
+
+    .chat-history-title {
+      color: #8e8ea0;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .chat-history-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 0.875rem;
+      margin-bottom: 0.5rem;
+      color: #8e8ea0;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-size: 0.875rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .chat-history-item:hover {
+      background: #2d2d2d;
+      color: #fff;
+      border: 1px solid #3d3d3d;
+    }
+
+    .chat-history-item.active {
+      background: #2d2d2d;
+      color: #fff;
+      border: 1px solid #3d3d3d;
+    }
+
+    .chat-history-preview {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .chat-history-time {
+      color: #6b7280;
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1rem;
+      margin-bottom: 0.5rem;
+      color: #8e8ea0;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .nav-item:hover {
+      background: #2d2d2d;
+      color: #fff;
+    }
+
+    .nav-icon {
+      width: 20px;
+      height: 20px;
+      opacity: 0.8;
+    }
+
+    .sidebar-footer {
+      padding: 1.5rem;
+      border-top: 1px solid #2d2d2d;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.875rem 1rem;
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #dc2626;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #171717;
+    }
+
+    .main-header {
+      padding: 2rem 2rem 1rem;
+      border-bottom: 1px solid #2d2d2d;
+      background: #171717;
+    }
+
+    .main-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .main-subtitle {
+      color: #8e8ea0;
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    .chat-container {
+      flex: 1;
+      padding: 2rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      background: #171717;
+      max-width: 100%;
+    }
+
+    .message {
+      max-width: 70%;
+      padding: 1rem 1.25rem;
+      border-radius: 18px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      animation: slideInUp 0.3s ease-out;
+      position: relative;
+      word-wrap: break-word;
+    }
+
+    .message.user {
+      background: #2d2d2d;
+      color: #fff;
+      align-self: flex-end !important;
+      margin-left: auto;
+      margin-right: 0;
+      border-bottom-right-radius: 6px;
+      border-bottom-left-radius: 18px;
+      clear: both;
+      border: 1px solid #3d3d3d;
+    }
+
+    .message.bot {
+      background: #2d2d2d;
+      color: #fff;
+      align-self: flex-start !important;
+      margin-left: 0;
+      margin-right: auto;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 18px;
+      border: 1px solid #3d3d3d;
+      clear: both;
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .input-container {
+      padding: 1.5rem 2rem 2rem;
+      border-top: 1px solid #2d2d2d;
+      background: #171717;
+    }
+
+    .input-form {
+      display: flex;
+      gap: 1rem;
+      background: #2d2d2d;
+      border-radius: 24px;
+      padding: 0.5rem;
+      border: 1px solid #3d3d3d;
+    }
+
+    .input-field {
+      flex: 1;
+      padding: 0.875rem 1.25rem;
+      background: transparent;
+      color: #fff;
+      border: none;
+      border-radius: 18px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .input-field::placeholder {
+      color: #8e8ea0;
+    }
+
+    .send-btn {
+      padding: 0.875rem 1.5rem;
+      background: #2d2d2d;
+      color: #fff;
+      border: none;
+      border-radius: 18px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid #3d3d3d;
+    }
+
+    .send-btn:hover {
+      background: #3d3d3d;
+    }
+
+    .send-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Typing indicator */
+    .typing-indicator {
+      display: flex;
+      gap: 0.25rem;
+      padding: 0.5rem 0;
+    }
+
+    .typing-dot {
+      width: 8px;
+      height: 8px;
+      background: #8e8ea0;
+      border-radius: 50%;
+      animation: typing 1.4s infinite ease-in-out;
+    }
+
+    .typing-dot:nth-child(1) {
+      animation-delay: -0.32s;
+    }
+
+    .typing-dot:nth-child(2) {
+      animation-delay: -0.16s;
+    }
+
+    @keyframes typing {
+      0%, 80%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+      }
+      40% {
+        transform: scale(1.3);
+        opacity: 1;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main-content {
+        width: 100%;
+      }
+
+      .message {
+        max-width: 85%;
+      }
+
+      .chat-container {
+        padding: 1rem;
+      }
+
+      .input-container {
+        padding: 1rem;
+      }
+    }
+
+    /* Scrollbar styling */
+    .chat-container::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chat-container::-webkit-scrollbar-track {
+      background: #171717;
+    }
+
+    .chat-container::-webkit-scrollbar-thumb {
+      background: #3d3d3d;
+      border-radius: 3px;
+    }
+
+    .chat-container::-webkit-scrollbar-thumb:hover {
+      background: #4d4d4d;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">N</div>
+          <div class="logo-text">Nexus AI</div>
+        </div>
+        <div class="sidebar-subtitle">Your intelligent assistant</div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="chat-history-section">
+          <div class="chat-history-title">Chat History</div>
+          <div id="chat-history-list"></div>
+        </div>
+        
+        <div class="chat-history-section">
+          <div class="chat-history-title">Actions</div>
+          <a href="#" class="nav-item" onclick="newChat()">
+            <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/>
+            </svg>
+            New Chat
+          </a>
+          <a href="#" class="nav-item" onclick="loadChatHistory()">
+            <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+              <path d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 100 4h2a2 2 0 100-4h-.01z"/>
+              <path d="M4 13a2 2 0 012-2 1 1 0 000 2H6a2 2 0 100 4h2a2 2 0 100-4h-.01z"/>
+            </svg>
+            View All History
+          </a>
+          <a href="#" class="nav-item" onclick="showSettings()">
+            <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.376-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287-.947c.945.54 2.041.061 2.287-.947.376-1.561 2.6-1.561 2.978 0a1.533 1.533 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106 1.371-.836 2.942.734 2.106 2.106a1.533 1.533 0 01-.947 2.287c.945.54 2.041.061 2.287-.947.376-1.562 2.6-1.562 2.978 0a1.532 1.532 0 01.947 2.287c-.836 1.373.734 2.942 2.106 2.106z" clip-rule="evenodd"/>
+            </svg>
+            Settings
+          </a>
+        </div>
+      </nav>
+      
+      <footer class="sidebar-footer">
+        <button class="btn" onclick="clearChat()">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+          </svg>
+          Clear Chat
+        </button>
+      </footer>
+    </aside>
+
+    <main class="main-content">
+      <header class="main-header">
+        <h1 class="main-title">AI Assistant</h1>
+        <p class="main-subtitle">Powered by advanced AI technology</p>
+      </header>
+      
+      <div class="chat-container" id="chat-container">
+        <div id="chat-log"></div>
+      </div>
+      
+      <div class="input-container">
+        <form class="input-form" id="chat-form">
+          <input 
+            type="text" 
+            id="user-input" 
+            class="input-field"
+            placeholder="Type your message..." 
+            autocomplete="off"
+          />
+          <button type="submit" class="send-btn">
+            <span>Send</span>
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5.951-1.429 5.951 1.429a1 1 0 001.169-1.409l-7-14z"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const chatLog = document.getElementById("chat-log");
+    const userInput = document.getElementById("user-input");
+    const chatForm = document.getElementById("chat-form");
+
+    let currentChatId = Date.now();
+    let chats = JSON.parse(localStorage.getItem("nexus_chats") || "{}");
+
+    function addMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.className = `message ${sender}`;
+      
+      if (sender === "bot" && text === "...") {
+        // Show typing indicator
+        msg.innerHTML = `
+          <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        `;
+      } else {
+        msg.textContent = text;
+      }
+      
+      chatLog.appendChild(msg);
+      chatLog.scrollTop = chatLog.scrollHeight;
+      
+      if (text !== "...") {
+        saveChatState();
+      }
+    }
+
+    function saveChatState() {
+      const messages = Array.from(chatLog.children).map(msg => ({
+        text: msg.textContent,
+        role: msg.classList.contains("user") ? "user" : "bot"
+      }));
+      
+      if (!chats[currentChatId]) {
+        chats[currentChatId] = { title: "New Chat", messages: [] };
+      }
+      chats[currentChatId].messages = messages;
+      
+      // Update title based on first user message
+      if (messages.length > 0) {
+        const firstUserMessage = messages.find(m => m.role === "user");
+        if (firstUserMessage && chats[currentChatId].title === "New Chat") {
+          chats[currentChatId].title = firstUserMessage.text.substring(0, 30) + (firstUserMessage.text.length > 30 ? "..." : "");
+        }
+      }
+      
+      localStorage.setItem("nexus_chats", JSON.stringify(chats));
+      renderChatHistory();
+    }
+
+    function renderChatHistory() {
+      const historyList = document.getElementById("chat-history-list");
+      historyList.innerHTML = "";
+      
+      const sortedChats = Object.keys(chats)
+        .sort((a, b) => b - a)
+        .slice(0, 10); // Show last 10 chats
+      
+      sortedChats.forEach(chatId => {
+        const chat = chats[chatId];
+        const lastMessage = chat.messages[chat.messages.length - 1];
+        const date = new Date(parseInt(chatId));
+        
+        const historyItem = document.createElement("div");
+        historyItem.className = `chat-history-item ${chatId == currentChatId ? 'active' : ''}`;
+        historyItem.onclick = () => loadChat(chatId);
+        
+        const timeString = date.toLocaleTimeString('en-US', { 
+          hour: '2-digit', 
+          minute: '2-digit' 
+        });
+        
+        historyItem.innerHTML = `
+          <div class="chat-history-preview">
+            ${chat.title}
+          </div>
+          <div class="chat-history-time">${timeString}</div>
+        `;
+        
+        historyList.appendChild(historyItem);
+      });
+    }
+
+    function loadChat(id) {
+      currentChatId = id;
+      chatLog.innerHTML = "";
+      const chat = chats[id];
+      chat.messages.forEach(m => addMessage(m.text, m.role));
+      renderChatHistory();
+    }
+
+    function newChat() {
+      currentChatId = Date.now();
+      chatLog.innerHTML = "";
+      addMessage("👋 Hi! I'm Nexus, your local AI assistant. How can I help you today?", "bot");
+      renderChatHistory();
+    }
+
+    function clearChat() {
+      if (confirm("Are you sure you want to clear this chat?")) {
+        chatLog.innerHTML = "";
+        addMessage("👋 Hi! I'm Nexus, your local AI assistant. How can I help you today?", "bot");
+        saveChatState();
+      }
+    }
+
+    function loadChatHistory() {
+      const history = Object.keys(chats).map(id => ({
+        id,
+        title: chats[id].title,
+        date: new Date(parseInt(id)).toLocaleDateString(),
+        messageCount: chats[id].messages.length
+      }));
+      
+      addMessage(`📚 Chat History (${history.length} chats):`, "bot");
+      history.forEach(chat => {
+        addMessage(`• ${chat.title} - ${chat.date} (${chat.messageCount} messages)`, "bot");
+      });
+    }
+
+    function showSettings() {
+      addMessage("⚙️ Settings:", "bot");
+      addMessage("• Model: Local AI (Ollama)", "bot");
+      addMessage("• Storage: Local browser storage", "bot");
+      addMessage("• Theme: Dark mode", "bot");
+    }
+
+    async function sendMessage() {
+      const message = userInput.value.trim();
+      if (!message) return;
+      addMessage(message, "user");
+      userInput.value = "";
+
+      addMessage("...", "bot");
+
+      try {
+        const response = await fetch("http://localhost:11434/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            model: " gemma3:270m",
+            prompt: message,
+            num_predict: 512,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let fullText = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          const chunk = decoder.decode(value);
+          try {
+            const json = JSON.parse(chunk);
+            if (json.response) fullText += json.response;
+          } catch { }
+        }
+
+        chatLog.lastChild.remove();
+        addMessage(fullText.trim() || "No response.", "bot");
+      } catch (error) {
+        chatLog.lastChild.remove();
+        
+        // Fallback responses when Ollama is not available
+        const fallbackResponses = [
+          "I'm sorry, I'm having trouble connecting to my AI backend. Please make sure Ollama is running on localhost:11434.",
+          "It seems the AI service is unavailable. You can start Ollama by running 'ollama serve' in your terminal.",
+          "I can't reach the AI model right now. Please check if Ollama is installed and running with the gemma3:270m model.",
+          "Connection failed! You may need to install Ollama and pull the model with 'ollama pull gemma3:270m'."
+        ];
+        
+        const randomResponse = fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
+        addMessage(randomResponse, "bot");
+        
+        console.error("Ollama connection error:", error);
+      }
+    }
+
+    // Event listeners
+    chatForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      sendMessage();
+    });
+
+    // Initialize
+    newChat();
+    renderChatHistory();
+  </script>
+</body>
+
+</html>

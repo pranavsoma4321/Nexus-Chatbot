@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bots - NexusBot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .glass-nav { background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .bot-card { transition: all 0.3s ease; }
+    .bot-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(14, 165, 233, 0.15); }
+  </style>
+</head>
+
+<body class="bg-gray-900 antialiased text-gray-100">
+
+  <header class="glass-nav fixed top-0 left-0 right-0 z-50">
+    <div class="w-full mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-white">
+        <a href="{{ url_for('home') }}">Nexus<span class="text-sky-500">Bot</span></a>
+      </h1>
+      <div class="flex gap-4 items-center">
+        <span id="botUsername" class="text-gray-300 text-sm"></span>
+        <a href="{{ url_for('home') }}" class="bg-sky-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-sky-600 transition">Home</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-20 pb-12">
+    <div class="w-full mx-auto px-4 lg:px-12">
+      
+      <!-- Title -->
+      <div class="mb-8">
+        <h2 class="text-4xl font-bold text-white mb-2">My Bots</h2>
+        <p class="text-gray-400">Manage and share your data-driven chatbots</p>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
+          <p class="text-gray-400 text-sm">Total Bots</p>
+          <p class="text-3xl font-bold text-sky-500" id="totalBots">0</p>
+        </div>
+        <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
+          <p class="text-gray-400 text-sm">Total Conversations</p>
+          <p class="text-3xl font-bold text-green-500" id="totalChats">0</p>
+        </div>
+        <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
+          <p class="text-gray-400 text-sm">Shared Bots</p>
+          <p class="text-3xl font-bold text-purple-500" id="sharedBots">0</p>
+        </div>
+        <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
+          <p class="text-gray-400 text-sm">Starred by Others</p>
+          <p class="text-3xl font-bold text-yellow-500" id="starredCount">0</p>
+        </div>
+      </div>
+
+      <!-- Bots List -->
+      <div id="botsList" class="space-y-4">
+        <div class="text-center text-gray-400 py-12">
+          <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+          </svg>
+          <p class="text-lg">No bots yet</p>
+          <p class="text-sm text-gray-500 mt-1">Create your first bot to get started</p>
+          <a href="{{ url_for('bot_builder') }}" class="inline-block mt-4 bg-sky-600 hover:bg-sky-700 text-white font-semibold px-6 py-2 rounded-lg transition">
+            Create Bot
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script type="module">
+    import authService from '../static/firebase-auth.js';
+    import { getFirestore, collection, query, where, getDocs, deleteDoc, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import db from '../static/firebase-config.js';
+    
+    let currentUser = null;
+
+    authService.initAuthListener(async (user) => {
+      currentUser = user;
+      const usernameEl = document.getElementById('botUsername');
+      
+      if (user) {
+        const userData = await authService.getUserData(user.uid);
+        usernameEl.textContent = userData?.username || user.email;
+        loadBots(user.uid);
+      } else {
+        window.location.href = '/login';
+      }
+    });
+
+    async function loadBots(userId) {
+      try {
+        const botsQuery = query(collection(db, 'bots'), where('userId', '==', userId));
+        const snapshot = await getDocs(botsQuery);
+        const bots = [];
+        let totalChats = 0;
+        let sharedCount = 0;
+
+        snapshot.forEach(doc => {
+          const bot = { id: doc.id, ...doc.data() };
+          bots.push(bot);
+          totalChats += bot.messageCount || 0;
+          if (bot.isPublic) sharedCount++;
+        });
+
+        document.getElementById('totalBots').textContent = bots.length;
+        document.getElementById('totalChats').textContent = totalChats;
+        document.getElementById('sharedBots').textContent = sharedCount;
+
+        if (bots.length === 0) return;
+
+        const botsList = document.getElementById('botsList');
+        botsList.innerHTML = '';
+
+        bots.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).forEach(bot => {
+          const createdDate = new Date(bot.createdAt).toLocaleDateString();
+          const botCard = document.createElement('div');
+          botCard.className = 'bot-card bg-gray-800 rounded-lg border border-gray-700 p-6 hover:border-sky-500';
+          botCard.innerHTML = `
+            <div class="flex justify-between items-start mb-4">
+              <div class="flex-1">
+                <h3 class="text-xl font-bold text-white">${bot.name || 'Untitled Bot'}</h3>
+                <p class="text-gray-400 text-sm mt-1">Created on ${createdDate}</p>
+              </div>
+              <div class="flex gap-2">
+                ${bot.isPublic ? '<span class="px-3 py-1 bg-green-600/20 text-green-400 text-xs rounded-full">Public</span>' : '<span class="px-3 py-1 bg-gray-600/20 text-gray-400 text-xs rounded-full">Private</span>'}
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-4 mb-6 text-sm">
+              <div class="bg-gray-700 rounded p-3">
+                <p class="text-gray-400">Data Rows</p>
+                <p class="text-xl font-bold text-sky-400">${(bot.data || []).length}</p>
+              </div>
+              <div class="bg-gray-700 rounded p-3">
+                <p class="text-gray-400">Conversations</p>
+                <p class="text-xl font-bold text-green-400">${bot.messageCount || 0}</p>
+              </div>
+              <div class="bg-gray-700 rounded p-3">
+                <p class="text-gray-400">File</p>
+                <p class="text-sm font-semibold text-gray-300 truncate">${bot.fileName || 'Unknown'}</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 flex-wrap">
+              <button onclick="openBot('${bot.id}')" class="flex-1 bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 rounded-lg transition">
+                Open Bot
+              </button>
+              <button onclick="togglePublic('${bot.id}', ${bot.isPublic})" class="flex-1 ${bot.isPublic ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'} text-white font-semibold py-2 rounded-lg transition">
+                ${bot.isPublic ? 'Make Private' : 'Share'}
+              </button>
+              <button onclick="deleteBot('${bot.id}')" class="flex-1 bg-gray-700 hover:bg-red-600 text-white font-semibold py-2 rounded-lg transition">
+                Delete
+              </button>
+            </div>
+          `;
+          botsList.appendChild(botCard);
+        });
+      } catch (error) {
+        console.error('Error loading bots:', error);
+      }
+    }
+
+    window.openBot = function(botId) {
+      window.location.href = `{{ url_for('bot_builder') }}?botId=${botId}`;
+    };
+
+    window.togglePublic = async function(botId, isPublic) {
+      try {
+        const botRef = doc(db, 'bots', botId);
+        await updateDoc(botRef, { isPublic: !isPublic });
+        loadBots(currentUser.uid);
+        
+        const message = !isPublic ? 'Bot is now public!' : 'Bot is now private!';
+        alert(message);
+      } catch (error) {
+        console.error('Error updating bot:', error);
+        alert('Failed to update bot');
+      }
+    };
+
+    window.deleteBot = async function(botId) {
+      if (!confirm('Are you sure you want to delete this bot? This action cannot be undone.')) return;
+
+      try {
+        await deleteDoc(doc(db, 'bots', botId));
+        loadBots(currentUser.uid);
+        alert('Bot deleted successfully');
+      } catch (error) {
+        console.error('Error deleting bot:', error);
+        alert('Failed to delete bot');
+      }
+    };
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bot Templates - NexusBot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .glass-nav { background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .template-card { transition: all 0.3s ease; }
+    .template-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(14, 165, 233, 0.2); }
+    
+    /* Responsive Design */
+    @media (max-width: 1400px) {
+      .container-custom { max-width: 1200px; }
+    }
+    
+    @media (max-width: 1200px) {
+      .container-custom { max-width: 992px; }
+    }
+    
+    @media (max-width: 992px) {
+      .container-custom { max-width: 768px; }
+      .grid.md\:grid-cols-2 { grid-template-columns: 1fr; }
+      .grid.lg\:grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
+      .text-4xl { font-size: 2rem; }
+      .text-2xl { font-size: 1.5rem; }
+    }
+    
+    @media (max-width: 768px) {
+      .container-custom { max-width: 576px; }
+      .px-4 { padding-left: 1rem; padding-right: 1rem; }
+      .px-6 { padding-left: 1rem; padding-right: 1rem; }
+      .px-12 { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .py-12 { padding-top: 2rem; padding-bottom: 2rem; }
+      .py-20 { padding-top: 2rem; padding-bottom: 2rem; }
+      .text-4xl { font-size: 1.5rem; }
+      .text-2xl { font-size: 1.25rem; }
+      .text-lg { font-size: 0.875rem; }
+      .mb-10 { margin-bottom: 1.5rem; }
+      .mb-8 { margin-bottom: 1rem; }
+      .mb-6 { margin-bottom: 0.75rem; }
+      .gap-6 { gap: 0.75rem; }
+      .p-6 { padding: 0.75rem; }
+      .p-8 { padding: 1rem; }
+      .grid.md\:grid-cols-2 { grid-template-columns: 1fr; }
+      .grid.lg\:grid-cols-3 { grid-template-columns: 1fr; }
+    }
+    
+    @media (max-width: 600px) {
+      .container-custom { max-width: 100%; padding: 0 0.75rem; }
+      .px-4 { padding-left: 0.75rem; padding-right: 0.75rem; }
+      .px-6 { padding-left: 0.75rem; padding-right: 0.75rem; }
+      .px-12 { padding-left: 1rem; padding-right: 1rem; }
+      .py-12 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+      .py-20 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+      .text-4xl { font-size: 1.25rem; }
+      .text-2xl { font-size: 1.125rem; }
+      .text-lg { font-size: 0.8rem; }
+      .mb-10 { margin-bottom: 1rem; }
+      .mb-8 { margin-bottom: 0.75rem; }
+      .mb-6 { margin-bottom: 0.5rem; }
+      .gap-6 { gap: 0.5rem; }
+      .p-6 { padding: 0.5rem; }
+      .p-8 { padding: 0.75rem; }
+      .w-12 { width: 2rem; }
+      .h-12 { height: 2rem; }
+      .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+    }
+    
+    /* Touch-friendly buttons */
+    @media (max-width: 768px) {
+      button {
+        min-height: 44px;
+      }
+    }
+    
+    /* Prevent horizontal scroll */
+    body {
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-900 antialiased text-gray-100">
+
+  <header class="glass-nav fixed top-0 left-0 right-0 z-50">
+    <div class="w-full mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-white">
+        <a href="{{ url_for('home') }}">Nexus<span class="text-sky-500">Bot</span></a>
+      </h1>
+      <div class="flex gap-4 items-center">
+        <span id="botUsername" class="text-gray-300 text-sm"></span>
+        <a href="{{ url_for('home') }}" class="bg-sky-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-sky-600 transition">Home</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-20 pb-8 sm:pb-12 container-custom mx-auto">
+    <div class="w-full mx-auto px-3 sm:px-4 lg:px-12">
+      
+      <!-- Title -->
+      <div class="mb-8 sm:mb-10">
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 sm:mb-3">Pre-Built Bot Templates</h2>
+        <p class="text-gray-400 text-base sm:text-lg">Start with ready-made datasets for instant data exploration</p>
+      </div>
+
+      <!-- Templates Grid -->
+      <div class="grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+
+        <!-- Template 1: Sales Data -->
+        <div class="template-card bg-gray-800 rounded-lg border border-gray-700 p-6 hover:border-sky-500">
+          <div class="mb-4">
+            <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-3">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-white">Sales Dashboard</h3>
+            <p class="text-gray-400 text-sm mt-1">Product sales, pricing & inventory data</p>
+          </div>
+          <div class="space-y-2 mb-6 text-sm text-gray-300">
+            <p>📊 100+ products</p>
+            <p>💰 Price ranges: ₹28 - ₹500</p>
+            <p>📦 Categories: 8 types</p>
+          </div>
+          <button onclick="loadTemplate('sales')" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 rounded-lg transition">
+            Start Exploring
+          </button>
+        </div>
+
+        <!-- Template 2: Student Records -->
+        <div class="template-card bg-gray-800 rounded-lg border border-gray-700 p-6 hover:border-sky-500">
+          <div class="mb-4">
+            <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-3">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C6.5 6.253 2 10.998 2 17s4.5 10.747 10 10.747c5.5 0 10-4.998 10-10.747S17.5 6.253 12 6.253z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-white">Student Records</h3>
+            <p class="text-gray-400 text-sm mt-1">Class performance, marks & attendance</p>
+          </div>
+          <div class="space-y-2 mb-6 text-sm text-gray-300">
+            <p>👥 50+ students</p>
+            <p>📈 Subjects: 8 courses</p>
+            <p>✅ Attendance: 60-100%</p>
+          </div>
+          <button onclick="loadTemplate('students')" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded-lg transition">
+            Start Exploring
+          </button>
+        </div>
+
+        <!-- Template 3: Experiment Data -->
+        <div class="template-card bg-gray-800 rounded-lg border border-gray-700 p-6 hover:border-sky-500">
+          <div class="mb-4">
+            <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-3">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5h.01"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-white">Lab Experiment</h3>
+            <p class="text-gray-400 text-sm mt-1">Temperature, pressure & reaction data</p>
+          </div>
+          <div class="space-y-2 mb-6 text-sm text-gray-300">
+            <p>🔬 100 measurements</p>
+            <p>📊 Variables: 6 properties</p>
+            <p>⏱️ Time series: 10-60 mins</p>
+          </div>
+          <button onclick="loadTemplate('experiment')" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition">
+            Start Exploring
+          </button>
+        </div>
+
+        <!-- Template 4: Market Data -->
+        <div class="template-card bg-gray-800 rounded-lg border border-gray-700 p-6 hover:border-sky-500">
+          <div class="mb-4">
+            <div class="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center mb-3">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-white">Economic Data</h3>
+            <p class="text-gray-400 text-sm mt-1">GDP, inflation, employment stats</p>
+          </div>
+          <div class="space-y-2 mb-6 text-sm text-gray-300">
+            <p>🌍 50+ countries</p>
+            <p>📅 Years: 2015-2025</p>
+            <p>💹 Metrics: 12 indicators</p>
+          </div>
+          <button onclick="loadTemplate('economic')" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-lg transition">
+            Start Exploring
+          </button>
+        </div>
+
+        <!-- Template 5: Health Records -->
+        <div class="template-card bg-gray-800 rounded-lg border border-gray-700 p-6 hover:border-sky-500">
+          <div class="mb-4">
+            <div class="w-12 h-12 bg-yellow-600 rounded-lg flex items-center justify-center mb-3">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-white">Health Data</h3>
+            <p class="text-gray-400 text-sm mt-1">Patient vitals, test results & history</p>
+          </div>
+          <div class="space-y-2 mb-6 text-sm text-gray-300">
+            <p>🏥 200+ patients</p>
+            <p>📋 Tests: Blood, X-ray, ECG</p>
+            <p>📈 Age range: 5-85 years</p>
+          </div>
+          <button onclick="loadTemplate('health')" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-2 rounded-lg transition">
+            Start Exploring
+          </button>
+        </div>
+
+        <!-- Template 6: Survey Results -->
+        <div class="template-card bg-gray-800 rounded-lg border border-gray-700 p-6 hover:border-sky-500">
+          <div class="mb-4">
+            <div class="w-12 h-12 bg-indigo-600 rounded-lg flex items-center justify-center mb-3">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-white">Survey Results</h3>
+            <p class="text-gray-400 text-sm mt-1">Customer feedback & satisfaction data</p>
+          </div>
+          <div class="space-y-2 mb-6 text-sm text-gray-300">
+            <p>📝 1000+ responses</p>
+            <p>⭐ Ratings: 1-5 stars</p>
+            <p>📍 Regions: 20 locations</p>
+          </div>
+          <button onclick="loadTemplate('survey')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-lg transition">
+            Start Exploring
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Or Create Custom -->
+      <div class="mt-12 text-center">
+        <p class="text-gray-400 mb-4">Want to use your own data?</p>
+        <a href="{{ url_for('bot_builder') }}" class="inline-block bg-sky-600 hover:bg-sky-700 text-white font-semibold px-8 py-3 rounded-lg transition">
+          Create Custom Bot
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <script type="module">
+    import authService from '../static/firebase-auth.js';
+    
+    // Check auth and display username
+    authService.initAuthListener(async (user) => {
+      const usernameEl = document.getElementById('botUsername');
+      if (user) {
+        const userData = await authService.getUserData(user.uid);
+        usernameEl.textContent = userData?.username || user.email;
+      } else {
+        window.location.href = '/login';
+      }
+    });
+
+    // Template data
+    const templates = {
+      sales: {
+        name: 'Sales Dashboard',
+        data: [
+          { product: 'Amul Milk 1L', category: 'Dairy', price: 50, quantity: 500, brand: 'Amul' },
+          { product: 'Nandini Butter 500g', category: 'Dairy', price: 150, quantity: 200, brand: 'Nandini' },
+          { product: 'Britannia Bread', category: 'Bakery', price: 35, quantity: 300, brand: 'Britannia' },
+          { product: 'ITC Biscuits', category: 'Snacks', price: 30, quantity: 400, brand: 'ITC' },
+          { product: 'Maggi Noodles', category: 'Instant Food', price: 25, quantity: 600, brand: 'Maggi' },
+          { product: 'Haldiram Namkeen', category: 'Snacks', price: 100, quantity: 150, brand: 'Haldiram' },
+          { product: 'Cadbury Chocolate', category: 'Sweets', price: 45, quantity: 350, brand: 'Cadbury' },
+          { product: 'Sprite Bottle', category: 'Beverages', price: 40, quantity: 400, brand: 'Sprite' },
+          { product: 'Coca Cola 1L', category: 'Beverages', price: 50, quantity: 380, brand: 'Coca Cola' },
+          { product: 'Tropicana Juice', category: 'Beverages', price: 60, quantity: 200, brand: 'Tropicana' }
+        ]
+      },
+      students: {
+        name: 'Student Records',
+        data: [
+          { name: 'Rohan Kumar', roll: 'A001', english: 85, math: 92, science: 88, attendance: '95%', grade: 'A+' },
+          { name: 'Priya Singh', roll: 'A002', english: 78, math: 85, science: 80, attendance: '92%', grade: 'A' },
+          { name: 'Raj Patel', roll: 'A003', english: 65, math: 70, science: 68, attendance: '80%', grade: 'B' },
+          { name: 'Neha Sharma', roll: 'A004', english: 90, math: 88, science: 91, attendance: '98%', grade: 'A+' },
+          { name: 'Amit Kumar', roll: 'A005', english: 72, math: 78, science: 75, attendance: '85%', grade: 'B+' },
+          { name: 'Sneha Gupta', roll: 'A006', english: 82, math: 87, science: 84, attendance: '96%', grade: 'A' },
+          { name: 'Varun Singh', roll: 'A007', english: 55, math: 62, science: 60, attendance: '70%', grade: 'C' },
+          { name: 'Ananya Rao', roll: 'A008', english: 88, math: 90, science: 89, attendance: '97%', grade: 'A+' }
+        ]
+      },
+      experiment: {
+        name: 'Lab Experiment',
+        data: [
+          { trial: 1, temperature: 25, pressure: 101.3, reaction_time: 12.5, ph: 7.0, yield: 95.2 },
+          { trial: 2, temperature: 30, pressure: 102.1, reaction_time: 11.8, ph: 7.1, yield: 96.5 },
+          { trial: 3, temperature: 35, pressure: 103.2, reaction_time: 10.9, ph: 6.9, yield: 97.1 },
+          { trial: 4, temperature: 40, pressure: 104.5, reaction_time: 9.8, ph: 6.8, yield: 98.3 },
+          { trial: 5, temperature: 45, pressure: 105.8, reaction_time: 8.5, ph: 6.7, yield: 99.2 },
+          { trial: 6, temperature: 50, pressure: 107.2, reaction_time: 7.2, ph: 6.5, yield: 98.9 }
+        ]
+      },
+      economic: {
+        name: 'Economic Data',
+        data: [
+          { country: 'India', year: 2023, gdp: 3.73, inflation: 6.8, unemployment: 7.2, growth_rate: 7.2 },
+          { country: 'China', year: 2023, gdp: 17.74, inflation: 0.2, unemployment: 4.1, growth_rate: 5.2 },
+          { country: 'USA', year: 2023, gdp: 27.36, inflation: 3.4, unemployment: 3.8, growth_rate: 2.5 },
+          { country: 'Japan', year: 2023, gdp: 4.23, inflation: 3.3, unemployment: 2.5, growth_rate: 1.8 },
+          { country: 'Germany', year: 2023, gdp: 4.31, inflation: 4.5, unemployment: 2.6, growth_rate: -0.3 },
+          { country: 'UK', year: 2023, gdp: 3.33, inflation: 4.0, unemployment: 4.0, growth_rate: 0.5 }
+        ]
+      },
+      health: {
+        name: 'Health Data',
+        data: [
+          { patient_id: 'P001', age: 45, blood_pressure: '120/80', heart_rate: 72, glucose: 95, cholesterol: 180 },
+          { patient_id: 'P002', age: 62, blood_pressure: '140/90', heart_rate: 78, glucose: 120, cholesterol: 220 },
+          { patient_id: 'P003', age: 38, blood_pressure: '118/76', heart_rate: 68, glucose: 90, cholesterol: 160 },
+          { patient_id: 'P004', age: 55, blood_pressure: '135/85', heart_rate: 75, glucose: 110, cholesterol: 200 },
+          { patient_id: 'P005', age: 42, blood_pressure: '122/82', heart_rate: 70, glucose: 100, cholesterol: 190 }
+        ]
+      },
+      survey: {
+        name: 'Survey Results',
+        data: [
+          { respondent_id: 'S001', age_group: '18-25', rating: 5, region: 'North', feedback: 'Excellent service' },
+          { respondent_id: 'S002', age_group: '26-35', rating: 4, region: 'South', feedback: 'Good experience' },
+          { respondent_id: 'S003', age_group: '36-45', rating: 3, region: 'East', feedback: 'Average service' },
+          { respondent_id: 'S004', age_group: '46-55', rating: 4, region: 'West', feedback: 'Very satisfied' },
+          { respondent_id: 'S005', age_group: '18-25', rating: 5, region: 'North', feedback: 'Highly recommend' }
+        ]
+      }
+    };
+
+    window.loadTemplate = async function(templateKey) {
+      const template = templates[templateKey];
+      if (!template) {
+        alert('Template not found');
+        return;
+      }
+
+      // Store template data in sessionStorage
+      sessionStorage.setItem('templateData', JSON.stringify(template.data));
+      sessionStorage.setItem('templateName', template.name);
+
+      // Redirect to bot builder
+      window.location.href = '{{ url_for("bot_builder") }}?template=true';
+    };
+  </script>
+
+</body>
+</html>

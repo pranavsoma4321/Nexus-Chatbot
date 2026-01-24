@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data-Driven Chatbot Builder - NexusBot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/cssin bot2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bot-builder.css') }}">
+  <style>
+    /* Responsive Design */
+    @media (max-width: 1400px) {
+      .container-custom { max-width: 1200px; }
+    }
+    
+    @media (max-width: 1200px) {
+      .container-custom { max-width: 992px; }
+    }
+    
+    @media (max-width: 992px) {
+      .container-custom { max-width: 768px; }
+      .grid.md\:grid-cols-2 { grid-template-columns: 1fr; }
+      .text-3xl { font-size: 1.5rem; }
+      .text-xl { font-size: 1.125rem; }
+    }
+    
+    @media (max-width: 768px) {
+      .container-custom { max-width: 576px; }
+      .px-4 { padding-left: 1rem; padding-right: 1rem; }
+      .px-6 { padding-left: 1rem; padding-right: 1rem; }
+      .px-12 { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .py-4 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+      .py-8 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+      .text-3xl { font-size: 1.25rem; }
+      .text-xl { font-size: 1rem; }
+      .text-lg { font-size: 0.875rem; }
+      .mb-6 { margin-bottom: 1rem; }
+      .mb-8 { margin-bottom: 1.5rem; }
+      .gap-6 { gap: 0.75rem; }
+      .gap-3 { gap: 0.5rem; }
+      .rounded-lg { border-radius: 0.5rem; }
+      .p-6 { padding: 0.75rem; }
+      .p-8 { padding: 1rem; }
+    }
+    
+    @media (max-width: 600px) {
+      .container-custom { max-width: 100%; padding: 0 0.75rem; }
+      .px-4 { padding-left: 0.75rem; padding-right: 0.75rem; }
+      .px-6 { padding-left: 0.75rem; padding-right: 0.75rem; }
+      .px-12 { padding-left: 1rem; padding-right: 1rem; }
+      .py-4 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+      .py-8 { padding-top: 1rem; padding-bottom: 1rem; }
+      .text-3xl { font-size: 1.125rem; }
+      .text-xl { font-size: 0.875rem; }
+      .text-lg { font-size: 0.8rem; }
+      .mb-6 { margin-bottom: 0.75rem; }
+      .mb-8 { margin-bottom: 1rem; }
+      .gap-6 { gap: 0.5rem; }
+      .gap-3 { gap: 0.25rem; }
+      .rounded-lg { border-radius: 0.375rem; }
+      .p-6 { padding: 0.5rem; }
+      .p-8 { padding: 0.75rem; }
+      .h-12 { height: 2rem; }
+      .w-12 { width: 2rem; }
+      .grid.grid-cols-3 { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+    }
+    
+    /* Touch-friendly elements */
+    @media (max-width: 768px) {
+      button, input, select, textarea {
+        min-height: 44px;
+      }
+    }
+    
+    /* Prevent horizontal scroll */
+    body {
+      overflow-x: hidden;
+    }
+    
+    /* Responsive tables */
+    @media (max-width: 768px) {
+      .data-table {
+        font-size: 0.75rem;
+      }
+      
+      .data-table table {
+        min-width: 500px;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .data-table {
+        font-size: 0.625rem;
+      }
+      
+      .data-table table {
+        min-width: 400px;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-900 antialiased text-gray-100">
+
+  <!-- Header -->
+  <header class="glass-nav fixed top-0 left-0 right-0 z-50">
+    <div class="w-full mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-white">
+        <a href="{{ url_for('home') }}">Nexus<span class="text-sky-500">Bot</span></a>
+      </h1>
+      <div class="flex gap-4 items-center">
+        <span id="botUsername" class="text-gray-300 text-sm"></span>
+        <a href="{{ url_for('home') }}" class="bg-sky-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-sky-600 transition">Home</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-20 pb-8 min-h-screen container-custom mx-auto">
+    <div class="w-full mx-auto px-3 sm:px-4 lg:px-12">
+      
+      <!-- Title Section -->
+      <div class="mb-4 sm:mb-6">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-1 sm:mb-2">Data-Driven Chatbot Builder</h2>
+        <p class="text-gray-400 text-sm sm:text-base">Upload your data and chat about it instantly</p>
+      </div>
+
+      <!-- Main Container -->
+      <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6" style="min-height: 350px;">
+        
+        <!-- Left Panel: Data Upload & Preview -->
+        <div class="bg-gray-800 rounded-lg border border-gray-700 p-4 sm:p-6 flex flex-col overflow-hidden">
+          
+          <!-- Upload Section -->
+          <div class="mb-4 sm:mb-6">
+            <h3 class="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Upload Data</h3>
+            <div class="border-2 border-dashed border-gray-600 rounded-lg p-4 sm:p-6 text-center hover:border-sky-500 transition cursor-pointer" id="dropZone">
+              <svg class="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 mx-auto mb-2 sm:mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+              </svg>
+              <p class="text-gray-300 font-medium text-sm sm:text-base">Drag and drop your file</p>
+              <p class="text-gray-500 text-xs sm:text-sm">or click to browse</p>
+              <p class="text-gray-600 text-xs mt-1 sm:mt-2">Supports: CSV, Excel, JSON</p>
+              <input type="file" id="fileInput" class="hidden" accept=".csv,.xlsx,.xls,.json">
+            </div>
+          </div>
+
+          <!-- Data Statistics -->
+          <div id="dataStats" class="hidden mb-4 sm:mb-6 grid grid-cols-3 gap-2 sm:gap-3">
+            <div class="stats-card rounded-lg p-2 sm:p-3 text-center">
+              <div class="text-lg sm:text-2xl font-bold text-sky-400" id="statRows">0</div>
+              <div class="text-xs text-gray-400">Total Rows</div>
+            </div>
+            <div class="stats-card rounded-lg p-2 sm:p-3 text-center">
+              <div class="text-lg sm:text-2xl font-bold text-green-400" id="statColumns">0</div>
+              <div class="text-xs text-gray-400">Columns</div>
+            </div>
+            <div class="stats-card rounded-lg p-2 sm:p-3 text-center">
+              <div class="text-lg sm:text-2xl font-bold text-purple-400" id="statSize">0KB</div>
+              <div class="text-xs text-gray-400">Data Size</div>
+            </div>
+          </div>
+
+          <!-- Upload Progress -->
+          <div id="uploadProgress" class="hidden mb-4">
+            <div class="w-full bg-gray-700 rounded-full h-2">
+              <div id="progressBar" class="bg-sky-500 h-2 rounded-full" style="width: 0%"></div>
+            </div>
+            <p class="text-xs text-gray-400 mt-2">Uploading...</p>
+          </div>
+
+          <!-- Data Preview -->
+          <div class="flex-1 flex flex-col overflow-hidden min-h-0">
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="text-lg font-bold text-white">Data Preview</h3>
+              <input type="text" id="tableSearch" placeholder="Search table..." class="bg-gray-700 text-white rounded px-3 py-1 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-500 hidden" />
+            </div>
+            <div id="dataPreview" class="data-table overflow-auto flex-1 min-h-0" style="max-height: 300px;">
+              <p class="text-gray-400 text-sm">No data uploaded yet</p>
+            </div>
+            <p id="rowCount" class="text-xs text-gray-500 mt-2"></p>
+          </div>
+
+        </div>
+
+        <!-- Right Panel: Chat Interface -->
+        <div class="bg-gray-800 rounded-lg border border-gray-700 flex flex-col" style="min-height: 450px;">
+          
+          <!-- Chat Header -->
+          <div class="border-b border-gray-700 p-4 bg-gray-750 flex-shrink-0">
+            <h3 class="text-xl font-bold text-white">💬 Chat with Your Data</h3>
+            <p class="text-gray-400 text-sm">Ask questions and get instant answers from your uploaded data</p>
+          </div>
+
+          <!-- Chat Messages -->
+          <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 chat-container bg-gray-800/50 min-h-[250px] max-h-[350px]">
+            <div class="text-center text-gray-400 text-sm mt-8">
+              <p>📤 Upload data to start chatting</p>
+              <p class="text-xs text-gray-500 mt-2">Ask questions like "Show me records from London" or "Find entries with value > 50"</p>
+            </div>
+          </div>
+
+          <!-- Chat Input -->
+          <div class="border-t border-gray-700 p-4 bg-gray-800 flex-shrink-0">
+            <form id="chatForm" class="flex gap-2">
+              <input 
+                type="text" 
+                id="chatInput" 
+                placeholder="Type your question here..." 
+                class="flex-1 bg-gray-700 text-white rounded-lg px-4 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
+              >
+              <button 
+                type="submit" 
+                class="bg-sky-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-sky-600 transition flex items-center gap-2"
+                id="sendBtn"
+              >
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5.951-1.429 5.951 1.429a1 1 0 001.169-1.409l-7-14z"></path>
+                </svg>
+                Send
+              </button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Bot Info Bar -->
+      <div class="mt-6 bg-gray-800 rounded-lg border border-gray-700 p-4">
+        <div class="flex justify-between items-center flex-wrap gap-4">
+          <div>
+            <p class="text-gray-400 text-sm">Bot Status</p>
+            <p id="botStatus" class="text-white font-semibold">Ready</p>
+          </div>
+          <div class="flex gap-2 flex-wrap">
+            <button id="clearChatBtn" class="bg-red-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-700 transition text-sm" title="Clear chat history">🗑️ Clear Chat</button>
+            <button id="downloadDataBtn" class="bg-green-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm" title="Download data as CSV">📥 Download Data</button>
+            <button id="exportPdfBtn" class="bg-orange-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-orange-700 transition text-sm" title="Export chat as PDF">📄 Export PDF</button>
+            <button id="saveBotBtn" class="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm" title="Save this bot">💾 Save Bot</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visualization & Summary Section -->
+      <div id="visualizationSection" class="mt-6 bg-gray-800 rounded-lg border border-gray-700 p-6 hidden">
+        <h3 class="text-xl font-bold text-white mb-4">📊 Data Visualization & Analysis</h3>
+        
+        <!-- Visualization Buttons -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+          <select id="columnSelector" class="bg-gray-700 text-white rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500">
+            <option value="">Select Column</option>
+          </select>
+          <button id="barChartBtn" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-blue-700 transition text-sm">📊 Bar Chart</button>
+          <button id="pieChartBtn" class="bg-purple-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-purple-700 transition text-sm">🥧 Pie Chart</button>
+          <button id="summaryBtn" class="bg-teal-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-teal-700 transition text-sm">📈 Summary</button>
+          <button id="tableComparisonBtn" class="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm">📋 Table Comparison</button>
+        </div>
+
+        <!-- Chart Container -->
+        <div id="chartSection" class="hidden mb-6 bg-gray-900 rounded-lg p-4">
+          <div class="flex justify-between items-center mb-3">
+            <h4 id="chartTitle" class="text-lg font-bold text-white"></h4>
+            <button id="closeChartBtn" class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700">Close</button>
+          </div>
+          <canvas id="dataChart" style="max-height: 400px;"></canvas>
+        </div>
+
+        <!-- Summary Statistics -->
+        <div id="summarySection" class="hidden">
+          <h4 class="text-lg font-bold text-white mb-4">Summary Statistics</h4>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+            <div class="bg-gradient-to-br from-blue-600/30 to-blue-700/30 rounded-lg p-4 border border-blue-500/30">
+              <div class="text-xs text-gray-400 mb-1">Total Records</div>
+              <div class="text-2xl font-bold text-blue-400" id="summaryTotal">0</div>
+            </div>
+            <div class="bg-gradient-to-br from-green-600/30 to-green-700/30 rounded-lg p-4 border border-green-500/30">
+              <div class="text-xs text-gray-400 mb-1">Mean Value</div>
+              <div class="text-2xl font-bold text-green-400" id="summaryMean">0</div>
+            </div>
+            <div class="bg-gradient-to-br from-purple-600/30 to-purple-700/30 rounded-lg p-4 border border-purple-500/30">
+              <div class="text-xs text-gray-400 mb-1">Max Value</div>
+              <div class="text-2xl font-bold text-purple-400" id="summaryMax">0</div>
+            </div>
+            <div class="bg-gradient-to-br from-orange-600/30 to-orange-700/30 rounded-lg p-4 border border-orange-500/30">
+              <div class="text-xs text-gray-400 mb-1">Min Value</div>
+              <div class="text-2xl font-bold text-orange-400" id="summaryMin">0</div>
+            </div>
+          </div>
+          <div id="summaryDetails" class="bg-gray-900 rounded-lg p-4 text-gray-300 text-sm whitespace-pre-wrap max-h-64 overflow-y-auto"></div>
+          <button id="closeSummaryBtn" class="mt-4 bg-red-600 text-white px-4 py-2 rounded text-sm hover:bg-red-700">Close Summary</button>
+        </div>
+
+        <!-- Table Data Comparison Section -->
+        <div id="tableComparisonSection" class="hidden">
+          <div class="flex justify-between items-center mb-4">
+            <h4 class="text-lg font-bold text-white">📋 Data Comparison Table</h4>
+            <div class="flex gap-2">
+              <input 
+                type="text" 
+                id="comparisonTableSearch" 
+                placeholder="Search in table..." 
+                class="bg-gray-700 text-white rounded px-3 py-1 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
+              />
+              <button id="closeComparisonBtn" class="bg-red-600 text-white px-4 py-1 rounded text-sm hover:bg-red-700">Close</button>
+            </div>
+          </div>
+          <div class="bg-gray-900 rounded-lg overflow-hidden border border-gray-700">
+            <div id="comparisonTableContainer" class="overflow-x-auto max-h-96" style="overflow-y: auto;">
+              <table class="w-full text-sm border-collapse">
+                <thead class="sticky top-0 bg-gradient-to-r from-gray-800 to-gray-700">
+                  <tr id="comparisonTableHeader"></tr>
+                </thead>
+                <tbody id="comparisonTableBody" class="divide-y divide-gray-700">
+                </tbody>
+              </table>
+            </div>
+            <div class="bg-gray-800 px-4 py-3 border-t border-gray-700 text-sm text-gray-400">
+              <span id="comparisonRowCount">No data</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import authService from '../static/firebase-auth.js';
+    import { db } from '../static/firebase-config.js';
+    import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    let currentData = [];
+    let uploadedFile = null;
+    let currentUser = null;
+
+    // Wait for auth state to be ready
+    authService.initAuthListener((user) => {
+      currentUser = user;
+      if (user) {
+        authService.getUserData(user.uid).then(userData => {
+          if (userData) {
+            document.getElementById('botUsername').textContent = `Welcome, ${userData.username}`;
+          }
+        });
+      }
+    });
+
+    // Load template if coming from templates page
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('template') === 'true') {
+      const templateData = sessionStorage.getItem('templateData');
+      const templateName = sessionStorage.getItem('templateName');
+      if (templateData) {
+        currentData = JSON.parse(templateData);
+        uploadedFile = templateName + '.csv';
+        document.getElementById('botStatus').textContent = `Loaded: ${templateName}`;
+        displayDataPreview(currentData);
+        sessionStorage.removeItem('templateData');
+        sessionStorage.removeItem('templateName');
+      }
+    }
+
+    // File upload handling
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatForm = document.getElementById('chatForm');
+    const uploadProgress = document.getElementById('uploadProgress');
+    const progressBar = document.getElementById('progressBar');
+    const botStatus = document.getElementById('botStatus');
+    const tableSearch = document.getElementById('tableSearch');
+
+    // Table search functionality
+    tableSearch.addEventListener('keyup', (e) => {
+      const searchValue = e.target.value.toLowerCase();
+      const rows = document.querySelectorAll('#dataPreview tbody tr');
+      
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        if (text.includes(searchValue)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+
+    // Drag and drop
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('border-sky-500', 'bg-sky-500/10');
+    });
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('border-sky-500', 'bg-sky-500/10');
+    });
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('border-sky-500', 'bg-sky-500/10');
+      handleFile(e.dataTransfer.files[0]);
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        handleFile(e.target.files[0]);
+      }
+    });
+
+    function handleFile(file) {
+      if (!file) return;
+      
+      uploadedFile = file;
+      const reader = new FileReader();
+      
+      reader.onload = (e) => {
+        try {
+          let data = [];
+          const content = e.target.result;
+          
+          console.log('File loaded:', file.name, 'Size:', content.length);
+
+          if (file.name.endsWith('.csv')) {
+            data = parseCSV(content);
+          } else if (file.name.endsWith('.json')) {
+            data = JSON.parse(content);
+            if (!Array.isArray(data)) data = [data];
+          } else if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+            addChatMessage('bot', 'Excel files require additional processing. Please convert to CSV or JSON first.');
+            return;
+          } else {
+            addChatMessage('bot', 'Unsupported file format. Please upload CSV, JSON, or Excel files.');
+            return;
+          }
+          
+          console.log('Data parsed:', data.length, 'records');
+
+          if (data.length === 0) {
+            addChatMessage('bot', '⚠️ No data found in the file. Please check the file format.');
+            return;
+          }
+
+          currentData = data;
+          displayDataPreview(data);
+          botStatus.textContent = 'Ready - Data loaded';
+          
+          // Clear chat
+          chatMessages.innerHTML = '';
+          addChatMessage('bot', `✅ Great! I've loaded your data with ${data.length} records. What would you like to know?`);
+          
+          console.log('Display completed successfully');
+        } catch (error) {
+          console.error('Error:', error);
+          addChatMessage('bot', '❌ Error parsing file: ' + error.message);
+        }
+      };
+
+      reader.onerror = () => {
+        addChatMessage('bot', '❌ Error reading file. Please try again.');
+        console.error('File read error');
+      };
+
+      reader.readAsText(file);
+    }
+
+    function parseCSV(content) {
+      const lines = content.trim().split('\n').filter(line => line.trim());
+      
+      if (lines.length < 2) {
+        throw new Error('CSV file must have headers and at least one data row');
+      }
+      
+      const headers = lines[0].split(',').map(h => h.trim());
+      const data = [];
+
+      for (let i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue; // Skip empty lines
+        
+        const obj = {};
+        const values = lines[i].split(',').map(v => v.trim());
+        headers.forEach((header, index) => {
+          obj[header] = values[index] || '';
+        });
+        data.push(obj);
+      }
+      
+      console.log('CSV parsed:', data.length, 'rows,', headers.length, 'columns');
+      return data;
+    }
+
+    function displayDataPreview(data) {
+      if (data.length === 0) {
+        console.warn('No data to display');
+        return;
+      }
+
+      const dataPreviewDiv = document.getElementById('dataPreview');
+      const headers = Object.keys(data[0]);
+      
+      let html = '<div style="overflow-x: auto;"><table class="w-full text-sm border-collapse"><thead class="sticky top-0 bg-gray-700"><tr>';
+      
+      headers.forEach(h => {
+        html += `<th class="px-4 py-2 text-left text-gray-300 font-semibold border border-gray-600 bg-gray-700">${h}</th>`;
+      });
+      html += '</tr></thead><tbody>';
+
+      const displayRows = data.length;
+      for (let i = 0; i < displayRows; i++) {
+        const row = data[i];
+        html += '<tr class="border-t border-gray-700 hover:bg-gray-750">';
+        headers.forEach(h => {
+          const value = row[h] !== undefined ? row[h] : '';
+          html += `<td class="px-4 py-2 text-gray-400 border border-gray-700">${String(value).substring(0, 50)}</td>`;
+        });
+        html += '</tr>';
+      }
+
+      html += '</tbody></table></div>';
+      
+      dataPreviewDiv.innerHTML = html;
+      dataPreviewDiv.style.overflow = 'auto';
+      
+      const rowCount = document.getElementById('rowCount');
+      rowCount.textContent = `Showing all ${data.length} rows`;
+      
+      // Show data statistics
+      const dataSize = JSON.stringify(data).length;
+      const dataSizeKB = (dataSize / 1024).toFixed(2);
+      document.getElementById('statRows').textContent = data.length;
+      document.getElementById('statColumns').textContent = headers.length;
+      document.getElementById('statSize').textContent = dataSizeKB + 'KB';
+      document.getElementById('dataStats').classList.remove('hidden');
+      document.getElementById('tableSearch').classList.remove('hidden');
+      showVisualizationSection();
+      
+      console.log('Data preview displayed:', displayRows, 'rows');
+    }
+
+
+    function searchData(query) {
+      if (!currentData.length) return [];
+
+      const lowerQuery = query.toLowerCase().trim();
+      const words = lowerQuery.split(/\s+/);
+      
+      // List of common product categories
+      const categories = ['dairy', 'snacks', 'beverages', 'bakery', 'spices', 'rice', 'flour', 'oil', 'detergent', 'shampoo', 'toothpaste', 'noodles', 'tea', 'coffee', 'juice', 'chips', 'biscuits'];
+      
+      // Check if query contains a category word
+      const categoryMatch = categories.find(cat => lowerQuery.includes(cat));
+      if (categoryMatch) {
+        return currentData.filter(row => {
+          const categoryField = getFieldValue(row, ['category', 'type', 'product_category', 'kind']).toLowerCase();
+          return categoryField === categoryMatch || categoryField.includes(categoryMatch);
+        });
+      }
+      
+      // Check for specific brand queries first
+      const brandMatch = query.match(/^(show|list|find|search|get)\s+(.+?)\s+(laptops?|products?|items?|devices?)$/i);
+      if (brandMatch) {
+        const brand = brandMatch[2].toLowerCase();
+        return currentData.filter(row => {
+          const brandField = getFieldValue(row, ['brand', 'brand_name', 'manufacturer', 'company']).toLowerCase();
+          return brandField === brand || brandField.includes(brand);
+        });
+      }
+      
+      // Check for simple brand name queries
+      const simpleBrandMatch = words.length <= 2 && words.some(word => {
+        const commonBrands = ['apple', 'dell', 'hp', 'lenovo', 'asus', 'acer', 'msi', 'samsung', 'amul', 'nandini', 'fortune', 'tata', 'nestle'];
+        return commonBrands.includes(word);
+      });
+      
+      if (simpleBrandMatch) {
+        const brand = words.find(word => {
+          const commonBrands = ['apple', 'dell', 'hp', 'lenovo', 'asus', 'acer', 'msi', 'samsung', 'amul', 'nandini', 'fortune', 'tata', 'nestle'];
+          return commonBrands.includes(word);
+        });
+        
+        return currentData.filter(row => {
+          const brandField = getFieldValue(row, ['brand', 'brand_name', 'manufacturer', 'company']).toLowerCase();
+          return brandField === brand || brandField.includes(brand);
+        });
+      }
+      
+      // Score-based matching for general queries
+      const results = currentData.map((row, index) => {
+        let score = 0;
+        const rowStr = JSON.stringify(row).toLowerCase();
+        
+        // Check each word in query
+        words.forEach(word => {
+          if (word.length > 2) {
+            // Exact match gets highest score
+            if (rowStr.includes(word)) {
+              score += 10;
+            }
+            // Partial match (e.g., "milk" matches "amul milk")
+            if (rowStr.includes(word.substring(0, 3))) {
+              score += 5;
+            }
+          }
+        });
+        
+        // Boost score for brand/product name matches
+        Object.values(row).forEach(val => {
+          const valStr = String(val).toLowerCase();
+          if (valStr.includes(lowerQuery)) {
+            score += 15;
+          }
+        });
+        
+        return { ...row, score, index };
+      })
+      .filter(item => item.score > 0)
+      .sort((a, b) => b.score - a.score);
+      
+      return results;
+    }
+
+    function getFieldValue(row, fieldNames) {
+      // Try to find a matching field (case-insensitive)
+      for (let name of fieldNames) {
+        const key = Object.keys(row).find(k => k.toLowerCase() === name.toLowerCase());
+        if (key && row[key]) return row[key];
+      }
+      // If not found, return empty string
+      return '';
+    }
+
+    function getProductName(row) {
+      // Try standard field names first
+      const name = getFieldValue(row, ['name', 'product', 'item', 'title', 'description', 'item_name', 'product_name']);
+      if (name) return name;
+      
+      // Fallback: find first text column (that's not price/quantity)
+      const numericFields = ['price', 'cost', 'rate', 'amount', 'qty', 'quantity', 'size', 'weight', 'volume'];
+      for (let key of Object.keys(row)) {
+        const value = String(row[key]);
+        const isNumeric = !isNaN(value) && value.trim() !== '';
+        const isNumericField = numericFields.some(nf => key.toLowerCase().includes(nf));
+        
+        // If it's a text field and not obviously numeric, use it as product name
+        if (!isNumeric && !isNumericField && value.trim()) {
+          return value;
+        }
+      }
+      
+      return 'Product';
+    }
+
+    function generateResponse(query, results) {
+      const lowerQuery = query.toLowerCase();
+      
+      if (results.length === 0) {
+        return `❌ Sorry, I couldn't find anything for "${query}". Try searching differently!`;
+      }
+      
+      // COMPREHENSIVE QUESTION HANDLING
+      
+      // 1. COUNT QUESTIONS
+      if (lowerQuery.includes('how many') || lowerQuery.includes('count') || lowerQuery.includes('number of')) {
+        return `Found ${results.length} item(s) matching your search.`;
+      }
+      
+      // 2. PRICE QUESTIONS
+      if (lowerQuery.includes('price') || lowerQuery.includes('cost') || lowerQuery.includes('rate') || lowerQuery.includes('amount')) {
+        if (lowerQuery.includes('highest') || lowerQuery.includes('maximum') || lowerQuery.includes('max')) {
+          const highest = results.reduce((max, r) => {
+            const price = parseFloat(getFieldValue(r, ['price', 'cost', 'rate', 'amount'])) || 0;
+            return price > max.price ? { item: r, price } : max;
+          }, { price: 0 });
+          
+          if (highest.price > 0) {
+            const name = getProductName(highest.item);
+            return `💰 Highest priced item: ${name} at ₹${highest.price.toLocaleString('en-IN')}`;
+          }
+        }
+        
+        if (lowerQuery.includes('lowest') || lowerQuery.includes('minimum') || lowerQuery.includes('min') || lowerQuery.includes('cheapest')) {
+          const lowest = results.reduce((min, r) => {
+            const price = parseFloat(getFieldValue(r, ['price', 'cost', 'rate', 'amount'])) || Infinity;
+            return price < min.price ? { item: r, price } : min;
+          }, { price: Infinity });
+          
+          if (lowest.price < Infinity) {
+            const name = getProductName(lowest.item);
+            return `💰 Lowest priced item: ${name} at ₹${lowest.price.toLocaleString('en-IN')}`;
+          }
+        }
+        
+        if (lowerQuery.includes('average') || lowerQuery.includes('avg')) {
+          const prices = results.map(r => parseFloat(getFieldValue(r, ['price', 'cost', 'rate', 'amount'])) || 0).filter(p => p > 0);
+          if (prices.length > 0) {
+            const avg = prices.reduce((sum, p) => sum + p, 0) / prices.length;
+            return `💰 Average price: ₹${avg.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;
+          }
+        }
+        
+        // Regular price listing
+        let priceInfo = results.map((r) => {
+          const price = getFieldValue(r, ['price', 'cost', 'rate', 'amount']) || '?';
+          const name = getProductName(r);
+          return `• ${name}: ₹${price}`;
+        }).join('\n');
+        return `Found ${results.length} item(s):\n${priceInfo}`;
+      }
+      
+      // 3. BRAND QUESTIONS
+      if (lowerQuery.includes('brand') || lowerQuery.includes('manufacturer') || lowerQuery.includes('company')) {
+        let brands = [...new Set(results.map(r => getFieldValue(r, ['brand', 'brand_name', 'manufacturer', 'company'])).filter(b => b))];
+        if (brands.length > 0) {
+          if (lowerQuery.includes('list') || lowerQuery.includes('show') || lowerQuery.includes('what')) {
+            return `Found ${brands.length} brand(s):\n${brands.map(b => `• ${b}`).join('\n')}`;
+          } else {
+            return `Available brands: ${brands.join(', ')}`;
+          }
+        }
+      }
+      
+      // 4. QUANTITY/STOCK QUESTIONS
+      if (lowerQuery.includes('quantity') || lowerQuery.includes('stock') || lowerQuery.includes('qty') || lowerQuery.includes('available')) {
+        if (lowerQuery.includes('total') || lowerQuery.includes('sum')) {
+          const totalQty = results.reduce((sum, r) => {
+            const qty = parseFloat(getFieldValue(r, ['quantity', 'qty', 'stock', 'available'])) || 0;
+            return sum + qty;
+          }, 0);
+          return `📊 Total quantity: ${totalQty} units`;
+        }
+        
+        let qtyInfo = results.map((r) => {
+          const qty = getFieldValue(r, ['quantity', 'qty', 'stock', 'available']) || '?';
+          const name = getProductName(r);
+          return `• ${name}: ${qty} units`;
+        }).join('\n');
+        return `Found ${results.length} item(s):\n${qtyInfo}`;
+      }
+      
+      // 5. COMPARISON QUESTIONS
+      if (lowerQuery.includes('compare') || lowerQuery.includes('difference') || lowerQuery.includes('vs') || lowerQuery.includes('versus')) {
+        if (results.length >= 2) {
+          let comparison = results.slice(0, 2).map((r, index) => {
+            const name = getProductName(r);
+            const price = getFieldValue(r, ['price', 'cost', 'rate', 'amount']) || '?';
+            const quantity = getFieldValue(r, ['quantity', 'qty', 'stock', 'available']) || '?';
+            return `${index + 1}. ${name}\n   Price: ₹${price}\n   Quantity: ${quantity}`;
+          }).join('\n\n');
+          return `📊 Comparison:\n${comparison}`;
+        }
+      }
+      
+      // 6. SPECIFIC ITEM QUESTIONS
+      if (lowerQuery.includes('what is') || lowerQuery.includes('tell me about') || lowerQuery.includes('details')) {
+        if (results.length > 0) {
+          const item = results[0];
+          const name = getProductName(item);
+          const price = getFieldValue(item, ['price', 'cost', 'rate', 'amount']) || 'N/A';
+          const quantity = getFieldValue(item, ['quantity', 'qty', 'stock', 'available']) || 'N/A';
+          const brand = getFieldValue(item, ['brand', 'brand_name', 'manufacturer', 'company']) || 'N/A';
+          
+          return `📋 Details for ${name}:\n• Brand: ${brand}\n• Price: ₹${price}\n• Quantity: ${quantity}`;
+        }
+      }
+      
+      // 7. LIST/SHOW QUESTIONS
+      if (lowerQuery.includes('show') || lowerQuery.includes('list') || lowerQuery.includes('display') || lowerQuery.includes('all')) {
+        let info = results.map((r, index) => {
+          const name = getProductName(r);
+          const price = getFieldValue(r, ['price', 'cost', 'rate', 'amount']) || '';
+          const quantity = getFieldValue(r, ['quantity', 'qty', 'stock', 'available']) || '';
+          
+          let details = `${index + 1}. ${name}`;
+          if (price) details += ` - ₹${price}`;
+          if (quantity) details += ` (${quantity} units)`;
+          
+          return details;
+        }).join('\n');
+        
+        return `📦 Found ${results.length} item(s):\n${info}`;
+      }
+      
+      // 8. CATEGORY/TYPE QUESTIONS
+      if (lowerQuery.includes('category') || lowerQuery.includes('type') || lowerQuery.includes('kind')) {
+        const categories = [...new Set(results.map(r => getFieldValue(r, ['category', 'type', 'kind', 'classification'])).filter(c => c))];
+        if (categories.length > 0) {
+          return `📂 Categories found: ${categories.join(', ')}`;
+        }
+      }
+      
+      // 9. SEARCH QUESTIONS
+      if (lowerQuery.includes('search') || lowerQuery.includes('find') || lowerQuery.includes('look for')) {
+        let info = results.map((r) => {
+          const name = getProductName(r);
+          const price = getFieldValue(r, ['price', 'cost', 'rate', 'amount']) || '';
+          const quantity = getFieldValue(r, ['quantity', 'qty', 'stock', 'available']) || '';
+          
+          let details = `• ${name}`;
+          if (price) details += ` - ₹${price}`;
+          if (quantity) details += ` (${quantity})`;
+          
+          return details;
+        }).join('\n');
+        
+        return `🔍 Search results (${results.length} items):\n${info}`;
+      }
+      
+      // 10. DEFAULT RESPONSE
+      let info = results.map((r, index) => {
+        const name = getProductName(r);
+        const price = getFieldValue(r, ['price', 'cost', 'rate', 'amount']) || '';
+        const quantity = getFieldValue(r, ['quantity', 'qty', 'stock', 'available']) || '';
+        
+        let details = `${index + 1}. ${name}`;
+        if (price) details += ` - ₹${price}`;
+        if (quantity) details += ` (${quantity} units)`;
+        
+        return details;
+      }).join('\n');
+      
+      return `📦 Found ${results.length} item(s):\n${info}`;
+    }
+
+    function addChatMessage(sender, message, data = null) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `chat-message flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+
+      let content = '';
+      if (sender === 'user') {
+        content = `
+          <div class="bg-sky-600 text-white rounded-lg rounded-tr-none px-4 py-3 max-w-xs break-words">
+            <p class="text-sm">${message}</p>
+          </div>
+        `;
+      } else {
+        content = `
+          <div class="bg-gray-700 text-gray-100 rounded-lg rounded-tl-none px-4 py-3 max-w-sm break-words">
+            <p class="text-sm whitespace-pre-wrap">${message}</p>
+          </div>
+        `;
+      }
+
+      messageDiv.innerHTML = content;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const query = chatInput.value.trim();
+      if (!query) return;
+
+      addChatMessage('user', query);
+      chatInput.value = '';
+
+      // Simulate bot thinking
+      setTimeout(() => {
+        const results = searchData(query);
+        const response = generateResponse(query, results);
+        addChatMessage('bot', response, results.slice(0, 3));
+      }, 800);
+    });
+
+    // Clear Chat Button
+    document.getElementById('clearChatBtn').addEventListener('click', () => {
+      if (confirm('Clear all chat messages? This cannot be undone.')) {
+        chatMessages.innerHTML = '';
+        addChatMessage('bot', '🧹 Chat cleared! You can ask new questions about your data.');
+        botStatus.textContent = 'Chat cleared';
+      }
+    });
+
+    // Download Data as CSV Button
+    document.getElementById('downloadDataBtn').addEventListener('click', () => {
+      if (currentData.length === 0) {
+        alert('Please upload data first');
+        return;
+      }
+
+      try {
+        // Get headers
+        const headers = Object.keys(currentData[0]);
+        
+        // Create CSV content
+        let csv = headers.join(',') + '\n';
+        currentData.forEach(row => {
+          const values = headers.map(header => {
+            const value = row[header] || '';
+            // Escape quotes and wrap in quotes if contains comma
+            const escaped = String(value).replace(/"/g, '""');
+            return escaped.includes(',') ? `"${escaped}"` : escaped;
+          });
+          csv += values.join(',') + '\n';
+        });
+
+        // Create and download file
+        const element = document.createElement('a');
+        element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
+        element.setAttribute('download', `data-export-${Date.now()}.csv`);
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+
+        alert('Data exported as CSV successfully!');
+        botStatus.textContent = 'Data exported as CSV';
+      } catch (error) {
+        alert('Error exporting data: ' + error.message);
+      }
+    });
+
+    // Export Chat as PDF Button
+    document.getElementById('exportPdfBtn').addEventListener('click', () => {
+      const chatMessages = document.getElementById('chatMessages');
+      const messages = Array.from(chatMessages.querySelectorAll('.chat-message'));
+      
+      if (messages.length === 0) {
+        alert('No chat history to export');
+        return;
+      }
+
+      try {
+        // Create HTML content for PDF
+        let htmlContent = `
+          <div style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
+            <h1 style="color: #0ea5e9; margin-bottom: 10px;">NexusBot Chat Export</h1>
+            <p style="color: #666; margin-bottom: 20px;">Generated: ${new Date().toLocaleString()}</p>
+            <p style="color: #666; margin-bottom: 20px;">File: ${uploadedFile?.name || 'Unknown'}</p>
+            <hr style="border: none; border-top: 1px solid #ddd; margin-bottom: 20px;">
+        `;
+
+        messages.forEach((msg, index) => {
+          const isUser = msg.className.includes('justify-end');
+          const text = msg.innerText;
+          const bgColor = isUser ? '#e0f2fe' : '#f3f4f6';
+          const borderColor = isUser ? '#0ea5e9' : '#9ca3af';
+          
+          htmlContent += `
+            <div style="margin-bottom: 15px; padding: 12px; background-color: ${bgColor}; border-left: 3px solid ${borderColor}; border-radius: 4px;">
+              <strong style="color: ${isUser ? '#0284c7' : '#6b7280'};">${isUser ? 'You' : 'Bot'}:</strong>
+              <p style="margin: 8px 0 0 0; white-space: pre-wrap;">${text}</p>
+            </div>
+          `;
+        });
+
+        htmlContent += '</div>';
+
+        // Create PDF
+        const element = document.createElement('div');
+        element.innerHTML = htmlContent;
+        
+        const opt = {
+          margin: 10,
+          filename: `chat-export-${Date.now()}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+        };
+
+        html2pdf().set(opt).from(element).save();
+        alert('Chat exported as PDF successfully!');
+        botStatus.textContent = 'Chat exported as PDF';
+      } catch (error) {
+        alert('Error exporting PDF: ' + error.message);
+      }
+    });
+
+    // Save bot
+    document.getElementById('saveBotBtn').addEventListener('click', async () => {
+      if (!currentUser) {
+        alert('Please log in first');
+        return;
+      }
+
+      if (currentData.length === 0) {
+        alert('Please upload data first');
+        return;
+      }
+
+      try {
+        const botName = prompt('Enter bot name:');
+        if (!botName) return;
+
+        await addDoc(collection(db, 'bots'), {
+          userId: currentUser.uid,
+          name: botName,
+          data: currentData,
+          fileName: uploadedFile.name,
+          createdAt: serverTimestamp(),
+          messageCount: chatMessages.children.length,
+          type: 'data-driven'
+        });
+
+        alert('Bot saved successfully!');
+        botStatus.textContent = 'Bot saved!';
+      } catch (error) {
+        alert('Error saving bot: ' + error.message);
+      }
+    });
+
+    // Load user's previous bots
+    async function loadUserBots() {
+      if (!user) return;
+      try {
+        const q = query(collection(db, 'bots'), where('userId', '==', user.uid));
+        const querySnapshot = await getDocs(q);
+        console.log('User has', querySnapshot.size, 'bots');
+      } catch (error) {
+        console.error('Error loading bots:', error);
+      }
+    }
+
+    loadUserBots();
+
+    // ============ VISUALIZATION & SUMMARY FUNCTIONS ============
+    let currentChart = null;
+
+    // Populate column selector
+    function populateColumnSelector() {
+      if (currentData.length === 0) return;
+      
+      const selector = document.getElementById('columnSelector');
+      const headers = Object.keys(currentData[0]);
+      
+      selector.innerHTML = '<option value="">Select Column</option>';
+      headers.forEach(header => {
+        const option = document.createElement('option');
+        option.value = header;
+        option.textContent = header;
+        selector.appendChild(option);
+      });
+    }
+
+    // Show visualization section when data is loaded
+    function showVisualizationSection() {
+      document.getElementById('visualizationSection').classList.remove('hidden');
+      populateColumnSelector();
+    }
+
+    // Generate Bar Chart
+    document.getElementById('barChartBtn').addEventListener('click', () => {
+      const selectedColumn = document.getElementById('columnSelector').value;
+      
+      if (!selectedColumn) {
+        alert('Please select a column');
+        return;
+      }
+
+      if (!currentData || currentData.length === 0) {
+        alert('Please upload data first');
+        return;
+      }
+
+      try {
+        // Count occurrences or sum numeric values
+        const columnData = {};
+        currentData.forEach(row => {
+          const value = row[selectedColumn];
+          const numValue = parseFloat(value);
+          
+          if (!isNaN(numValue)) {
+            // For numeric values
+            columnData[value] = (columnData[value] || 0) + 1;
+          } else {
+            // For categorical values
+            columnData[value] = (columnData[value] || 0) + 1;
+          }
+        });
+
+        createBarChart(columnData, selectedColumn);
+      } catch (error) {
+        alert('Error creating chart: ' + error.message);
+      }
+    });
+
+    // Generate Pie Chart
+    document.getElementById('pieChartBtn').addEventListener('click', () => {
+      const selectedColumn = document.getElementById('columnSelector').value;
+      
+      if (!selectedColumn) {
+        alert('Please select a column');
+        return;
+      }
+
+      if (!currentData || currentData.length === 0) {
+        alert('Please upload data first');
+        return;
+      }
+
+      try {
+        const columnData = {};
+        currentData.forEach(row => {
+          const value = row[selectedColumn] || 'Unknown';
+          columnData[value] = (columnData[value] || 0) + 1;
+        });
+
+        createPieChart(columnData, selectedColumn);
+      } catch (error) {
+        alert('Error creating chart: ' + error.message);
+      }
+    });
+
+    // Create Bar Chart
+    function createBarChart(data, columnName) {
+      const ctx = document.getElementById('dataChart').getContext('2d');
+      
+      if (currentChart) {
+        currentChart.destroy();
+      }
+
+      const labels = Object.keys(data);
+      const values = Object.values(data);
+      const colors = generateChartColors(labels.length);
+
+      currentChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: `Count of ${columnName}`,
+            data: values,
+            backgroundColor: colors.background,
+            borderColor: colors.border,
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { color: '#9ca3af' },
+              grid: { color: '#374151' }
+            },
+            x: {
+              ticks: { color: '#9ca3af' },
+              grid: { color: '#374151' }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: { color: '#e5e7eb' }
+            }
+          }
+        }
+      });
+
+      document.getElementById('chartTitle').textContent = `Bar Chart - ${columnName}`;
+      document.getElementById('chartSection').classList.remove('hidden');
+      document.getElementById('summarySection').classList.add('hidden');
+    }
+
+    // Create Pie Chart
+    function createPieChart(data, columnName) {
+      const ctx = document.getElementById('dataChart').getContext('2d');
+      
+      if (currentChart) {
+        currentChart.destroy();
+      }
+
+      const labels = Object.keys(data);
+      const values = Object.values(data);
+      const colors = generateChartColors(labels.length);
+
+      currentChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: values,
+            backgroundColor: colors.background,
+            borderColor: colors.border,
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: '#e5e7eb',
+                padding: 15,
+                font: { size: 12 }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = context.parsed || 0;
+                  const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                  const percentage = ((value / total) * 100).toFixed(1);
+                  return `${label}: ${value} (${percentage}%)`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      document.getElementById('chartTitle').textContent = `Pie Chart - ${columnName}`;
+      document.getElementById('chartSection').classList.remove('hidden');
+      document.getElementById('summarySection').classList.add('hidden');
+    }
+
+    // Generate Chart Colors
+    function generateChartColors(count) {
+      const baseColors = [
+        '#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6',
+        '#ec4899', '#06b6d4', '#84cc16', '#f97316', '#6366f1'
+      ];
+      
+      const background = [];
+      const border = [];
+      
+      for (let i = 0; i < count; i++) {
+        const color = baseColors[i % baseColors.length];
+        background.push(color + '99');
+        border.push(color);
+      }
+      
+      return { background, border };
+    }
+
+    // Generate Summary Statistics
+    document.getElementById('summaryBtn').addEventListener('click', () => {
+      const selectedColumn = document.getElementById('columnSelector').value;
+      
+      if (!selectedColumn) {
+        alert('Please select a column');
+        return;
+      }
+
+      if (!currentData || currentData.length === 0) {
+        alert('Please upload data first');
+        return;
+      }
+
+      try {
+        const values = currentData.map(row => row[selectedColumn]).filter(v => v !== null && v !== '');
+        const numericValues = values.map(v => parseFloat(v)).filter(v => !isNaN(v));
+        
+        // Calculate statistics
+        const total = values.length;
+        const mean = numericValues.length > 0 ? (numericValues.reduce((a, b) => a + b, 0) / numericValues.length).toFixed(2) : 'N/A';
+        const max = numericValues.length > 0 ? Math.max(...numericValues).toFixed(2) : 'N/A';
+        const min = numericValues.length > 0 ? Math.min(...numericValues).toFixed(2) : 'N/A';
+        const median = getMedian(numericValues).toFixed(2) || 'N/A';
+        const stdDev = getStandardDeviation(numericValues).toFixed(2) || 'N/A';
+        
+        // Frequency distribution
+        const frequency = {};
+        values.forEach(v => {
+          frequency[v] = (frequency[v] || 0) + 1;
+        });
+        
+        // Create summary text
+        let summaryText = `Column: ${selectedColumn}\n\n`;
+        summaryText += `=== STATISTICS ===\n`;
+        summaryText += `Total Records: ${total}\n`;
+        summaryText += `Unique Values: ${Object.keys(frequency).length}\n`;
+        summaryText += `Mean: ${mean}\n`;
+        summaryText += `Median: ${median}\n`;
+        summaryText += `Standard Deviation: ${stdDev}\n`;
+        summaryText += `Maximum: ${max}\n`;
+        summaryText += `Minimum: ${min}\n\n`;
+        
+        summaryText += `=== TOP 10 VALUES ===\n`;
+        const sorted = Object.entries(frequency)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 10);
+        
+        sorted.forEach((entry, index) => {
+          summaryText += `${index + 1}. ${entry[0]}: ${entry[1]} occurrences\n`;
+        });
+
+        // Update UI
+        document.getElementById('summaryTotal').textContent = total;
+        document.getElementById('summaryMean').textContent = mean;
+        document.getElementById('summaryMax').textContent = max;
+        document.getElementById('summaryMin').textContent = min;
+        document.getElementById('summaryDetails').textContent = summaryText;
+
+        document.getElementById('chartSection').classList.add('hidden');
+        document.getElementById('summarySection').classList.remove('hidden');
+      } catch (error) {
+        alert('Error creating summary: ' + error.message);
+      }
+    });
+
+    // Helper: Calculate Median
+    function getMedian(arr) {
+      if (arr.length === 0) return 0;
+      const sorted = [...arr].sort((a, b) => a - b);
+      const mid = Math.floor(sorted.length / 2);
+      return sorted.length % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+    }
+
+    // Helper: Calculate Standard Deviation
+    function getStandardDeviation(arr) {
+      if (arr.length === 0) return 0;
+      const mean = arr.reduce((a, b) => a + b, 0) / arr.length;
+      const variance = arr.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / arr.length;
+      return Math.sqrt(variance);
+    }
+
+    // Close Chart
+    document.getElementById('closeChartBtn').addEventListener('click', () => {
+      document.getElementById('chartSection').classList.add('hidden');
+      if (currentChart) {
+        currentChart.destroy();
+      }
+    });
+
+    // Close Summary
+    document.getElementById('closeSummaryBtn').addEventListener('click', () => {
+      document.getElementById('summarySection').classList.add('hidden');
+    });
+
+    // Display Table Comparison
+    document.getElementById('tableComparisonBtn').addEventListener('click', () => {
+      if (!currentData || currentData.length === 0) {
+        alert('Please upload data first');
+        return;
+      }
+
+      displayTableComparison(currentData);
+      document.getElementById('chartSection').classList.add('hidden');
+      document.getElementById('summarySection').classList.add('hidden');
+      document.getElementById('tableComparisonSection').classList.remove('hidden');
+    });
+
+    // Display Table Comparison Function
+    function displayTableComparison(data) {
+      const headers = Object.keys(data[0]);
+      const headerRow = document.getElementById('comparisonTableHeader');
+      const tbody = document.getElementById('comparisonTableBody');
+      
+      // Clear existing content
+      headerRow.innerHTML = '';
+      tbody.innerHTML = '';
+      
+      // Create header row
+      headers.forEach(header => {
+        const th = document.createElement('th');
+        th.className = 'px-4 py-3 text-left text-gray-300 font-semibold border border-gray-700 bg-gray-800 whitespace-nowrap';
+        th.textContent = header;
+        headerRow.appendChild(th);
+      });
+      
+      // Create data rows
+      data.forEach((row, rowIndex) => {
+        const tr = document.createElement('tr');
+        tr.className = 'border-t border-gray-700 hover:bg-gray-700/50 transition';
+        
+        headers.forEach(header => {
+          const td = document.createElement('td');
+          td.className = 'px-4 py-3 text-gray-400 border border-gray-700 text-sm';
+          const value = row[header] !== undefined ? row[header] : '-';
+          td.textContent = String(value).substring(0, 100);
+          td.title = String(value); // Show full value on hover
+          tr.appendChild(td);
+        });
+        
+        tbody.appendChild(tr);
+      });
+      
+      // Update row count
+      document.getElementById('comparisonRowCount').textContent = `Showing ${data.length} of ${currentData.length} rows`;
+    }
+
+    // Close Table Comparison
+    document.getElementById('closeComparisonBtn').addEventListener('click', () => {
+      document.getElementById('tableComparisonSection').classList.add('hidden');
+    });
+
+    // Search in Table Comparison
+    document.getElementById('comparisonTableSearch').addEventListener('keyup', (e) => {
+      const searchValue = e.target.value.toLowerCase();
+      const rows = document.querySelectorAll('#comparisonTableBody tr');
+      let visibleCount = 0;
+      
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        if (text.includes(searchValue)) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+      
+      document.getElementById('comparisonRowCount').textContent = `Showing ${visibleCount} of ${currentData.length} rows (filtered)`;
+    });
+  </script>
+
+</body>
+
+</html>
