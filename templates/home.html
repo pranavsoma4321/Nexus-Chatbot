@@ -131,8 +131,20 @@
   </style>
 </head>
 
-<body class="antialiased">
+<body class="bg-gray-900 text-gray-100">
 
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg text-white font-medium {% if category == 'error' %}bg-red-600{% elif category == 'success' %}bg-green-600{% else %}bg-blue-600{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Header -->
   <header id="header" class="glass-nav fixed top-0 left-0 right-0 z-50">
     <div class="w-full mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
       <!-- Logo -->

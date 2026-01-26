@@ -48,13 +48,67 @@ def login_required(f):
 # Login Route
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    """Serve the login page"""
+    """Handle login requests"""
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        
+        # Find user by email
+        user = User.query.filter_by(email=email).first()
+        
+        if user and user.check_password(password):
+            session['user_id'] = user.id
+            session['username'] = user.username
+            flash('Login successful!', 'success')
+            return redirect(url_for('home'))
+        else:
+            flash('Invalid email or password', 'error')
+            return redirect(url_for('login'))
+    
     return render_template("login.html")
 
 # Signup Route
 @app.route("/signup", methods=['GET', 'POST'])
 def signup_page():
-    """Serve the signup page"""
+    """Handle signup requests"""
+    if request.method == 'POST':
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirmPassword')
+        
+        # Validation
+        if not username or not email or not password:
+            flash('All fields are required', 'error')
+            return redirect(url_for('signup_page'))
+        
+        if password != confirm_password:
+            flash('Passwords do not match', 'error')
+            return redirect(url_for('signup_page'))
+        
+        # Check if user already exists
+        if User.query.filter_by(email=email).first():
+            flash('Email already registered', 'error')
+            return redirect(url_for('signup_page'))
+        
+        if User.query.filter_by(username=username).first():
+            flash('Username already taken', 'error')
+            return redirect(url_for('signup_page'))
+        
+        # Create new user
+        new_user = User(username=username, email=email)
+        new_user.set_password(password)
+        
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Account created successfully! Please login.', 'success')
+            return redirect(url_for('login'))
+        except Exception as e:
+            db.session.rollback()
+            flash('Error creating account', 'error')
+            return redirect(url_for('signup_page'))
+    
     return render_template("signup.html")
 
 # Logout Route
