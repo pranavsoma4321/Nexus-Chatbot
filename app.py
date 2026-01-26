@@ -1,8 +1,25 @@
-from flask import Flask, render_template, redirect, url_for, flash, request, session
+from flask import Flask, render_template, redirect, url_for, flash, request, session, jsonify
 from functools import wraps
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+import base64
+import os
+import sys
+
+# Add the current directory to Python path for importing modules
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+# Import AI processor
+try:
+    from ai_image_processor import AIImageProcessor
+    ai_processor = AIImageProcessor()
+    print("✅ AI Image Processor loaded successfully!")
+except Exception as e:
+    print(f"❌ Failed to load AI Image Processor: {e}")
+    print("📦 Please install required packages:")
+    print("   pip install Pillow opencv-python open3d")
+    ai_processor = None
 
 app = Flask(__name__)
 app.secret_key = "your-secret-key"  # Change this in production
@@ -147,6 +164,93 @@ def choose_model():
 def customize_chatbot():
     username = session.get('username', 'Guest')
     return render_template("customize_chatbot.html", username=username)
+
+# Image Processor Page
+@app.route("/image_processor")
+def image_processor():
+    username = session.get('username', 'Guest')
+    return render_template("image_processor.html", username=username)
+
+# AI Processing Routes
+@app.route("/api/text_to_image", methods=['POST'])
+def text_to_image():
+    if not ai_processor:
+        return jsonify({'success': False, 'error': 'AI processor not available'})
+    
+    try:
+        data = request.get_json()
+        prompt = data.get('prompt', '')
+        negative_prompt = data.get('negative_prompt', '')
+        width = data.get('width', 512)
+        height = data.get('height', 512)
+        
+        result = ai_processor.text_to_image(prompt, negative_prompt, width, height)
+        return jsonify(result)
+        
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route("/api/image_to_3d", methods=['POST'])
+def image_to_3d():
+    if not ai_processor:
+        return jsonify({'success': False, 'error': 'AI processor not available'})
+    
+    try:
+        data = request.get_json()
+        image_data = data.get('image', '')
+        depth_scale = data.get('depth_scale', 1.0)
+        
+        result = ai_processor.image_to_3d(image_data, depth_scale)
+        return jsonify(result)
+        
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route("/api/text_to_3d", methods=['POST'])
+def text_to_3d():
+    if not ai_processor:
+        return jsonify({'success': False, 'error': 'AI processor not available'})
+    
+    try:
+        data = request.get_json()
+        text_prompt = data.get('prompt', '')
+        
+        result = ai_processor.text_to_3d(text_prompt)
+        return jsonify(result)
+        
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route("/api/apply_filter", methods=['POST'])
+def apply_filter():
+    if not ai_processor:
+        return jsonify({'success': False, 'error': 'AI processor not available'})
+    
+    try:
+        data = request.get_json()
+        image_data = data.get('image', '')
+        filter_type = data.get('filter', '')
+        
+        result = ai_processor.apply_image_filter(image_data, filter_type)
+        return jsonify(result)
+        
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route("/api/detect_faces", methods=['POST'])
+def detect_faces():
+    if not ai_processor:
+        return jsonify({'success': False, 'error': 'AI processor not available'})
+    
+    try:
+        data = request.get_json()
+        image_data = data.get('image', '')
+        
+        result = ai_processor.detect_faces(image_data)
+        return jsonify(result)
+        
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
 
 @app.route("/bot_builder")
 def bot_builder():

@@ -84,37 +84,47 @@
     }
 
     .chat-history-section {
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     .chat-history-title {
-      color: #8e8ea0;
+      color: #6b7280;
       font-size: 0.75rem;
-      font-weight: 600;
+      font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.75rem;
+      letter-spacing: 0.025em;
+      margin-bottom: 0.5rem;
+      padding: 0 0.75rem;
     }
 
     .chat-history-item {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem 0.875rem;
-      margin-bottom: 0.5rem;
-      color: #8e8ea0;
+      padding: 0.625rem 0.75rem;
+      margin-bottom: 0.125rem;
+      color: #d1d5db;
       text-decoration: none;
-      border-radius: 8px;
-      transition: all 0.2s ease;
+      border-radius: 6px;
+      transition: all 0.15s ease;
       font-size: 0.875rem;
       cursor: pointer;
-      border: 1px solid transparent;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .chat-history-item:hover {
-      background: #2d2d2d;
-      color: #fff;
-      border: 1px solid #3d3d3d;
+      background: #374151;
+      color: #f3f4f6;
+    }
+
+    .chat-history-item.active {
+      background: #374151;
+      color: #f3f4f6;
     }
 
     .chat-history-item.active {
@@ -233,6 +243,7 @@
       animation: slideInUp 0.3s ease-out;
       position: relative;
       word-wrap: break-word;
+      margin-bottom: 1rem;
     }
 
     .message.user {
@@ -413,33 +424,26 @@
       </div>
       
       <nav class="sidebar-nav">
+        <button class="nav-item" onclick="newChat()" style="margin-bottom: 0.75rem;">
+          <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/>
+          </svg>
+          New chat
+        </button>
+        
         <div class="chat-history-section">
-          <div class="chat-history-title">Chat History</div>
+          <div class="chat-history-title">Today</div>
           <div id="chat-history-list"></div>
         </div>
         
         <div class="chat-history-section">
-          <div class="chat-history-title">Actions</div>
-          <a href="#" class="nav-item" onclick="newChat()">
-            <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/>
-            </svg>
-            New Chat
-          </a>
-          <a href="#" class="nav-item" onclick="loadChatHistory()">
-            <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-              <path d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 100 4h2a2 2 0 100-4h-.01z"/>
-              <path d="M4 13a2 2 0 012-2 1 1 0 000 2H6a2 2 0 100 4h2a2 2 0 100-4h-.01z"/>
-            </svg>
-            View All History
-          </a>
-          <a href="#" class="nav-item" onclick="showSettings()">
-            <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.376-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287-.947c.945.54 2.041.061 2.287-.947.376-1.561 2.6-1.561 2.978 0a1.533 1.533 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106 1.371-.836 2.942.734 2.106 2.106a1.533 1.533 0 01-.947 2.287c.945.54 2.041.061 2.287-.947.376-1.562 2.6-1.562 2.978 0a1.532 1.532 0 01.947 2.287c-.836 1.373.734 2.942 2.106 2.106z" clip-rule="evenodd"/>
-            </svg>
-            Settings
-          </a>
+          <div class="chat-history-title">Previous 7 Days</div>
+          <div id="chat-history-older"></div>
+        </div>
+        
+        <div class="chat-history-section">
+          <div class="chat-history-title">Previous 30 Days</div>
+          <div id="chat-history-month"></div>
         </div>
       </nav>
       
@@ -540,36 +544,48 @@
     }
 
     function renderChatHistory() {
-      const historyList = document.getElementById("chat-history-list");
-      historyList.innerHTML = "";
+      const todayList = document.getElementById("chat-history-list");
+      const weekList = document.getElementById("chat-history-older");
+      const monthList = document.getElementById("chat-history-month");
       
-      const sortedChats = Object.keys(chats)
-        .sort((a, b) => b - a)
-        .slice(0, 10); // Show last 10 chats
+      todayList.innerHTML = "";
+      weekList.innerHTML = "";
+      monthList.innerHTML = "";
+      
+      const now = Date.now();
+      const oneDayAgo = now - (24 * 60 * 60 * 1000);
+      const sevenDaysAgo = now - (7 * 24 * 60 * 60 * 1000);
+      const thirtyDaysAgo = now - (30 * 24 * 60 * 60 * 1000);
+      
+      const sortedChats = Object.keys(chats).sort((a, b) => b - a);
       
       sortedChats.forEach(chatId => {
         const chat = chats[chatId];
-        const lastMessage = chat.messages[chat.messages.length - 1];
-        const date = new Date(parseInt(chatId));
+        const chatTime = parseInt(chatId);
+        const date = new Date(chatTime);
         
         const historyItem = document.createElement("div");
         historyItem.className = `chat-history-item ${chatId == currentChatId ? 'active' : ''}`;
         historyItem.onclick = () => loadChat(chatId);
+        historyItem.textContent = chat.title;
         
-        const timeString = date.toLocaleTimeString('en-US', { 
-          hour: '2-digit', 
-          minute: '2-digit' 
-        });
-        
-        historyItem.innerHTML = `
-          <div class="chat-history-preview">
-            ${chat.title}
-          </div>
-          <div class="chat-history-time">${timeString}</div>
-        `;
-        
-        historyList.appendChild(historyItem);
+        // Categorize by time
+        if (chatTime > oneDayAgo) {
+          todayList.appendChild(historyItem);
+        } else if (chatTime > sevenDaysAgo) {
+          weekList.appendChild(historyItem);
+        } else if (chatTime > thirtyDaysAgo) {
+          monthList.appendChild(historyItem);
+        }
       });
+      
+      // Hide empty sections
+      document.getElementById('chat-history-list').parentElement.style.display = 
+        todayList.children.length > 0 ? 'block' : 'none';
+      document.getElementById('chat-history-older').parentElement.style.display = 
+        weekList.children.length > 0 ? 'block' : 'none';
+      document.getElementById('chat-history-month').parentElement.style.display = 
+        monthList.children.length > 0 ? 'block' : 'none';
     }
 
     function loadChat(id) {
@@ -629,7 +645,7 @@
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            model: " gemma3:270m",
+            model: "gemma3:270m",
             prompt: message,
             num_predict: 512,
           }),

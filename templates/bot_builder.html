@@ -10,9 +10,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/cssin bot2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bot-builder.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/logo.css') }}">
   <style>
     /* Responsive Design */
     @media (max-width: 1400px) {
@@ -112,7 +113,58 @@
   <header class="glass-nav fixed top-0 left-0 right-0 z-50">
     <div class="w-full mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-white">
-        <a href="{{ url_for('home') }}">Nexus<span class="text-sky-500">Bot</span></a>
+        <a href="{{ url_for('home') }}" class="nexusbot-logo small">
+          <div class="nexusbot-logo-icon">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <!-- Outer hexagon shape representing network/connection -->
+              <defs>
+                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+                  <stop offset="50%" style="stop-color:#6366f1;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="centerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#a78bfa;stop-opacity:1" />
+                </linearGradient>
+              </defs>
+              
+              <!-- Main hexagon frame -->
+              <path d="M50 5 L85 25 L85 75 L50 95 L15 75 L15 25 Z" 
+                    fill="none" 
+                    stroke="url(#logoGradient)" 
+                    stroke-width="3"/>
+              
+              <!-- Inner hexagon -->
+              <path d="M50 20 L70 32 L70 68 L50 80 L30 68 L30 32 Z" 
+                    fill="url(#centerGradient)" 
+                    opacity="0.2"/>
+              
+              <!-- Central AI brain/core -->
+              <circle cx="50" cy="50" r="15" fill="url(#logoGradient)"/>
+              
+              <!-- Neural network nodes -->
+              <circle cx="50" cy="35" r="3" fill="#60a5fa"/>
+              <circle cx="65" cy="42" r="3" fill="#818cf8"/>
+              <circle cx="65" cy="58" r="3" fill="#a78bfa"/>
+              <circle cx="50" cy="65" r="3" fill="#c084fc"/>
+              <circle cx="35" cy="58" r="3" fill="#818cf8"/>
+              <circle cx="35" cy="42" r="3" fill="#60a5fa"/>
+              
+              <!-- Connection lines -->
+              <line x1="50" y1="35" x2="65" y2="42" stroke="#60a5fa" stroke-width="1.5" opacity="0.7"/>
+              <line x1="65" y1="42" x2="65" y2="58" stroke="#818cf8" stroke-width="1.5" opacity="0.7"/>
+              <line x1="65" y1="58" x2="50" y2="65" stroke="#a78bfa" stroke-width="1.5" opacity="0.7"/>
+              <line x1="50" y1="65" x2="35" y2="58" stroke="#c084fc" stroke-width="1.5" opacity="0.7"/>
+              <line x1="35" y1="58" x2="35" y2="42" stroke="#818cf8" stroke-width="1.5" opacity="0.7"/>
+              <line x1="35" y1="42" x2="50" y2="35" stroke="#60a5fa" stroke-width="1.5" opacity="0.7"/>
+              
+              <!-- Central letter N -->
+              <text x="50" y="56" font-family="Arial, sans-serif" font-size="14" font-weight="bold" 
+                    fill="white" text-anchor="middle">N</text>
+            </svg>
+          </div>
+                  </a>
       </h1>
       <div class="flex gap-4 items-center">
         <span id="botUsername" class="text-gray-300 text-sm"></span>
