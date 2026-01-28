@@ -1,0 +1,64 @@
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+table {
+  max-width: 100%;
+}
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.container-custom {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (max-width: 1400px) {
+  .container-custom {
+    max-width: 1200px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .container-custom {
+    max-width: 992px;
+  }
+}
+
+@media (max-width: 992px) {
+  .container-custom {
+    max-width: 768px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container-custom {
+    max-width: 576px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .container-custom {
+    max-width: 100%;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}

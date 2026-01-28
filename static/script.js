@@ -1,5 +1,7 @@
 // Import Firebase Auth Service
 import authService from './firebase-auth.js';
+import { db } from './firebase-config.js';
+import { collection, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 // Intersection Observer to trigger fade-in animations
 const observerOptions = {
@@ -56,6 +58,8 @@ function updateAuthButtons() {
         }
       });
     }
+
+    renderRecentBots(user.uid);
   } else {
     // User is logged out - show login, hide logout
     if (loginBtn) {
@@ -73,6 +77,71 @@ function updateAuthButtons() {
     if (usernameDisplay) {
       usernameDisplay.style.display = 'none';
     }
+
+    const recentBotsSection = document.getElementById('recentBotsSection');
+    const recentBotsList = document.getElementById('recentBotsList');
+    if (recentBotsSection) recentBotsSection.classList.add('hidden');
+    if (recentBotsList) recentBotsList.innerHTML = '';
+  }
+}
+
+async function renderRecentBots(userId) {
+  const recentBotsSection = document.getElementById('recentBotsSection');
+  const recentBotsList = document.getElementById('recentBotsList');
+  if (!recentBotsSection || !recentBotsList) return;
+
+  try {
+    const botsQuery = query(collection(db, 'bots'), where('userId', '==', userId));
+    const snapshot = await getDocs(botsQuery);
+
+    const bots = [];
+    snapshot.forEach(docSnap => {
+      bots.push({ id: docSnap.id, ...docSnap.data() });
+    });
+
+    const toMillis = (v) => {
+      if (!v) return 0;
+      if (typeof v === 'string') {
+        const t = Date.parse(v);
+        return Number.isNaN(t) ? 0 : t;
+      }
+      if (typeof v?.toDate === 'function') return v.toDate().getTime();
+      if (typeof v?.seconds === 'number') return v.seconds * 1000;
+      return 0;
+    };
+
+    bots.sort((a, b) => {
+      const bTime = Math.max(toMillis(b.updatedAt), toMillis(b.createdAt));
+      const aTime = Math.max(toMillis(a.updatedAt), toMillis(a.createdAt));
+      return bTime - aTime;
+    });
+
+    const topBots = bots.slice(0, 3);
+    if (topBots.length === 0) {
+      recentBotsSection.classList.add('hidden');
+      recentBotsList.innerHTML = '';
+      return;
+    }
+
+    recentBotsSection.classList.remove('hidden');
+    recentBotsList.innerHTML = topBots.map(bot => {
+      const name = bot.name || 'Untitled Bot';
+      const rows = Array.isArray(bot.data) ? bot.data.length : 0;
+      const chats = bot.messageCount || 0;
+      return `
+        <a href="/bot_builder?botId=${bot.id}" class="block rounded-xl border border-gray-800 bg-black/30 hover:bg-black/50 transition-colors p-4">
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
+              <div class="text-white font-semibold truncate">${name}</div>
+              <div class="text-xs text-gray-400 mt-1">${rows} rows • ${chats} chats</div>
+            </div>
+            <div class="text-sky-400 text-sm font-semibold">Open</div>
+          </div>
+        </a>
+      `;
+    }).join('');
+  } catch (e) {
+    console.error('Failed to load recent bots:', e);
   }
 }
 

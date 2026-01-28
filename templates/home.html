@@ -5,9 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NexusBot - Your AI Assistant</title>
+  <meta name="description" content="Build conversational and data-driven chatbots with a modern UI, fast setup, and local-first privacy." />
+  <meta property="og:title" content="NexusBot - Your AI Assistant" />
+  <meta property="og:description" content="Build conversational and data-driven chatbots with a modern UI, fast setup, and local-first privacy." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ request.url }}" />
+  <meta name="twitter:card" content="summary_large_image" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="../static/style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/logo.css') }}">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -730,11 +737,11 @@
       }
       
       .sm\:text-xs {
-        font-size: 0.625rem !important;
+        font-size: 0.75rem !important;
       }
       
       .sm\:text-sm {
-        font-size: 0.6875rem !important;
+        font-size: 0.875rem !important;
       }
       
       /* Hero small mobile */
@@ -759,7 +766,7 @@
       }
       
       .testimonial-text {
-        font-size: 0.75rem !important;
+        font-size: 0.875rem !important;
       }
       
       /* Pricing small mobile */
@@ -768,7 +775,7 @@
       }
       
       .pricing-price {
-        font-size: 1.5rem !important;
+        font-size: 1.875rem !important;
       }
       
       /* Contact small mobile */
@@ -778,18 +785,18 @@
       
       .contact-input {
         padding: 0.5rem !important;
-        font-size: 0.75rem !important;
+        font-size: 0.875rem !important;
       }
       
       .contact-button {
         padding: 0.5rem 1rem !important;
-        font-size: 0.75rem !important;
+        font-size: 0.875rem !important;
       }
       
       /* Badges small mobile */
       .badge {
         padding: 0.125rem 0.5rem !important;
-        font-size: 0.5625rem !important;
+        font-size: 0.75rem !important;
       }
       
       /* Cards small mobile */
@@ -982,10 +989,10 @@
               <span class="text-gray-400">Local AI + Data Bots</span>
             </div>
             <h2
-              class="mt-5 text-2xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold hero-gradient-text leading-tight">
+              class="mt-5 text-4xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold hero-gradient-text leading-tight">
               Build chatbots people actually want to use.
             </h2>
-            <p class="mt-5 text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0">
+            <p class="mt-5 text-lg sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0">
               Create conversational and data-driven assistants <br> with a clean UI, fast setup, and seamless navigation.
             </p>
             <div class="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
@@ -1010,6 +1017,18 @@
               <div class="soft-ring rounded-xl bg-black/60 border border-gray-800 p-4">
                 <div class="text-white font-semibold">Local AI</div>
                 <div class="text-xs text-gray-400 mt-1">LLaMA ready</div>
+              </div>
+            </div>
+            <div id="recentBotsSection" class="mt-8 hidden max-w-xl mx-auto lg:mx-0">
+              <div class="rounded-2xl border border-gray-800 bg-black/40 p-5">
+                <div class="flex items-center justify-between gap-3">
+                  <div>
+                    <div class="text-white font-semibold">Continue building</div>
+                    <div class="text-xs text-gray-400 mt-1">Your recent bots</div>
+                  </div>
+                  <a href="{{ url_for('my_bots') }}" class="text-sm text-sky-400 hover:text-sky-300 font-semibold">View all</a>
+                </div>
+                <div id="recentBotsList" class="mt-4 space-y-3"></div>
               </div>
             </div>
             <div class="mt-8 flex flex-wrap gap-2 justify-center lg:justify-start">
@@ -2507,9 +2526,9 @@
           Nexus<span class="text-sky-400">Bot</span>
         </h2>
         <div class="flex space-x-6 mb-4 md:mb-0">
-          <a href="index.html#about" class="text-gray-400 hover:text-white">About</a>
-          <a href="index.html#services" class="text-gray-400 hover:text-white">Services</a>
-          <a href="index.html#features" class="text-gray-400 hover:text-white">Features</a>
+          <a href="#about" class="text-gray-400 hover:text-white">About</a>
+          <a href="#services" class="text-gray-400 hover:text-white">Services</a>
+          <a href="#features" class="text-gray-400 hover:text-white">Features</a>
           <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
         </div>
         <p class="text-gray-500">&copy; 2024 NexusBot. All rights reserved.</p>
