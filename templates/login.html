@@ -85,11 +85,11 @@
       <form id="loginForm" action="{{ url_for('login') }}" method="POST" class="space-y-6">
         <div>
           <label for="email" class="block text-gray-300 mb-2 font-medium text-sm sm:text-base">Email Address</label>
-          <input type="email" id="email" placeholder="your@email.com" required class="w-full px-3 sm:px-4 py-3 rounded-xl bg-gray-900 text-white placeholder-gray-600 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition text-base">
+          <input type="email" id="email" name="email" placeholder="your@email.com" required class="w-full px-3 sm:px-4 py-3 rounded-xl bg-gray-900 text-white placeholder-gray-600 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition text-base">
         </div>
         <div>
           <label for="password" class="block text-gray-300 mb-2 font-medium text-sm sm:text-base">Password</label>
-          <input type="password" id="password" placeholder="" required class="w-full px-3 sm:px-4 py-3 rounded-xl bg-gray-900 text-white placeholder-gray-600 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition text-base">
+          <input type="password" id="password" name="password" placeholder="" required class="w-full px-3 sm:px-4 py-3 rounded-xl bg-gray-900 text-white placeholder-gray-600 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition text-base">
         </div>
         <button type="submit" id="loginBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded-xl text-white font-semibold transition transform hover:-translate-y-1 duration-300 flex items-center justify-center gap-2 text-sm sm:text-base min-h-[44px]">
           <span id="btnText">Login</span>
@@ -107,10 +107,9 @@
         Don't have an account? <a href="/signup" class="text-indigo-500 hover:text-indigo-400 font-semibold transition">Sign up</a>
       </p>
     </div>
-    <p class="text-gray-500 text-xs sm:text-sm text-center mt-6 sm:mt-8">Protected by Firebase Authentication</p>
+    <p class="text-gray-500 text-xs sm:text-sm text-center mt-6 sm:mt-8"></p>
   </div>
-  <script type="module">
-    import authService from '../static/firebase-auth.js';
+  <script>
     function showToast(message, type = 'info') {
       const toast = document.getElementById('toast');
       const bgColor = type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : type === 'warning' ? 'bg-yellow-600' : 'bg-blue-600';
@@ -119,35 +118,16 @@
       toast.classList.remove('hidden');
       setTimeout(() => { toast.classList.add('hidden'); }, 3000);
     }
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+    
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
       const loginBtn = document.getElementById('loginBtn');
       const btnText = document.getElementById('btnText');
       const spinner = document.getElementById('spinner');
+      
       loginBtn.disabled = true;
       btnText.textContent = 'Logging in...';
       spinner.classList.remove('hidden');
-      try {
-        const result = await authService.signIn(email, password);
-        if (result.success) {
-          showToast('Login successful! Redirecting...', 'success');
-          setTimeout(() => { window.location.href = '/home'; }, 1500);
-        } else {
-          showToast(result.error || 'Login failed', 'error');
-        }
-      } catch (error) {
-        showToast('An unexpected error occurred', 'error');
-      } finally {
-        loginBtn.disabled = false;
-        btnText.textContent = 'Login';
-        spinner.classList.add('hidden');
-      }
     });
-    if (authService.getCurrentUser()) {
-      window.location.href = '/home';
-    }
   </script>
 </body>
 </html>

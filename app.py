@@ -62,6 +62,40 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def _get_admin_user():
+    admin_user_id = os.environ.get('ADMIN_USER_ID')
+    admin_email = os.environ.get('ADMIN_EMAIL')
+    admin_username = os.environ.get('ADMIN_USERNAME')
+
+    if admin_user_id:
+        try:
+            return User.query.get(int(admin_user_id))
+        except Exception:
+            return None
+
+    if admin_email:
+        return User.query.filter_by(email=admin_email).first()
+
+    if admin_username:
+        return User.query.filter_by(username=admin_username).first()
+
+    return User.query.order_by(User.id.asc()).first()
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('Please login to access this page.', 'warning')
+            return redirect(url_for('login'))
+
+        admin_user = _get_admin_user()
+        if not admin_user or session.get('user_id') != admin_user.id:
+            flash('You are not authorized to access that page.', 'error')
+            return redirect(url_for('home'))
+
+        return f(*args, **kwargs)
+    return decorated_function
+
 # Login Route
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -280,6 +314,13 @@ def assignments():
 def assignment_detail(assignment_id):
     username = session.get('username', 'Guest')
     return render_template("assignment_detail.html", username=username, assignment_id=assignment_id)
+
+@app.route("/admin/users")
+@admin_required
+def admin_users():
+    username = session.get('username', 'Guest')
+    users = User.query.order_by(User.created_at.desc()).all()
+    return render_template("admin_users.html", username=username, users=users)
 
 # Run the app
 if __name__ == "__main__":

@@ -1,8 +1,3 @@
-// Import Firebase Auth Service
-import authService from './firebase-auth.js';
-import { db } from './firebase-config.js';
-import { collection, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-
 // Intersection Observer to trigger fade-in animations
 const observerOptions = {
   threshold: 0.1,
@@ -32,47 +27,65 @@ const usernameDisplay = document.getElementById('usernameDisplay');
 
 // Function to update button visibility based on auth state
 function updateAuthButtons() {
-  const user = authService.getCurrentUser();
-  console.log('Auth state check - User:', user);
-  if (user) {
+  // Get username from Flask session via data attribute
+  const usernameElement = document.getElementById('usernameDisplay');
+  const username = usernameElement ? usernameElement.getAttribute('data-username') : null;
+  
+  console.log('=== Auth Debug ===');
+  console.log('Username element found:', !!usernameElement);
+  console.log('Username from Flask session:', username);
+  console.log('Login button found:', !!loginBtn);
+  console.log('Logout button found:', !!logoutBtn);
+  console.log('Login button current display:', loginBtn ? loginBtn.style.display : 'N/A');
+  console.log('Logout button current display:', logoutBtn ? logoutBtn.style.display : 'N/A');
+  
+  if (username && username !== 'Guest') {
+    console.log('User is logged in, showing logout button');
     // User is logged in - show logout, hide login
     if (loginBtn) {
       loginBtn.style.display = 'none';
+      console.log('Hiding login button');
     }
     if (loginBtnMobile) {
       loginBtnMobile.style.display = 'none';
     }
     if (logoutBtn) {
       logoutBtn.style.display = 'block';
+      logoutBtn.classList.remove('hidden');
+      console.log('Showing logout button');
     }
     if (logoutBtnMobile) {
       logoutBtnMobile.style.display = 'block';
+      logoutBtnMobile.classList.remove('hidden');
     }
     
     // Display username
     if (usernameDisplay) {
-      authService.getUserData(user.uid).then(userData => {
-        if (userData && userData.username) {
-          usernameDisplay.textContent = `Welcome, ${userData.username}!`;
-          usernameDisplay.style.display = 'block';
-        }
-      });
+      usernameDisplay.textContent = `Welcome, ${username}!`;
+      usernameDisplay.style.display = 'block';
+      console.log('Setting username display:', `Welcome, ${username}!`);
     }
 
-    renderRecentBots(user.uid);
+    // Don't render recent bots from Firebase since we're using Flask session
+    // renderRecentBots(user.uid);
   } else {
+    console.log('User is logged out, showing login button');
     // User is logged out - show login, hide logout
     if (loginBtn) {
       loginBtn.style.display = 'block';
+      loginBtn.classList.remove('hidden');
     }
     if (loginBtnMobile) {
       loginBtnMobile.style.display = 'block';
+      loginBtnMobile.classList.remove('hidden');
     }
     if (logoutBtn) {
       logoutBtn.style.display = 'none';
+      logoutBtn.classList.add('hidden');
     }
     if (logoutBtnMobile) {
       logoutBtnMobile.style.display = 'none';
+      logoutBtnMobile.classList.add('hidden');
     }
     if (usernameDisplay) {
       usernameDisplay.style.display = 'none';
@@ -83,77 +96,17 @@ function updateAuthButtons() {
     if (recentBotsSection) recentBotsSection.classList.add('hidden');
     if (recentBotsList) recentBotsList.innerHTML = '';
   }
+  console.log('=== End Auth Debug ===');
 }
 
-async function renderRecentBots(userId) {
-  const recentBotsSection = document.getElementById('recentBotsSection');
-  const recentBotsList = document.getElementById('recentBotsList');
-  if (!recentBotsSection || !recentBotsList) return;
-
-  try {
-    const botsQuery = query(collection(db, 'bots'), where('userId', '==', userId));
-    const snapshot = await getDocs(botsQuery);
-
-    const bots = [];
-    snapshot.forEach(docSnap => {
-      bots.push({ id: docSnap.id, ...docSnap.data() });
-    });
-
-    const toMillis = (v) => {
-      if (!v) return 0;
-      if (typeof v === 'string') {
-        const t = Date.parse(v);
-        return Number.isNaN(t) ? 0 : t;
-      }
-      if (typeof v?.toDate === 'function') return v.toDate().getTime();
-      if (typeof v?.seconds === 'number') return v.seconds * 1000;
-      return 0;
-    };
-
-    bots.sort((a, b) => {
-      const bTime = Math.max(toMillis(b.updatedAt), toMillis(b.createdAt));
-      const aTime = Math.max(toMillis(a.updatedAt), toMillis(a.createdAt));
-      return bTime - aTime;
-    });
-
-    const topBots = bots.slice(0, 3);
-    if (topBots.length === 0) {
-      recentBotsSection.classList.add('hidden');
-      recentBotsList.innerHTML = '';
-      return;
-    }
-
-    recentBotsSection.classList.remove('hidden');
-    recentBotsList.innerHTML = topBots.map(bot => {
-      const name = bot.name || 'Untitled Bot';
-      const rows = Array.isArray(bot.data) ? bot.data.length : 0;
-      const chats = bot.messageCount || 0;
-      return `
-        <a href="/bot_builder?botId=${bot.id}" class="block rounded-xl border border-gray-800 bg-black/30 hover:bg-black/50 transition-colors p-4">
-          <div class="flex items-start justify-between gap-3">
-            <div class="min-w-0">
-              <div class="text-white font-semibold truncate">${name}</div>
-              <div class="text-xs text-gray-400 mt-1">${rows} rows • ${chats} chats</div>
-            </div>
-            <div class="text-sky-400 text-sm font-semibold">Open</div>
-          </div>
-        </a>
-      `;
-    }).join('');
-  } catch (e) {
-    console.error('Failed to load recent bots:', e);
-  }
-}
-
-// Update buttons on page load with a slight delay to ensure Firebase is ready
-setTimeout(() => {
-  updateAuthButtons();
-}, 500);
-
-// Listen for auth state changes
-authService.initAuthListener(() => {
+// Update buttons on page load
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM loaded, updating auth buttons...');
   updateAuthButtons();
 });
+
+// Also update immediately in case DOM is already loaded
+updateAuthButtons();
 
 if (loginBtn) {
   loginBtn.addEventListener('click', () => {
@@ -168,16 +121,14 @@ if (loginBtnMobile) {
 }
 
 if (logoutBtn) {
-  logoutBtn.addEventListener('click', async () => {
-    await authService.signOut();
-    window.location.href = '/login';
+  logoutBtn.addEventListener('click', () => {
+    window.location.href = '/logout';
   });
 }
 
 if (logoutBtnMobile) {
-  logoutBtnMobile.addEventListener('click', async () => {
-    await authService.signOut();
-    window.location.href = '/login';
+  logoutBtnMobile.addEventListener('click', () => {
+    window.location.href = '/logout';
   });
 }
 
