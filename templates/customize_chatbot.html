@@ -276,6 +276,7 @@
         opacity: 0;
         transform: translateY(20px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -360,10 +361,14 @@
     }
 
     @keyframes typing {
-      0%, 80%, 100% {
+
+      0%,
+      80%,
+      100% {
         transform: scale(1);
         opacity: 0.5;
       }
+
       40% {
         transform: scale(1.3);
         opacity: 1;
@@ -410,6 +415,139 @@
     .chat-container::-webkit-scrollbar-thumb:hover {
       background: #4d4d4d;
     }
+
+    /* Mobile and Small Screen Adjustments */
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+        /* hide sidebar */
+      }
+
+      .main-content {
+        width: 100%;
+      }
+
+      .chat-container {
+        padding: 1rem;
+        max-width: 100%;
+      }
+
+      .message {
+        max-width: 90%;
+        /* messages take more width */
+        font-size: 0.9rem;
+      }
+
+      .input-container {
+        padding: 0.75rem 1rem;
+      }
+
+      .input-form {
+        gap: 0.5rem;
+      }
+
+      .send-btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      /* Stack Clear / Delete History buttons for mobile */
+      .sidebar-footer {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem;
+      }
+
+      .sidebar-footer .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* Extra tweaks for very small screens 350px – 500px */
+    @media (max-width: 500px) {
+      .main-title {
+        font-size: 1.5rem;
+      }
+
+      .main-subtitle {
+        font-size: 0.875rem;
+      }
+
+      .message.user,
+      .message.bot {
+        max-width: 95%;
+        font-size: 0.85rem;
+      }
+
+      .input-field {
+        font-size: 0.9rem;
+        padding: 0.75rem 1rem;
+      }
+
+      .send-btn {
+        padding: 0.75rem 0.8rem;
+        font-size: 0.85rem;
+      }
+
+      .chat-container {
+        padding: 0.5rem;
+        gap: 1rem;
+      }
+    }
+
+    /* Make chat container take all remaining height and scroll */
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      /* full viewport */
+    }
+
+    /* Chat log area */
+    .chat-container {
+      flex: 1;
+      /* takes all remaining space */
+      overflow-y: auto;
+      padding: 1rem 2rem;
+    }
+
+    /* Input sticks to bottom */
+    .input-container {
+      flex-shrink: 0;
+      /* never shrink */
+      border-top: 1px solid #2d2d2d;
+      background: #171717;
+      padding: 1rem 2rem;
+    }
+
+    /* Make input form take full width */
+    .input-form {
+      display: flex;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    /* Input field stretches */
+    .input-field {
+      flex: 1;
+    }
+
+    /* Make send button align nicely */
+    .send-btn {
+      flex-shrink: 0;
+    }
+
+    /* Extra small screens */
+    @media (max-width: 500px) {
+      .chat-container {
+        padding: 0.5rem 1rem;
+      }
+
+      .input-container {
+        padding: 0.5rem 1rem;
+      }
+    }
   </style>
 </head>
 
@@ -423,39 +561,44 @@
         </div>
         <div class="sidebar-subtitle">Your intelligent assistant</div>
       </div>
-      
+
       <nav class="sidebar-nav">
         <button class="nav-item" onclick="newChat()" style="margin-bottom: 0.75rem;">
           <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/>
+            <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
           </svg>
           New chat
         </button>
-        
+
         <div class="chat-history-section">
           <div class="chat-history-title">Today</div>
           <div id="chat-history-list"></div>
         </div>
-        
+
         <div class="chat-history-section">
           <div class="chat-history-title">Previous 7 Days</div>
           <div id="chat-history-older"></div>
         </div>
-        
+
         <div class="chat-history-section">
           <div class="chat-history-title">Previous 30 Days</div>
           <div id="chat-history-month"></div>
         </div>
       </nav>
-      
-      <footer class="sidebar-footer">
-        <button class="btn" onclick="clearChat()">
+
+      <footer class="sidebar-footer flex flex-col gap-2">
+
+        <!-- Delete All History -->
+        <button class="btn bg-gray-700 hover:bg-gray-800" onclick="deleteHistory()">
           <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+            <path fill-rule="evenodd"
+              d="M6 2a1 1 0 00-1 1v1H3.5a.5.5 0 000 1h.707l.646 9.192A2 2 0 006.847 15h6.306a2 2 0 001.994-1.808L15.793 5h.707a.5.5 0 000-1H15V3a1 1 0 00-1-1H6zm2 3a.5.5 0 011 0v7a.5.5 0 01-1 0V5zm3 0a.5.5 0 011 0v7a.5.5 0 01-1 0V5z"
+              clip-rule="evenodd" />
           </svg>
-          Clear Chat
+          Delete History
         </button>
       </footer>
+
     </aside>
 
     <main class="main-content">
@@ -463,24 +606,20 @@
         <h1 class="main-title">AI Assistant</h1>
         <p class="main-subtitle">Powered by advanced AI technology</p>
       </header>
-      
+
       <div class="chat-container" id="chat-container">
         <div id="chat-log"></div>
       </div>
-      
+
       <div class="input-container">
         <form class="input-form" id="chat-form">
-          <input 
-            type="text" 
-            id="user-input" 
-            class="input-field"
-            placeholder="Type your message..." 
-            autocomplete="off"
-          />
+          <input type="text" id="user-input" class="input-field" placeholder="Type your message..."
+            autocomplete="off" />
           <button type="submit" class="send-btn">
             <span>Send</span>
             <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5.951-1.429 5.951 1.429a1 1 0 001.169-1.409l-7-14z"/>
+              <path
+                d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5.951-1.429 5.951 1.429a1 1 0 001.169-1.409l-7-14z" />
             </svg>
           </button>
         </form>
@@ -499,7 +638,7 @@
     function addMessage(text, sender) {
       const msg = document.createElement("div");
       msg.className = `message ${sender}`;
-      
+
       if (sender === "bot" && text === "...") {
         // Show typing indicator
         msg.innerHTML = `
@@ -512,10 +651,10 @@
       } else {
         msg.textContent = text;
       }
-      
+
       chatLog.appendChild(msg);
       chatLog.scrollTop = chatLog.scrollHeight;
-      
+
       if (text !== "...") {
         saveChatState();
       }
@@ -526,12 +665,12 @@
         text: msg.textContent,
         role: msg.classList.contains("user") ? "user" : "bot"
       }));
-      
+
       if (!chats[currentChatId]) {
         chats[currentChatId] = { title: "New Chat", messages: [] };
       }
       chats[currentChatId].messages = messages;
-      
+
       // Update title based on first user message
       if (messages.length > 0) {
         const firstUserMessage = messages.find(m => m.role === "user");
@@ -539,7 +678,7 @@
           chats[currentChatId].title = firstUserMessage.text.substring(0, 30) + (firstUserMessage.text.length > 30 ? "..." : "");
         }
       }
-      
+
       localStorage.setItem("nexus_chats", JSON.stringify(chats));
       renderChatHistory();
     }
@@ -548,28 +687,28 @@
       const todayList = document.getElementById("chat-history-list");
       const weekList = document.getElementById("chat-history-older");
       const monthList = document.getElementById("chat-history-month");
-      
+
       todayList.innerHTML = "";
       weekList.innerHTML = "";
       monthList.innerHTML = "";
-      
+
       const now = Date.now();
       const oneDayAgo = now - (24 * 60 * 60 * 1000);
       const sevenDaysAgo = now - (7 * 24 * 60 * 60 * 1000);
       const thirtyDaysAgo = now - (30 * 24 * 60 * 60 * 1000);
-      
+
       const sortedChats = Object.keys(chats).sort((a, b) => b - a);
-      
+
       sortedChats.forEach(chatId => {
         const chat = chats[chatId];
         const chatTime = parseInt(chatId);
         const date = new Date(chatTime);
-        
+
         const historyItem = document.createElement("div");
         historyItem.className = `chat-history-item ${chatId == currentChatId ? 'active' : ''}`;
         historyItem.onclick = () => loadChat(chatId);
         historyItem.textContent = chat.title;
-        
+
         // Categorize by time
         if (chatTime > oneDayAgo) {
           todayList.appendChild(historyItem);
@@ -579,13 +718,13 @@
           monthList.appendChild(historyItem);
         }
       });
-      
+
       // Hide empty sections
-      document.getElementById('chat-history-list').parentElement.style.display = 
+      document.getElementById('chat-history-list').parentElement.style.display =
         todayList.children.length > 0 ? 'block' : 'none';
-      document.getElementById('chat-history-older').parentElement.style.display = 
+      document.getElementById('chat-history-older').parentElement.style.display =
         weekList.children.length > 0 ? 'block' : 'none';
-      document.getElementById('chat-history-month').parentElement.style.display = 
+      document.getElementById('chat-history-month').parentElement.style.display =
         monthList.children.length > 0 ? 'block' : 'none';
     }
 
@@ -619,7 +758,7 @@
         date: new Date(parseInt(id)).toLocaleDateString(),
         messageCount: chats[id].messages.length
       }));
-      
+
       addMessage(`📚 Chat History (${history.length} chats):`, "bot");
       history.forEach(chat => {
         addMessage(`• ${chat.title} - ${chat.date} (${chat.messageCount} messages)`, "bot");
@@ -674,7 +813,7 @@
         addMessage(fullText.trim() || "No response.", "bot");
       } catch (error) {
         chatLog.lastChild.remove();
-        
+
         // Fallback responses when Ollama is not available
         const fallbackResponses = [
           "I'm sorry, I'm having trouble connecting to my AI backend. Please make sure Ollama is running on localhost:11434.",
@@ -682,10 +821,10 @@
           "I can't reach the AI model right now. Please check if Ollama is installed and running with the gemma3:270m model.",
           "Connection failed! You may need to install Ollama and pull the model with 'ollama pull gemma3:270m'."
         ];
-        
+
         const randomResponse = fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
         addMessage(randomResponse, "bot");
-        
+
         console.error("Ollama connection error:", error);
       }
     }
@@ -699,6 +838,18 @@
     // Initialize
     newChat();
     renderChatHistory();
+
+    function deleteHistory() {
+      if (confirm("Are you sure you want to delete ALL chat history? This cannot be undone.")) {
+        localStorage.removeItem("nexus_chats"); // Remove all saved chats
+        chats = {}; // Reset the in-memory object
+        currentChatId = Date.now(); // Start a new chat
+        chatLog.innerHTML = "";
+        addMessage("👋 Hi! I'm Nexus, your local AI assistant. How can I help you today?", "bot");
+        renderChatHistory(); // Refresh sidebar
+      }
+    }
+
   </script>
 </body>
 
