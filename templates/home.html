@@ -166,14 +166,25 @@
       <div class="w-full max-w-7xl mx-auto px-4 sm:px-6">
         <div class="grid lg:grid-cols-2 gap-10 items-center">
           <div class="text-center lg:text-left">
-            <div
-              class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-200">
-              <span class="text-sky-400 font-semibold">NexusBot</span>
-              <span class="text-gray-400 mt-5 sm:mt-0">
-                Local AI + Data Bots
-              </span>
+            <style>
+              @media (min-width:350px) and (max-width:500px) {
+                #nexus-badge {
+                  margin-top: 1.25rem;
+                }
 
+                /* Tailwind mt-5 */
+              }
+            </style>
+
+            <div id="nexus-badge"
+              class="inline-flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 px-3 py-2 rounded-full bg-white/5 border border-white/10 text-xs text-gray-200">
+              <span class="text-sky-400 font-semibold">NexusBot</span>
+              <span class="text-gray-400">Local AI + Data Bots</span>
             </div>
+
+
+
+
             <h2
               class="mt-5 text-4xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold hero-gradient-text leading-tight">
               Build chatbots people actually want to use.
@@ -487,19 +498,24 @@
 
                 <!-- Features -->
                 <div class="space-y-2 mb-6">
-                  <div class="flex items-center gap-2 text-xs text-gray-400">
-                    <div class="w-1.5 h-1.5 bg-sky-400 rounded-full"></div>
-                    <span>Natural Conversations</span>
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-sky-400 rounded-full"></span>
+                    <span class="break-words">Natural Conversations</span>
                   </div>
-                  <div class="flex items-center gap-2 text-xs text-gray-400">
-                    <div class="w-1.5 h-1.5 bg-sky-400 rounded-full"></div>
-                    <span>Custom Personality</span>
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-sky-400 rounded-full"></span>
+                    <span class="break-words">Custom Personality</span>
                   </div>
-                  <div class="flex items-center gap-2 text-xs text-gray-400">
-                    <div class="w-1.5 h-1.5 bg-sky-400 rounded-full"></div>
-                    <span>Context Aware</span>
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-sky-400 rounded-full"></span>
+                    <span class="break-words">Context Aware</span>
                   </div>
+
                 </div>
+
 
                 <!-- CTA -->
                 <a href="{{ url_for('customize_chatbot') }}"
@@ -544,19 +560,24 @@
 
                 <!-- Features -->
                 <div class="space-y-2 mb-6">
-                  <div class="flex items-center gap-2 text-xs text-gray-400">
-                    <div class="w-1.5 h-1.5 bg-violet-400 rounded-full"></div>
-                    <span>Excel/CSV Support</span>
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-violet-400 rounded-full"></span>
+                    <span class="break-words">Excel/CSV Support</span>
                   </div>
-                  <div class="flex items-center gap-2 text-xs text-gray-400">
-                    <div class="w-1.5 h-1.5 bg-violet-400 rounded-full"></div>
-                    <span>Statistical Analysis</span>
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-violet-400 rounded-full"></span>
+                    <span class="break-words">Statistical Analysis</span>
                   </div>
-                  <div class="flex items-center gap-2 text-xs text-gray-400">
-                    <div class="w-1.5 h-1.5 bg-violet-400 rounded-full"></div>
-                    <span>Visual Reports</span>
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-violet-400 rounded-full"></span>
+                    <span class="break-words">Visual Reports</span>
                   </div>
+
                 </div>
+
 
                 <!-- CTA -->
                 <a href="{{ url_for('customize_upload') }}"
@@ -601,19 +622,24 @@
 
                 <!-- Features -->
                 <div class="space-y-2 mb-6">
-                  <div class="flex items-center gap-2 text-xs text-gray-400">
-                    <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                    <span>Smart Filters</span>
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-emerald-400 rounded-full"></span>
+                    <span class="break-words">Smart Filters</span>
                   </div>
-                  <div class="flex items-center gap-2 text-xs text-gray-400">
-                    <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                    <span>Object Detection</span>
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-emerald-400 rounded-full"></span>
+                    <span class="break-words">Object Detection</span>
                   </div>
-                  <div class="flex items-center gap-2 text-xs text-gray-400">
-                    <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                    <span>Batch Processing</span>
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-emerald-400 rounded-full"></span>
+                    <span class="break-words">Batch Processing</span>
                   </div>
+
                 </div>
+
 
                 <!-- CTA -->
                 <a href="{{ url_for('image_processor') }}"
@@ -702,19 +728,32 @@
 
                     <!-- Features -->
                     <div class="space-y-2 text-left">
-                      <div class="flex items-center gap-2 text-xs text-gray-400">
-                        <div class="w-1.5 h-1.5 bg-purple-400 rounded-full"></div>
-                        <span>Custom Conversational</span>
+
+                      <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                        <span class="w-2 h-2 mt-1 bg-purple-400 rounded-full"></span>
+                        <span class="break-words">
+                          Custom Conversational
+                        </span>
                       </div>
-                      <div class="flex items-center gap-2 text-xs text-gray-400">
-                        <div class="w-1.5 h-1.5 bg-purple-400 rounded-full"></div>
-                        <span>Data-Driven Analysis</span>
+
+                      <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                        <span class="w-2 h-2 mt-1 bg-purple-400 rounded-full"></span>
+                        <span class="break-words">
+                          Data-Driven Analysis
+                        </span>
                       </div>
-                      <div class="flex items-center gap-2 text-xs text-gray-400">
-                        <div class="w-1.5 h-1.5 bg-purple-400 rounded-full"></div>
-                        <span>Image Processing</span>
+
+                      <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                        <span class="w-2 h-2 mt-1 bg-purple-400 rounded-full"></span>
+                        <span class="break-words">
+                          Image Processing
+                        </span>
                       </div>
+
                     </div>
+
+
+
                   </div>
 
                   <!-- CTA -->
@@ -772,19 +811,24 @@
 
                     <!-- Features -->
                     <div class="space-y-2 text-left">
-                      <div class="flex items-center gap-2 text-xs text-gray-400">
-                        <div class="w-1.5 h-1.5 bg-pink-400 rounded-full"></div>
-                        <span>Conversation Design</span>
+
+                      <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                        <span class="w-2 h-2 mt-1 bg-pink-400 rounded-full"></span>
+                        <span class="break-words">Conversation Design</span>
                       </div>
-                      <div class="flex items-center gap-2 text-xs text-gray-400">
-                        <div class="w-1.5 h-1.5 bg-pink-400 rounded-full"></div>
-                        <span>Excel/CSV Upload</span>
+
+                      <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                        <span class="w-2 h-2 mt-1 bg-pink-400 rounded-full"></span>
+                        <span class="break-words">Excel/CSV Upload</span>
                       </div>
-                      <div class="flex items-center gap-2 text-xs text-gray-400">
-                        <div class="w-1.5 h-1.5 bg-pink-400 rounded-full"></div>
-                        <span>Brand Customization</span>
+
+                      <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                        <span class="w-2 h-2 mt-1 bg-pink-400 rounded-full"></span>
+                        <span class="break-words">Brand Customization</span>
                       </div>
+
                     </div>
+
                   </div>
 
                   <!-- CTA -->
@@ -840,19 +884,24 @@
 
                     <!-- Features -->
                     <div class="space-y-2 text-left">
-                      <div class="flex items-center gap-2 text-xs text-gray-400">
-                        <div class="w-1.5 h-1.5 bg-violet-400 rounded-full"></div>
-                        <span>Easy Integration</span>
+
+                      <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                        <span class="w-2 h-2 mt-1 bg-violet-400 rounded-full"></span>
+                        <span class="break-words">Easy Integration</span>
                       </div>
-                      <div class="flex items-center gap-2 text-xs text-gray-400">
-                        <div class="w-1.5 h-1.5 bg-violet-400 rounded-full"></div>
-                        <span>API Access</span>
+
+                      <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                        <span class="w-2 h-2 mt-1 bg-violet-400 rounded-full"></span>
+                        <span class="break-words">API Access</span>
                       </div>
-                      <div class="flex items-center gap-2 text-xs text-gray-400">
-                        <div class="w-1.5 h-1.5 bg-violet-400 rounded-full"></div>
-                        <span>Instant Deployment</span>
+
+                      <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                        <span class="w-2 h-2 mt-1 bg-violet-400 rounded-full"></span>
+                        <span class="break-words">Instant Deployment</span>
                       </div>
+
                     </div>
+
                   </div>
 
                   <!-- CTA -->
@@ -1025,7 +1074,7 @@
         </p>
 
         <p class="text-gray-500">
-          Built with ❤️ using AI
+          Built with by the Vizchat Team.
         </p>
       </div>
 
