@@ -5,820 +5,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NexusBot - Your AI Assistant</title>
-  <meta name="description" content="Build conversational and data-driven chatbots with a modern UI, fast setup, and local-first privacy." />
-  <meta property="og:title" content="NexusBot - Your AI Assistant" />
-  <meta property="og:description" content="Build conversational and data-driven chatbots with a modern UI, fast setup, and local-first privacy." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="{{ request.url }}" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="description"
+    content="Build conversational and data-driven chatbots with a modern UI, fast setup, and local-first privacy." />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="../static/style.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/logo.css') }}">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <style>
-    /* Professional Unified Color Scheme */
-    
-    :root {
-      /* Primary Brand Colors */
-      --primary-blue: #3b82f6;
-      --primary-indigo: #6366f1;
-      --primary-purple: #8b5cf6;
-      
-      /* Neutral Grays */
-      --gray-50: #f9fafb;
-      --gray-100: #f3f4f6;
-      --gray-200: #e5e7eb;
-      --gray-300: #d1d5db;
-      --gray-400: #9ca3af;
-      --gray-500: #6b7280;
-      --gray-600: #4b5563;
-      --gray-700: #374151;
-      --gray-800: #1f2937;
-      --gray-900: #111827;
-      
-      /* Subtle Border Colors */
-      --border-subtle: rgba(255, 255, 255, 0.06);
-      --border-medium: rgba(255, 255, 255, 0.1);
-      --border-strong: rgba(255, 255, 255, 0.15);
-      
-      /* Background Gradients */
-      --bg-gradient-start: #000000;
-      --bg-gradient-mid: #0a0a0a;
-      --bg-gradient-end: #111827;
-      
-      /* Text Colors */
-      --text-primary: #ffffff;
-      --text-secondary: #e5e7eb;
-      --text-muted: #9ca3af;
-      
-      /* Accent Colors (minimal use) */
-      --accent-emerald: #10b981;
-      --accent-sky: #3b82f6;
-      --accent-purple: #8b5cf6;
-      --accent-pink: #ec4899;
-      --accent-orange: #f97316;
-    }
-    
-    /* Base Styles */
-    body {
-      background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%);
-      color: var(--text-primary);
-    }
-    
-    /* Consistent Text Colors */
-    .text-white {
-      color: var(--text-primary) !important;
-    }
-    
-    .text-gray-100,
-    .text-gray-200,
-    .text-gray-300 {
-      color: var(--text-secondary) !important;
-    }
-    
-    .text-gray-400,
-    .text-gray-500 {
-      color: var(--text-muted) !important;
-    }
-    
-    /* Unified Border Colors */
-    .border-emerald-500\/20,
-    .border-sky-500\/20,
-    .border-purple-500\/20,
-    .border-pink-500\/20,
-    .border-orange-500\/20,
-    .border-blue-500\/20,
-    .border-indigo-500\/20,
-    .border-rose-500\/20,
-    .border-red-500\/20,
-    .border-teal-500\/20,
-    .border-green-500\/20 {
-      border-color: var(--border-subtle) !important;
-    }
-    
-    .border-gray-600,
-    .border-gray-700,
-    .border-gray-800 {
-      border-color: var(--border-subtle) !important;
-    }
-    
-    /* Consistent Background Colors */
-    .bg-black\/50,
-    .bg-gray-800\/50,
-    .bg-gray-900\/50 {
-      background: rgba(17, 24, 39, 0.6) !important;
-      backdrop-filter: blur(12px);
-    }
-    
-    .bg-gradient-to-br {
-      background: linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(31, 41, 55, 0.6) 100%) !important;
-      backdrop-filter: blur(16px);
-    }
-    
-    /* Unified Icon Colors */
-    .text-emerald-400,
-    .text-sky-400,
-    .text-purple-400,
-    .text-pink-400,
-    .text-orange-400,
-    .text-blue-400,
-    .text-indigo-400,
-    .text-rose-400,
-    .text-red-400,
-    .text-teal-400,
-    .text-green-400 {
-      color: var(--primary-blue) !important;
-    }
-    
-    /* Consistent Badge Colors */
-    .bg-emerald-500\/10,
-    .bg-sky-500\/10,
-    .bg-purple-500\/10,
-    .bg-pink-500\/10,
-    .bg-orange-500\/10 {
-      background: rgba(59, 130, 246, 0.08) !important;
-      border-color: var(--border-subtle) !important;
-    }
-    
-    .text-emerald-400,
-    .text-sky-400,
-    .text-purple-400,
-    .text-pink-400,
-    .text-orange-400 {
-      color: var(--primary-blue) !important;
-    }
-    
-    /* Unified Gradient Text - SAME GRADIENT FOR ALL */
-    .bg-gradient-to-r.from-emerald-400.to-green-400,
-    .bg-gradient-to-r.from-sky-400.to-blue-400,
-    .bg-gradient-to-r.from-purple-400.to-pink-400,
-    .bg-gradient-to-r.from-pink-400.to-rose-400,
-    .bg-gradient-to-r.from-orange-400.to-amber-400,
-    .bg-gradient-to-r.from-blue-400.to-indigo-400,
-    .bg-gradient-to-r.from-indigo-400.to-purple-400,
-    .bg-gradient-to-r.from-rose-400.to-red-400,
-    .bg-gradient-to-r.from-teal-400.to-cyan-400,
-    .bg-gradient-to-r.from-green-400.to-emerald-400,
-    .bg-gradient-to-r.from-yellow-400.to-orange-400,
-    .bg-gradient-to-r.from-red-400.to-pink-400,
-    .bg-gradient-to-r.from-cyan-400.to-blue-400,
-    .bg-gradient-to-r.from-violet-400.to-purple-400 {
-      background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%) !important;
-      -webkit-background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
-      background-clip: text !important;
-    }
-    
-    /* Consistent Button Colors */
-    .bg-emerald-600,
-    .bg-sky-600,
-    .bg-purple-600,
-    .bg-pink-600,
-    .bg-orange-600 {
-      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-indigo) 100%) !important;
-    }
-    
-    .bg-emerald-600:hover,
-    .bg-sky-600:hover,
-    .bg-purple-600:hover,
-    .bg-pink-600:hover,
-    .bg-orange-600:hover {
-      background: linear-gradient(135deg, var(--primary-indigo) 0%, var(--primary-purple) 100%) !important;
-    }
-    
-    /* Unified Glow Effects */
-    .group:hover .group-hover\:from-emerald-500\/20,
-    .group:hover .group-hover\:via-green-500\/20,
-    .group:hover .group-hover\:to-teal-500\/20,
-    .group:hover .group-hover\:from-sky-500\/20,
-    .group:hover .group-hover\:via-blue-500\/20,
-    .group:hover .group-hover\:to-indigo-500\/20,
-    .group:hover .group-hover\:from-purple-500\/20,
-    .group:hover .group-hover\:via-pink-500\/20,
-    .group:hover .group-hover\:to-indigo-500\/20,
-    .group:hover .group-hover\:from-pink-500\/20,
-    .group:hover .group-hover\:via-rose-500\/20,
-    .group:hover .group-hover\:to-red-500\/20,
-    .group:hover .group-hover\:from-orange-500\/20,
-    .group:hover .group-hover\:via-amber-500\/20,
-    .group:hover .group-hover\:to-yellow-500\/20 {
-      background: linear-gradient(135deg, 
-        rgba(59, 130, 246, 0.08) 0%, 
-        rgba(99, 102, 241, 0.06) 50%, 
-        rgba(139, 92, 246, 0.04) 100%) !important;
-    }
-    
-    /* Consistent Icon Backgrounds */
-    .bg-gradient-to-br.from-emerald-500\/20.to-green-500\/20,
-    .bg-gradient-to-br.from-sky-500\/20.to-blue-500\/20,
-    .bg-gradient-to-br.from-purple-500\/20.to-pink-500\/20,
-    .bg-gradient-to-br.from-pink-500\/20.to-rose-500\/20,
-    .bg-gradient-to-br.from-orange-500\/20.to-amber-500\/20 {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(99, 102, 241, 0.08) 100%) !important;
-    }
-    
-    /* Navigation Consistency */
-    .home-nav {
-      background: rgba(17, 24, 39, 0.85) !important;
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border-subtle) !important;
-    }
-    
-    .text-sky-500 {
-      color: var(--primary-blue) !important;
-    }
-    
-    /* Enhanced Mobile Responsive Design */
-    
-    /* Tablet and below */
-    @media (max-width: 768px) {
-      /* Typography adjustments */
-      .hero-gradient-text {
-        font-size: 1.75rem !important;
-        line-height: 1.2;
-      }
-      
-      .text-5xl {
-        font-size: 2rem !important;
-      }
-      
-      .text-4xl {
-        font-size: 1.5rem !important;
-      }
-      
-      .text-3xl {
-        font-size: 1.25rem !important;
-      }
-      
-      .text-2xl {
-        font-size: 1.125rem !important;
-      }
-      
-      .text-xl {
-        font-size: 1rem !important;
-      }
-      
-      .text-lg {
-        font-size: 0.875rem !important;
-      }
-      
-      .text-sm {
-        font-size: 0.75rem !important;
-      }
-      
-      /* Spacing adjustments */
-      .py-20 {
-        padding-top: 3rem !important;
-        padding-bottom: 3rem !important;
-      }
-      
-      .py-16 {
-        padding-top: 2rem !important;
-        padding-bottom: 2rem !important;
-      }
-      
-      .py-8 {
-        padding-top: 1.5rem !important;
-        padding-bottom: 1.5rem !important;
-      }
-      
-      .px-6 {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-      }
-      
-      .px-12 {
-        padding-left: 1.5rem !important;
-        padding-right: 1.5rem !important;
-      }
-      
-      .p-8 {
-        padding: 1.5rem !important;
-      }
-      
-      .p-6 {
-        padding: 1rem !important;
-      }
-      
-      .mb-16 {
-        margin-bottom: 2rem !important;
-      }
-      
-      .mb-12 {
-        margin-bottom: 1.5rem !important;
-      }
-      
-      .mb-6 {
-        margin-bottom: 1rem !important;
-      }
-      
-      .mb-4 {
-        margin-bottom: 0.75rem !important;
-      }
-      
-      .mt-6 {
-        margin-top: 1rem !important;
-      }
-      
-      .mt-4 {
-        margin-top: 0.75rem !important;
-      }
-      
-      .gap-8 {
-        gap: 1rem !important;
-      }
-      
-      .gap-6 {
-        gap: 0.75rem !important;
-      }
-      
-      .gap-4 {
-        gap: 0.5rem !important;
-      }
-      
-      /* Grid adjustments */
-      .grid.lg\:grid-cols-3 {
-        grid-template-columns: 1fr !important;
-      }
-      
-      .grid.md\:grid-cols-3 {
-        grid-template-columns: 1fr !important;
-      }
-      
-      .grid.md\:grid-cols-2 {
-        grid-template-columns: 1fr !important;
-      }
-      
-      .grid.sm\:grid-cols-2 {
-        grid-template-columns: 1fr !important;
-      }
-      
-      /* Flex adjustments */
-      .flex.md\:grid-cols-2 {
-        flex-direction: column !important;
-      }
-      
-      /* Icon sizes */
-      .w-16 {
-        width: 3rem !important;
-        height: 3rem !important;
-      }
-      
-      .w-12 {
-        width: 2.5rem !important;
-        height: 2.5rem !important;
-      }
-      
-      .h-16 {
-        height: 3rem !important;
-      }
-      
-      .h-12 {
-        height: 2.5rem !important;
-      }
-      
-      /* Container adjustments */
-      .max-w-7xl {
-        max-width: 100% !important;
-      }
-      
-      .max-w-5xl {
-        max-width: 100% !important;
-      }
-      
-      .max-w-4xl {
-        max-width: 100% !important;
-      }
-      
-      .max-w-3xl {
-        max-width: 100% !important;
-      }
-      
-      .max-w-2xl {
-        max-width: 100% !important;
-      }
-      
-      /* Mobile specific utilities */
-      .mobile\:hidden {
-        display: none !important;
-      }
-      
-      .mobile\:block {
-        display: block !important;
-      }
-      
-      .mobile\:flex {
-        display: flex !important;
-      }
-      
-      .mobile\:text-center {
-        text-align: center !important;
-      }
-      
-      .mobile\:w-full {
-        width: 100% !important;
-      }
-      
-      .mobile\:flex-col {
-        flex-direction: column !important;
-      }
-      
-      .mobile\:gap-4 {
-        gap: 1rem !important;
-      }
-      
-      .mobile\:p-4 {
-        padding: 1rem !important;
-      }
-      
-      .mobile\:px-4 {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-      }
-      
-      .mobile\:py-4 {
-        padding-top: 1rem !important;
-        padding-bottom: 1rem !important;
-      }
-      
-      .mobile\:mb-4 {
-        margin-bottom: 1rem !important;
-      }
-      
-      .mobile\:mt-4 {
-        margin-top: 1rem !important;
-      }
-      
-      .mobile\:text-sm {
-        font-size: 0.875rem !important;
-      }
-      
-      .mobile\:text-xs {
-        font-size: 0.75rem !important;
-      }
-      
-      /* Reduce animations on mobile for performance */
-      .group:hover .group-hover\:scale-110 {
-        transform: scale(1.05) !important;
-      }
-      
-      .group:hover .group-hover\:scale-105 {
-        transform: scale(1.02) !important;
-      }
-      
-      /* Navigation adjustments */
-      .nav-container {
-        padding: 0.5rem 1rem !important;
-      }
-      
-      /* Hero section mobile */
-      .hero-content {
-        text-align: center !important;
-        padding: 1rem !important;
-      }
-      
-      .hero-buttons {
-        flex-direction: column !important;
-        gap: 0.75rem !important;
-        align-items: center !important;
-      }
-      
-      .hero-buttons .btn {
-        width: 100% !important;
-        max-width: 280px !important;
-      }
-      
-      /* Feature cards mobile */
-      .feature-card {
-        padding: 1.5rem !important;
-        margin-bottom: 1rem !important;
-      }
-      
-      .feature-icon {
-        width: 2.5rem !important;
-        height: 2.5rem !important;
-      }
-      
-      /* Testimonials mobile */
-      .testimonial-card {
-        padding: 1.5rem !important;
-        margin-bottom: 1rem !important;
-      }
-      
-      .testimonial-text {
-        font-size: 0.875rem !important;
-        line-height: 1.4 !important;
-      }
-      
-      /* Pricing mobile */
-      .pricing-card {
-        padding: 1.5rem !important;
-        margin-bottom: 1rem !important;
-      }
-      
-      .pricing-price {
-        font-size: 2rem !important;
-      }
-      
-      /* Contact form mobile */
-      .contact-form {
-        padding: 1.5rem !important;
-      }
-      
-      .contact-input {
-        padding: 0.75rem !important;
-        font-size: 0.875rem !important;
-      }
-      
-      .contact-button {
-        padding: 0.75rem 1.5rem !important;
-        font-size: 0.875rem !important;
-      }
-      
-      /* Footer mobile */
-      .footer-content {
-        flex-direction: column !important;
-        text-align: center !important;
-        gap: 1rem !important;
-      }
-      
-      .footer-links {
-        flex-direction: column !important;
-        gap: 0.5rem !important;
-      }
-    }
-    
-    /* Mobile phones */
-    @media (max-width: 480px) {
-      /* Typography */
-      .hero-gradient-text {
-        font-size: 1.5rem !important;
-        line-height: 1.1;
-      }
-      
-      .text-5xl {
-        font-size: 1.75rem !important;
-      }
-      
-      .text-4xl {
-        font-size: 1.375rem !important;
-      }
-      
-      .text-3xl {
-        font-size: 1.125rem !important;
-      }
-      
-      .text-2xl {
-        font-size: 1rem !important;
-      }
-      
-      .text-xl {
-        font-size: 0.875rem !important;
-      }
-      
-      .text-lg {
-        font-size: 0.75rem !important;
-      }
-      
-      .text-sm {
-        font-size: 0.6875rem !important;
-      }
-      
-      .text-xs {
-        font-size: 0.625rem !important;
-      }
-      
-      /* Spacing */
-      .py-20 {
-        padding-top: 2rem !important;
-        padding-bottom: 2rem !important;
-      }
-      
-      .py-16 {
-        padding-top: 1.5rem !important;
-        padding-bottom: 1.5rem !important;
-      }
-      
-      .py-8 {
-        padding-top: 1rem !important;
-        padding-bottom: 1rem !important;
-      }
-      
-      .px-6 {
-        padding-left: 0.75rem !important;
-        padding-right: 0.75rem !important;
-      }
-      
-      .px-12 {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-      }
-      
-      .p-8 {
-        padding: 1rem !important;
-      }
-      
-      .p-6 {
-        padding: 0.75rem !important;
-      }
-      
-      .mb-16 {
-        margin-bottom: 1.5rem !important;
-      }
-      
-      .mb-12 {
-        margin-bottom: 1rem !important;
-      }
-      
-      .mb-6 {
-        margin-bottom: 0.75rem !important;
-      }
-      
-      .mb-4 {
-        margin-bottom: 0.5rem !important;
-      }
-      
-      .mt-6 {
-        margin-top: 0.75rem !important;
-      }
-      
-      .mt-4 {
-        margin-top: 0.5rem !important;
-      }
-      
-      .gap-8 {
-        gap: 0.75rem !important;
-      }
-      
-      .gap-6 {
-        gap: 0.5rem !important;
-      }
-      
-      .gap-4 {
-        gap: 0.375rem !important;
-      }
-      
-      .gap-2 {
-        gap: 0.25rem !important;
-      }
-      
-      /* Icons */
-      .w-16 {
-        width: 2.5rem !important;
-        height: 2.5rem !important;
-      }
-      
-      .w-12 {
-        width: 2rem !important;
-        height: 2rem !important;
-      }
-      
-      .h-16 {
-        height: 2.5rem !important;
-      }
-      
-      .h-12 {
-        height: 2rem !important;
-      }
-      
-      /* Small mobile specific */
-      .sm\:hidden {
-        display: none !important;
-      }
-      
-      .sm\:block {
-        display: block !important;
-      }
-      
-      .sm\:flex {
-        display: flex !important;
-      }
-      
-      .sm\:text-center {
-        text-align: center !important;
-      }
-      
-      .sm\:w-full {
-        width: 100% !important;
-      }
-      
-      .sm\:flex-col {
-        flex-direction: column !important;
-      }
-      
-      .sm\:gap-2 {
-        gap: 0.5rem !important;
-      }
-      
-      .sm\:p-3 {
-        padding: 0.75rem !important;
-      }
-      
-      .sm\:px-3 {
-        padding-left: 0.75rem !important;
-        padding-right: 0.75rem !important;
-      }
-      
-      .sm\:py-3 {
-        padding-top: 0.75rem !important;
-        padding-bottom: 0.75rem !important;
-      }
-      
-      .sm\:mb-3 {
-        margin-bottom: 0.75rem !important;
-      }
-      
-      .sm\:mt-3 {
-        margin-top: 0.75rem !important;
-      }
-      
-      .sm\:text-xs {
-        font-size: 0.75rem !important;
-      }
-      
-      .sm\:text-sm {
-        font-size: 0.875rem !important;
-      }
-      
-      /* Hero small mobile */
-      .hero-buttons .btn {
-        font-size: 0.875rem !important;
-        padding: 0.75rem 1rem !important;
-      }
-      
-      /* Feature cards small mobile */
-      .feature-card {
-        padding: 1rem !important;
-      }
-      
-      .feature-icon {
-        width: 2rem !important;
-        height: 2rem !important;
-      }
-      
-      /* Testimonials small mobile */
-      .testimonial-card {
-        padding: 1rem !important;
-      }
-      
-      .testimonial-text {
-        font-size: 0.875rem !important;
-      }
-      
-      /* Pricing small mobile */
-      .pricing-card {
-        padding: 1rem !important;
-      }
-      
-      .pricing-price {
-        font-size: 1.875rem !important;
-      }
-      
-      /* Contact small mobile */
-      .contact-form {
-        padding: 1rem !important;
-      }
-      
-      .contact-input {
-        padding: 0.5rem !important;
-        font-size: 0.875rem !important;
-      }
-      
-      .contact-button {
-        padding: 0.5rem 1rem !important;
-        font-size: 0.875rem !important;
-      }
-      
-      /* Badges small mobile */
-      .badge {
-        padding: 0.125rem 0.5rem !important;
-        font-size: 0.75rem !important;
-      }
-      
-      /* Cards small mobile */
-      .card {
-        padding: 0.75rem !important;
-      }
-    }
-    
-    /* Touch devices */
-    @media (hover: none) and (pointer: coarse) {
-      /* Remove hover effects on touch devices */
-      .group:hover .group-hover\:scale-110,
-      .group:hover .group-hover\:scale-105 {
-        transform: none !important;
-      }
-      
-      /* Add active states for touch */
-      .group:active {
-        transform: scale(0.98);
-      }
-    }
-  </style>
+  
 </head>
 
 <body class="bg-black text-gray-100 antialiased">
@@ -835,7 +30,7 @@
   {% endwith %}
 
   <header id="header" class="glass-nav home-nav fixed top-0 left-0 right-0 z-50 bg-grid">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 sm:py-4 flex items-center justify-between">
       <!-- Logo -->
       <h1 class="text-lg sm:text-xl md:text-2xl font-bold text-white tracking-tight">
         <a href="{{ url_for('home') }}" class="nexusbot-logo">
@@ -853,75 +48,63 @@
                   <stop offset="100%" style="stop-color:#a78bfa;stop-opacity:1" />
                 </linearGradient>
               </defs>
-              
+
               <!-- Main hexagon frame -->
-              <path d="M50 5 L85 25 L85 75 L50 95 L15 75 L15 25 Z" 
-                    fill="none" 
-                    stroke="url(#logoGradient)" 
-                    stroke-width="3"/>
-              
+              <path d="M50 5 L85 25 L85 75 L50 95 L15 75 L15 25 Z" fill="none" stroke="url(#logoGradient)"
+                stroke-width="3" />
+
               <!-- Inner hexagon -->
-              <path d="M50 20 L70 32 L70 68 L50 80 L30 68 L30 32 Z" 
-                    fill="url(#centerGradient)" 
-                    opacity="0.2"/>
-              
+              <path d="M50 20 L70 32 L70 68 L50 80 L30 68 L30 32 Z" fill="url(#centerGradient)" opacity="0.2" />
+
               <!-- Central AI brain/core -->
-              <circle cx="50" cy="50" r="15" fill="url(#logoGradient)"/>
-              
+              <circle cx="50" cy="50" r="15" fill="url(#logoGradient)" />
+
               <!-- Neural network nodes -->
-              <circle cx="50" cy="35" r="3" fill="#60a5fa"/>
-              <circle cx="65" cy="42" r="3" fill="#818cf8"/>
-              <circle cx="65" cy="58" r="3" fill="#a78bfa"/>
-              <circle cx="50" cy="65" r="3" fill="#c084fc"/>
-              <circle cx="35" cy="58" r="3" fill="#818cf8"/>
-              <circle cx="35" cy="42" r="3" fill="#60a5fa"/>
-              
+              <circle cx="50" cy="35" r="3" fill="#60a5fa" />
+              <circle cx="65" cy="42" r="3" fill="#818cf8" />
+              <circle cx="65" cy="58" r="3" fill="#a78bfa" />
+              <circle cx="50" cy="65" r="3" fill="#c084fc" />
+              <circle cx="35" cy="58" r="3" fill="#818cf8" />
+              <circle cx="35" cy="42" r="3" fill="#60a5fa" />
+
               <!-- Connection lines -->
-              <line x1="50" y1="35" x2="65" y2="42" stroke="#60a5fa" stroke-width="1.5" opacity="0.7"/>
-              <line x1="65" y1="42" x2="65" y2="58" stroke="#818cf8" stroke-width="1.5" opacity="0.7"/>
-              <line x1="65" y1="58" x2="50" y2="65" stroke="#a78bfa" stroke-width="1.5" opacity="0.7"/>
-              <line x1="50" y1="65" x2="35" y2="58" stroke="#c084fc" stroke-width="1.5" opacity="0.7"/>
-              <line x1="35" y1="58" x2="35" y2="42" stroke="#818cf8" stroke-width="1.5" opacity="0.7"/>
-              <line x1="35" y1="42" x2="50" y2="35" stroke="#60a5fa" stroke-width="1.5" opacity="0.7"/>
-              
-              <!-- Central letter N -->
-              <text x="50" y="56" font-family="Arial, sans-serif" font-size="14" font-weight="bold" 
-                    fill="white" text-anchor="middle">N</text>
-            </svg>
-          </div>
-        </a>
+              <line x1="50" y1="35" x2="65" y2="42" stroke="#60a5fa" stroke-width="1.5" opacity="0.7" />
+              <line x1="65" y1="42" x2="65" y2="58" stroke="#818cf8" stroke-width="1.5" opacity="0.7" />
+              <line x1="65" y1="58" x2="50" y2="65" stroke="#a78bfa" stroke-width="1.5" opacity="0.7" />
       </h1>
 
-      <!-- Centered Navigation -->
-      <nav class="hidden md:flex items-center gap-8 flex-1 justify-center text-sm font-medium">
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex items-center gap-6 lg:gap-8">
         <a href="{{ url_for('bot_builder') }}"
-          class="text-gray-300 hover:text-white transition-colors duration-300">Create Bot</a>
+          class="text-gray-300 hover:text-white transition-colors duration-300 font-medium">Create Bot</a>
         <a href="{{ url_for('templates') }}"
-          class="text-gray-300 hover:text-white transition-colors duration-300">Templates</a>
-        <a href="{{ url_for('my_bots') }}" class="text-gray-300 hover:text-white transition-colors duration-300">My
+          class="text-gray-300 hover:text-white transition-colors duration-300 font-medium">Templates</a>
+        <a href="{{ url_for('my_bots') }}"
+          class="text-gray-300 hover:text-white transition-colors duration-300 font-medium">My
           Bots</a>
         <a href="{{ url_for('assignments') }}"
-          class="text-gray-300 hover:text-white transition-colors duration-300">Assignments</a>
+          class="text-gray-300 hover:text-white transition-colors duration-300 font-medium">Assignments</a>
       </nav>
 
       <!-- Auth Buttons Container -->
-      <div class="flex gap-3 items-center">
+      <div class="hidden md:flex gap-3 items-center">
         <a href="{{ url_for('bot_builder') }}"
-          class="hidden md:inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gradient-to-r from-sky-500 to-indigo-500 text-white font-semibold transition-opacity duration-300 hover:opacity-90">
+          class="hidden lg:inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gradient-to-r from-sky-500 to-indigo-500 text-white font-semibold transition-opacity duration-300 hover:opacity-90 text-sm">
           Launch Builder
         </a>
         <!-- Username Display -->
-        <span id="usernameDisplay" class="hidden md:block text-gray-300 font-medium text-sm" data-username="{{ username }}"></span>
+        <span id="usernameDisplay" class="hidden lg:block text-gray-300 font-medium text-sm"
+          data-username="{{ username }}"></span>
 
         <!-- Login Button -->
         <button id="loginBtn"
-          class="hidden md:block bg-sky-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-sky-600 transition-colors duration-300">
+          class="hidden lg:block bg-sky-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-sky-600 transition-colors duration-300 text-sm">
           Login
         </button>
 
         <!-- Logout Button -->
         <button id="logoutBtn"
-          class="hidden md:block bg-red-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300">
+          class="hidden lg:block bg-red-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300 text-sm">
           Logout
         </button>
       </div>
@@ -929,8 +112,8 @@
       <!-- Mobile Menu Button -->
       <div class="md:hidden">
         <button id="mobile-menu-button"
-          class="text-white p-2 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all duration-200">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          class="text-white p-3 rounded-xl hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all duration-200">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
           </svg>
         </button>
@@ -993,7 +176,8 @@
               Build chatbots people actually want to use.
             </h2>
             <p class="mt-5 text-lg sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0">
-              Create conversational and data-driven assistants <br> with a clean UI, fast setup, and seamless navigation.
+              Create conversational and data-driven assistants <br> with a clean UI, fast setup, and seamless
+              navigation.
             </p>
             <div class="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
               <a href="{{ url_for('bot_builder') }}"
@@ -1026,7 +210,8 @@
                     <div class="text-white font-semibold">Continue building</div>
                     <div class="text-xs text-gray-400 mt-1">Your recent bots</div>
                   </div>
-                  <a href="{{ url_for('my_bots') }}" class="text-sm text-sky-400 hover:text-sky-300 font-semibold">View all</a>
+                  <a href="{{ url_for('my_bots') }}" class="text-sm text-sky-400 hover:text-sky-300 font-semibold">View
+                    all</a>
                 </div>
                 <div id="recentBotsList" class="mt-4 space-y-3"></div>
               </div>
@@ -1079,18 +264,21 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20 bg-gradient-to-b from-black via-gray-900/50 to-black section-fade-in">
+    <section id="about" class="py-32 bg-gradient-to-b from-black via-gray-900/50 to-black section-fade-in">
       <div class="w-full mx-auto px-6 lg:px-12">
         <!-- Section Header -->
         <div class="text-center mb-16">
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
             <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
+              </path>
             </svg>
             <span class="text-emerald-400 font-semibold text-sm">Why Choose NexusBot</span>
           </div>
           <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-            The <span class="bg-gradient-to-r from-emerald-400 to-sky-400 bg-clip-text text-transparent">Smart Choice</span> for Modern AI
+            The <span class="bg-gradient-to-r from-emerald-400 to-sky-400 bg-clip-text text-transparent">Smart
+              Choice</span> for Modern AI
           </h3>
           <p class="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Discover the perfect blend of cutting-edge technology and powerful capabilities that set NexusBot apart.
@@ -1099,135 +287,33 @@
 
         <!-- Main Content Grid -->
         <div class="grid lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
-          <!-- Left Side - AI Visualization -->
+          <!-- Left Side - Simple Content -->
           <div class="relative order-2 lg:order-1">
-            <!-- Glow Effect -->
-            <div class="absolute -inset-8 bg-gradient-to-r from-emerald-500/20 via-sky-500/20 to-purple-500/20 blur-3xl rounded-2xl"></div>
-            
-            <!-- Main Visualization Card -->
-            <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-3xl p-8 border border-emerald-500/20 shadow-2xl">
-              <!-- Header -->
-              <div class="flex items-center justify-between mb-8">
-                <div class="flex items-center gap-3">
-                  <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
-                  <h4 class="text-xl font-bold text-emerald-400">AI Core Architecture</h4>
+            <div
+              class="bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-12 border border-emerald-500/20 min-h-[400px] flex items-center">
+              <div class="text-center w-full">
+                <div
+                  class="w-24 h-24 bg-gradient-to-br from-emerald-500 to-sky-500 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                  <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                    </path>
+                  </svg>
                 </div>
-                <div class="flex items-center gap-2">
-                  <span class="relative flex h-3 w-3">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-                  </span>
-                  <span class="text-xs text-emerald-400 font-medium">LIVE</span>
-                </div>
-              </div>
-
-              <!-- Interactive Architecture Display -->
-              <div class="relative h-80 bg-gradient-to-br from-gray-800/50 to-black/50 rounded-2xl overflow-hidden mb-8 border border-gray-700/50">
-                <div class="absolute inset-0 flex items-center justify-center">
-                  <div class="relative w-full h-full p-6">
-                    <!-- Input Layer -->
-                    <div class="absolute left-6 top-1/2 -translate-y-1/2 space-y-4">
-                      <div class="group cursor-pointer">
-                        <div class="bg-sky-500/20 backdrop-blur-sm rounded-xl p-4 border border-sky-500/30 hover:border-sky-400/50 transition-all duration-300">
-                          <div class="text-sky-400 text-sm font-bold mb-1">💬 Chat</div>
-                          <div class="text-gray-400 text-xs">LLaMA AI</div>
-                        </div>
-                      </div>
-                      <div class="group cursor-pointer">
-                        <div class="bg-emerald-500/20 backdrop-blur-sm rounded-xl p-4 border border-emerald-500/30 hover:border-emerald-400/50 transition-all duration-300">
-                          <div class="text-emerald-400 text-sm font-bold mb-1">📊 Data</div>
-                          <div class="text-gray-400 text-xs">Analytics</div>
-                        </div>
-                      </div>
-                      <div class="group cursor-pointer">
-                        <div class="bg-purple-500/20 backdrop-blur-sm rounded-xl p-4 border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300">
-                          <div class="text-purple-400 text-sm font-bold mb-1">🖼️ Vision</div>
-                          <div class="text-gray-400 text-xs">Processing</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Central Processing Core -->
-                    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                      <div class="relative">
-                        <div class="w-24 h-24 bg-gradient-to-br from-emerald-500 to-sky-500 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/25">
-                          <div class="text-white font-bold text-sm">CORE</div>
-                        </div>
-                        <!-- Rotating Ring -->
-                        <div class="absolute inset-0 w-24 h-24 border-2 border-emerald-400/30 rounded-2xl animate-spin" style="animation-duration: 8s;"></div>
-                        <div class="absolute inset-0 w-24 h-24 border border-sky-400/20 rounded-2xl animate-spin" style="animation-duration: 12s; animation-direction: reverse;"></div>
-                      </div>
-                    </div>
-
-                    <!-- Output Layer -->
-                    <div class="absolute right-6 top-1/2 -translate-y-1/2 space-y-4">
-                      <div class="bg-green-500/20 backdrop-blur-sm rounded-xl p-4 border border-green-500/30">
-                        <div class="text-green-400 text-sm font-bold mb-1">✅ Smart</div>
-                        <div class="text-gray-400 text-xs">Responses</div>
-                      </div>
-                      <div class="bg-green-500/20 backdrop-blur-sm rounded-xl p-4 border border-green-500/30">
-                        <div class="text-green-400 text-sm font-bold mb-1">📈 Insights</div>
-                        <div class="text-gray-400 text-xs">Reports</div>
-                      </div>
-                      <div class="bg-green-500/20 backdrop-blur-sm rounded-xl p-4 border border-green-500/30">
-                        <div class="text-green-400 text-sm font-bold mb-1">🎯 Results</div>
-                        <div class="text-gray-400 text-xs">Quality</div>
-                      </div>
-                    </div>
-
-                    <!-- Animated Connection Lines -->
-                    <svg class="absolute inset-0 w-full h-full pointer-events-none">
-                      <defs>
-                        <linearGradient id="flowGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:0.8" />
-                          <stop offset="100%" style="stop-color:#34d399;stop-opacity:0.3" />
-                        </linearGradient>
-                      </defs>
-                      <path d="M 120 100 Q 250 120 380 100" stroke="url(#flowGradient1)" stroke-width="2" fill="none" opacity="0.6">
-                        <animate attributeName="stroke-dasharray" values="0 300;300 0" dur="3s" repeatCount="indefinite"/>
-                      </path>
-                      <path d="M 120 160 Q 250 180 380 160" stroke="url(#flowGradient1)" stroke-width="2" fill="none" opacity="0.6">
-                        <animate attributeName="stroke-dasharray" values="0 300;300 0" dur="3s" begin="1s" repeatCount="indefinite"/>
-                      </path>
-                      <path d="M 120 220 Q 250 200 380 220" stroke="url(#flowGradient1)" stroke-width="2" fill="none" opacity="0.6">
-                        <animate attributeName="stroke-dasharray" values="0 300;300 0" dur="3s" begin="2s" repeatCount="indefinite"/>
-                      </path>
-                    </svg>
-                  </div>
-                </div>
-
-                <!-- Status Bar -->
-                <div class="absolute bottom-4 left-4 right-4 flex justify-between items-center">
-                  <div class="flex gap-4 text-xs">
-                    <span class="text-sky-400">Input</span>
-                    <span class="text-emerald-400">Processing</span>
-                    <span class="text-green-400">Output</span>
-                  </div>
-                  <div class="flex gap-2">
-                    <div class="w-2 h-2 bg-sky-400 rounded-full animate-pulse"></div>
-                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
-                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse" style="animation-delay: 1s"></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Tech Stack Grid -->
-              <div class="grid grid-cols-4 gap-3">
-                <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 text-center border border-gray-700/50">
-                  <div class="text-emerald-400 font-bold text-xs mb-1">LLaMA</div>
-                  <div class="text-gray-500 text-xs">AI Engine</div>
-                </div>
-                <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 text-center border border-gray-700/50">
-                  <div class="text-emerald-400 font-bold text-xs mb-1">Flask</div>
-                  <div class="text-gray-500 text-xs">Backend</div>
-                </div>
-                <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 text-center border border-gray-700/50">
-                  <div class="text-emerald-400 font-bold text-xs mb-1">Python</div>
-                  <div class="text-gray-500 text-xs">Core</div>
-                </div>
-                <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 text-center border border-gray-700/50">
-                  <div class="text-emerald-400 font-bold text-xs mb-1">Local</div>
-                  <div class="text-gray-500 text-xs">Private</div>
+                <h4 class="text-2xl font-bold text-emerald-400 mb-6">AI-Powered Intelligence</h4>
+                <p class="text-gray-300 text-base leading-relaxed mb-8">
+                  Built with advanced LLaMA integration and Python excellence, delivering smart, efficient, and private
+                  AI solutions.
+                </p>
+                <div class="flex flex-wrap gap-3 justify-center">
+                  <span
+                    class="px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-sm text-emerald-400">LLaMA
+                    AI</span>
+                  <span
+                    class="px-4 py-2 bg-sky-500/10 border border-sky-500/20 rounded-full text-sm text-sky-400">Python</span>
+                  <span
+                    class="px-4 py-2 bg-purple-500/10 border border-purple-500/20 rounded-full text-sm text-purple-400">Local
+                    Processing</span>
                 </div>
               </div>
             </div>
@@ -1241,7 +327,8 @@
                 Engineering Excellence <span class="text-emerald-400">Meets</span> Simplicity
               </h4>
               <p class="text-base text-gray-300 leading-relaxed mb-8">
-                NexusBot combines advanced AI technology with intuitive design. Built on Python with LLaMA integration, it delivers human-like conversations with exceptional performance and privacy.
+                NexusBot combines advanced AI technology with intuitive design. Built on Python with LLaMA integration,
+                it delivers human-like conversations with exceptional performance and privacy.
               </p>
             </div>
 
@@ -1249,72 +336,90 @@
             <div class="grid sm:grid-cols-2 gap-6">
               <div class="group">
                 <div class="flex items-start gap-4">
-                  <div class="flex-shrink-0 w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors duration-300">
+                  <div
+                    class="flex-shrink-0 w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors duration-300">
                     <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                      </path>
                     </svg>
                   </div>
                   <div>
                     <h5 class="text-lg font-semibold text-white mb-2">Intelligent Processing</h5>
-                    <p class="text-gray-400 text-sm leading-relaxed">Advanced NLP with context awareness and adaptive learning.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">Advanced NLP with context awareness and adaptive
+                      learning.</p>
                   </div>
                 </div>
               </div>
 
               <div class="group">
                 <div class="flex items-start gap-4">
-                  <div class="flex-shrink-0 w-12 h-12 bg-sky-500/10 rounded-xl flex items-center justify-center group-hover:bg-sky-500/20 transition-colors duration-300">
+                  <div
+                    class="flex-shrink-0 w-12 h-12 bg-sky-500/10 rounded-xl flex items-center justify-center group-hover:bg-sky-500/20 transition-colors duration-300">
                     <svg class="w-6 h-6 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                      </path>
                     </svg>
                   </div>
                   <div>
                     <h5 class="text-lg font-semibold text-white mb-2">Privacy First</h5>
-                    <p class="text-gray-400 text-sm leading-relaxed">Local processing ensures complete data confidentiality and security.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">Local processing ensures complete data
+                      confidentiality and security.</p>
                   </div>
                 </div>
               </div>
 
               <div class="group">
                 <div class="flex items-start gap-4">
-                  <div class="flex-shrink-0 w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center group-hover:bg-purple-500/20 transition-colors duration-300">
+                  <div
+                    class="flex-shrink-0 w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center group-hover:bg-purple-500/20 transition-colors duration-300">
                     <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
                   </div>
                   <div>
                     <h5 class="text-lg font-semibold text-white mb-2">Lightning Fast</h5>
-                    <p class="text-gray-400 text-sm leading-relaxed">Sub-second response times with optimized performance.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">Sub-second response times with optimized
+                      performance.</p>
                   </div>
                 </div>
               </div>
 
               <div class="group">
                 <div class="flex items-start gap-4">
-                  <div class="flex-shrink-0 w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center group-hover:bg-green-500/20 transition-colors duration-300">
+                  <div
+                    class="flex-shrink-0 w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center group-hover:bg-green-500/20 transition-colors duration-300">
                     <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                      </path>
                     </svg>
                   </div>
                   <div>
                     <h5 class="text-lg font-semibold text-white mb-2">Easy Integration</h5>
-                    <p class="text-gray-400 text-sm leading-relaxed">Simple API with comprehensive documentation for seamless setup.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">Simple API with comprehensive documentation for
+                      seamless setup.</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- CTA Section -->
-            <div class="bg-gradient-to-r from-emerald-500/10 to-sky-500/10 rounded-2xl p-6 border border-emerald-500/20">
-              <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div>
+            <div
+              class="bg-gradient-to-r from-emerald-500/10 to-sky-500/10 rounded-2xl p-8 border border-emerald-500/20">
+              <div class="flex flex-col sm:flex-row items-start justify-start gap-6">
+                <div class="pr-4">
                   <h5 class="text-lg font-bold text-white mb-2">Ready to Get Started?</h5>
                   <p class="text-gray-300 text-sm">Join thousands of developers building with NexusBot</p>
                 </div>
-                <a href="{{ url_for('bot_builder') }}" class="inline-flex items-center justify-center bg-emerald-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-emerald-700 transition-colors duration-300">
+                <a href="{{ url_for('bot_builder') }}"
+                  class="inline-flex items-center justify-center bg-emerald-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-emerald-700 transition-colors duration-300">
                   Start Building
                   <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
+                    </path>
                   </svg>
                 </a>
               </div>
@@ -1329,17 +434,22 @@
       <div class="w-full mx-auto px-6 lg:px-12">
         <!-- Section Header -->
         <div class="text-center mb-16">
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/20 mb-6">
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/20 mb-6">
             <svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+              </path>
             </svg>
             <span class="text-sky-400 font-semibold text-sm">AI Solutions</span>
           </div>
           <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-            Powerful <span class="bg-gradient-to-r from-sky-400 to-purple-400 bg-clip-text text-transparent">AI Tools</span> for Modern Projects
+            Powerful <span class="bg-gradient-to-r from-sky-400 to-purple-400 bg-clip-text text-transparent">AI
+              Tools</span> for Modern Projects
           </h3>
           <p class="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Complete suite of AI solutions for conversation, data analysis, and image processing - all running locally on your infrastructure.
+            Complete suite of AI solutions for conversation, data analysis, and image processing - all running locally
+            on your infrastructure.
           </p>
         </div>
 
@@ -1349,23 +459,29 @@
           <div class="group">
             <div class="relative h-full">
               <!-- Glow Effect -->
-              <div class="absolute -inset-4 bg-gradient-to-r from-sky-500/10 via-blue-500/10 to-purple-500/10 blur-xl rounded-2xl group-hover:from-sky-500/20 group-hover:via-blue-500/20 group-hover:to-purple-500/20 transition-all duration-500"></div>
-              
+              <div
+                class="absolute -inset-4 bg-gradient-to-r from-sky-500/10 via-blue-500/10 to-purple-500/10 blur-xl rounded-2xl group-hover:from-sky-500/20 group-hover:via-blue-500/20 group-hover:to-purple-500/20 transition-all duration-500">
+              </div>
+
               <!-- Main Card -->
-              <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-sky-500/20 h-full flex flex-col">
+              <div
+                class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-sky-500/20 h-full flex flex-col">
                 <!-- Icon -->
-                <div class="w-16 h-16 bg-gradient-to-br from-sky-500/20 to-blue-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div
+                  class="w-16 h-16 bg-gradient-to-br from-sky-500/20 to-blue-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V10a2 2 0 012-2h8z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V10a2 2 0 012-2h8z"></path>
                   </svg>
                 </div>
-                
+
                 <!-- Content -->
                 <div class="flex-1">
                   <h4 class="text-xl font-bold text-white mb-3">Custom Conversational Bot</h4>
-                  <p class="text-gray-400 text-sm leading-relaxed mb-6">Perfect for user engagement, customer support, and brand interaction with unique personality.</p>
+                  <p class="text-gray-400 text-sm leading-relaxed mb-6">Perfect for user engagement, customer support,
+                    and brand interaction with unique personality.</p>
                 </div>
-                
+
                 <!-- Features -->
                 <div class="space-y-2 mb-6">
                   <div class="flex items-center gap-2 text-xs text-gray-400">
@@ -1381,12 +497,14 @@
                     <span>Context Aware</span>
                   </div>
                 </div>
-                
+
                 <!-- CTA -->
-                <a href="{{ url_for('customize_chatbot') }}" class="inline-flex items-center justify-center w-full bg-sky-600/20 text-sky-400 font-semibold py-3 px-4 rounded-xl hover:bg-sky-600/30 transition-colors duration-300 border border-sky-500/30">
+                <a href="{{ url_for('customize_chatbot') }}"
+                  class="inline-flex items-center justify-center w-full bg-sky-600/20 text-sky-400 font-semibold py-3 px-4 rounded-xl hover:bg-sky-600/30 transition-colors duration-300 border border-sky-500/30">
                   Build Chatbot
                   <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
+                    </path>
                   </svg>
                 </a>
               </div>
@@ -1397,23 +515,30 @@
           <div class="group">
             <div class="relative h-full">
               <!-- Glow Effect -->
-              <div class="absolute -inset-4 bg-gradient-to-r from-violet-500/10 via-purple-500/10 to-pink-500/10 blur-xl rounded-2xl group-hover:from-violet-500/20 group-hover:via-purple-500/20 group-hover:to-pink-500/20 transition-all duration-500"></div>
-              
+              <div
+                class="absolute -inset-4 bg-gradient-to-r from-violet-500/10 via-purple-500/10 to-pink-500/10 blur-xl rounded-2xl group-hover:from-violet-500/20 group-hover:via-purple-500/20 group-hover:to-pink-500/20 transition-all duration-500">
+              </div>
+
               <!-- Main Card -->
-              <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-violet-500/20 h-full flex flex-col">
+              <div
+                class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-violet-500/20 h-full flex flex-col">
                 <!-- Icon -->
-                <div class="w-16 h-16 bg-gradient-to-br from-violet-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div
+                  class="w-16 h-16 bg-gradient-to-br from-violet-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <svg class="w-8 h-8 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V7a2 2 0 012-2h5l2 2h5a2 2 0 012 2v5a2 2 0 01-2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V7a2 2 0 012-2h5l2 2h5a2 2 0 012 2v5a2 2 0 01-2 2z">
+                    </path>
                   </svg>
                 </div>
-                
+
                 <!-- Content -->
                 <div class="flex-1">
                   <h4 class="text-xl font-bold text-white mb-3">Data Analysis</h4>
-                  <p class="text-gray-400 text-sm leading-relaxed mb-6">Transform Excel, CSV files into insights with instant analysis and visualizations.</p>
+                  <p class="text-gray-400 text-sm leading-relaxed mb-6">Transform Excel, CSV files into insights with
+                    instant analysis and visualizations.</p>
                 </div>
-                
+
                 <!-- Features -->
                 <div class="space-y-2 mb-6">
                   <div class="flex items-center gap-2 text-xs text-gray-400">
@@ -1429,12 +554,14 @@
                     <span>Visual Reports</span>
                   </div>
                 </div>
-                
+
                 <!-- CTA -->
-                <a href="{{ url_for('customize_upload') }}" class="inline-flex items-center justify-center w-full bg-violet-600/20 text-violet-400 font-semibold py-3 px-4 rounded-xl hover:bg-violet-600/30 transition-colors duration-300 border border-violet-500/30">
+                <a href="{{ url_for('customize_upload') }}"
+                  class="inline-flex items-center justify-center w-full bg-violet-600/20 text-violet-400 font-semibold py-3 px-4 rounded-xl hover:bg-violet-600/30 transition-colors duration-300 border border-violet-500/30">
                   Analyze Data
                   <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
+                    </path>
                   </svg>
                 </a>
               </div>
@@ -1445,23 +572,30 @@
           <div class="group">
             <div class="relative h-full">
               <!-- Glow Effect -->
-              <div class="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 via-green-500/10 to-teal-500/10 blur-xl rounded-2xl group-hover:from-emerald-500/20 group-hover:via-green-500/20 group-hover:to-teal-500/20 transition-all duration-500"></div>
-              
+              <div
+                class="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 via-green-500/10 to-teal-500/10 blur-xl rounded-2xl group-hover:from-emerald-500/20 group-hover:via-green-500/20 group-hover:to-teal-500/20 transition-all duration-500">
+              </div>
+
               <!-- Main Card -->
-              <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20 h-full flex flex-col">
+              <div
+                class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20 h-full flex flex-col">
                 <!-- Icon -->
-                <div class="w-16 h-16 bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div
+                  class="w-16 h-16 bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                    </path>
                   </svg>
                 </div>
-                
+
                 <!-- Content -->
                 <div class="flex-1">
                   <h4 class="text-xl font-bold text-white mb-3">Image Processing</h4>
-                  <p class="text-gray-400 text-sm leading-relaxed mb-6">Advanced image editing with filters, object detection, and enhancement - all locally.</p>
+                  <p class="text-gray-400 text-sm leading-relaxed mb-6">Advanced image editing with filters, object
+                    detection, and enhancement - all locally.</p>
                 </div>
-                
+
                 <!-- Features -->
                 <div class="space-y-2 mb-6">
                   <div class="flex items-center gap-2 text-xs text-gray-400">
@@ -1477,12 +611,14 @@
                     <span>Batch Processing</span>
                   </div>
                 </div>
-                
+
                 <!-- CTA -->
-                <a href="{{ url_for('image_processor') }}" class="inline-flex items-center justify-center w-full bg-emerald-600/20 text-emerald-400 font-semibold py-3 px-4 rounded-xl hover:bg-emerald-600/30 transition-colors duration-300 border border-emerald-500/30">
+                <a href="{{ url_for('image_processor') }}"
+                  class="inline-flex items-center justify-center w-full bg-emerald-600/20 text-emerald-400 font-semibold py-3 px-4 rounded-xl hover:bg-emerald-600/30 transition-colors duration-300 border border-emerald-500/30">
                   Process Images
                   <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
+                    </path>
                   </svg>
                 </a>
               </div>
@@ -1497,14 +633,17 @@
       <div class="w-full mx-auto px-6 lg:px-12">
         <!-- Section Header -->
         <div class="text-center mb-16">
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 mb-6">
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 mb-6">
             <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
+              </path>
             </svg>
             <span class="text-purple-400 font-semibold text-sm">Quick Start</span>
           </div>
           <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-            Get Started in <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">3 Easy Steps</span>
+            Get Started in <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">3
+              Easy Steps</span>
           </h3>
           <p class="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Launch your powerful AI chatbot with our simple and intuitive process designed for developers.
@@ -1514,40 +653,50 @@
         <!-- Steps Container -->
         <div class="relative max-w-7xl mx-auto">
           <!-- Connection Line -->
-          <div class="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-purple-500/20 -translate-y-1/2"></div>
-          
+          <div
+            class="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-purple-500/20 -translate-y-1/2">
+          </div>
+
           <div class="grid md:grid-cols-3 gap-8 relative">
             <!-- Step 1 -->
             <div class="group">
               <div class="relative h-full">
                 <!-- Glow Effect -->
-                <div class="absolute -inset-4 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-violet-500/10 blur-xl rounded-2xl group-hover:from-purple-500/20 group-hover:via-pink-500/20 group-hover:to-violet-500/20 transition-all duration-500"></div>
-                
+                <div
+                  class="absolute -inset-4 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-violet-500/10 blur-xl rounded-2xl group-hover:from-purple-500/20 group-hover:via-pink-500/20 group-hover:to-violet-500/20 transition-all duration-500">
+                </div>
+
                 <!-- Main Card -->
-                <a href="{{ url_for('bot_builder') }}" class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-purple-500/20 h-full flex flex-col block hover:border-purple-400/40 transition-all duration-300">
+                <a href="{{ url_for('customize_upload') }}"
+                  class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-purple-500/20 h-full flex flex-col block hover:border-purple-400/40 transition-all duration-300">
                   <!-- Step Number -->
                   <div class="flex items-center justify-center mb-6">
                     <div class="relative">
-                      <div class="w-16 h-16 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <div
+                        class="w-16 h-16 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                         <span class="text-2xl font-bold text-purple-400">1</span>
                       </div>
                       <!-- Rotating Ring -->
-                      <div class="absolute inset-0 w-16 h-16 border-2 border-purple-400/20 rounded-2xl animate-spin" style="animation-duration: 8s;"></div>
+                      <div class="absolute inset-0 w-16 h-16 border-2 border-purple-400/20 rounded-2xl animate-spin"
+                        style="animation-duration: 8s;"></div>
                     </div>
                   </div>
-                  
+
                   <!-- Icon -->
                   <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mx-auto mb-4">
                     <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                      </path>
                     </svg>
                   </div>
-                  
+
                   <!-- Content -->
                   <div class="flex-1 text-center">
                     <h4 class="text-xl font-bold text-white mb-3">Choose Your Model</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Select the perfect AI model for your project needs.</p>
-                    
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Select the perfect AI model for your project
+                      needs.</p>
+
                     <!-- Features -->
                     <div class="space-y-2 text-left">
                       <div class="flex items-center gap-2 text-xs text-gray-400">
@@ -1564,13 +713,14 @@
                       </div>
                     </div>
                   </div>
-                  
+
                   <!-- CTA -->
                   <div class="mt-6 pt-6 border-t border-gray-700/50">
                     <div class="flex items-center justify-center gap-2 text-purple-400 text-sm font-medium">
                       <span>Choose Model</span>
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                       </svg>
                     </div>
                   </div>
@@ -1582,33 +732,41 @@
             <div class="group">
               <div class="relative h-full">
                 <!-- Glow Effect -->
-                <div class="absolute -inset-4 bg-gradient-to-r from-pink-500/10 via-rose-500/10 to-purple-500/10 blur-xl rounded-2xl group-hover:from-pink-500/20 group-hover:via-rose-500/20 group-hover:to-purple-500/20 transition-all duration-500"></div>
-                
+                <div
+                  class="absolute -inset-4 bg-gradient-to-r from-pink-500/10 via-rose-500/10 to-purple-500/10 blur-xl rounded-2xl group-hover:from-pink-500/20 group-hover:via-rose-500/20 group-hover:to-purple-500/20 transition-all duration-500">
+                </div>
+
                 <!-- Main Card -->
-                <a href="{{ url_for('customize_upload') }}" class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-pink-500/20 h-full flex flex-col block hover:border-pink-400/40 transition-all duration-300">
+                <a href="{{ url_for('bot_builder') }}"
+                  class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-pink-500/20 h-full flex flex-col block hover:border-pink-400/40 transition-all duration-300">
                   <!-- Step Number -->
                   <div class="flex items-center justify-center mb-6">
                     <div class="relative">
-                      <div class="w-16 h-16 bg-gradient-to-br from-pink-500/20 to-rose-500/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <div
+                        class="w-16 h-16 bg-gradient-to-br from-pink-500/20 to-rose-500/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                         <span class="text-2xl font-bold text-pink-400">2</span>
                       </div>
                       <!-- Rotating Ring -->
-                      <div class="absolute inset-0 w-16 h-16 border-2 border-pink-400/20 rounded-2xl animate-spin" style="animation-duration: 8s;"></div>
+                      <div class="absolute inset-0 w-16 h-16 border-2 border-pink-400/20 rounded-2xl animate-spin"
+                        style="animation-duration: 8s;"></div>
                     </div>
                   </div>
-                  
+
                   <!-- Icon -->
                   <div class="w-12 h-12 bg-pink-500/10 rounded-xl flex items-center justify-center mx-auto mb-4">
                     <svg class="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                      </path>
                     </svg>
                   </div>
-                  
+
                   <!-- Content -->
                   <div class="flex-1 text-center">
                     <h4 class="text-xl font-bold text-white mb-3">Customize or Upload</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Personalize your bot or upload your data for analysis.</p>
-                    
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Personalize your bot or upload your data for
+                      analysis.</p>
+
                     <!-- Features -->
                     <div class="space-y-2 text-left">
                       <div class="flex items-center gap-2 text-xs text-gray-400">
@@ -1625,13 +783,14 @@
                       </div>
                     </div>
                   </div>
-                  
+
                   <!-- CTA -->
                   <div class="mt-6 pt-6 border-t border-gray-700/50">
                     <div class="flex items-center justify-center gap-2 text-pink-400 text-sm font-medium">
                       <span>Customize</span>
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                       </svg>
                     </div>
                   </div>
@@ -1643,33 +802,39 @@
             <div class="group">
               <div class="relative h-full">
                 <!-- Glow Effect -->
-                <div class="absolute -inset-4 bg-gradient-to-r from-violet-500/10 via-purple-500/10 to-pink-500/10 blur-xl rounded-2xl group-hover:from-violet-500/20 group-hover:via-purple-500/20 group-hover:to-pink-500/20 transition-all duration-500"></div>
-                
+                <div
+                  class="absolute -inset-4 bg-gradient-to-r from-violet-500/10 via-purple-500/10 to-pink-500/10 blur-xl rounded-2xl group-hover:from-violet-500/20 group-hover:via-purple-500/20 group-hover:to-pink-500/20 transition-all duration-500">
+                </div>
+
                 <!-- Main Card -->
-                <a href="{{ url_for('my_bots') }}" class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-violet-500/20 h-full flex flex-col block hover:border-violet-400/40 transition-all duration-300">
+                <a href="{{ url_for('my_bots') }}"
+                  class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-violet-500/20 h-full flex flex-col block hover:border-violet-400/40 transition-all duration-300">
                   <!-- Step Number -->
                   <div class="flex items-center justify-center mb-6">
                     <div class="relative">
-                      <div class="w-16 h-16 bg-gradient-to-br from-violet-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <div
+                        class="w-16 h-16 bg-gradient-to-br from-violet-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                         <span class="text-2xl font-bold text-violet-400">3</span>
                       </div>
                       <!-- Rotating Ring -->
-                      <div class="absolute inset-0 w-16 h-16 border-2 border-violet-400/20 rounded-2xl animate-spin" style="animation-duration: 8s;"></div>
+                      <div class="absolute inset-0 w-16 h-16 border-2 border-violet-400/20 rounded-2xl animate-spin"
+                        style="animation-duration: 8s;"></div>
                     </div>
                   </div>
-                  
+
                   <!-- Icon -->
                   <div class="w-12 h-12 bg-violet-500/10 rounded-xl flex items-center justify-center mx-auto mb-4">
                     <svg class="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                   </div>
-                  
+
                   <!-- Content -->
                   <div class="flex-1 text-center">
                     <h4 class="text-xl font-bold text-white mb-3">Integrate & Launch</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Deploy your AI solution with simple integration.</p>
-                    
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Deploy your AI solution with simple
+                      integration.</p>
+
                     <!-- Features -->
                     <div class="space-y-2 text-left">
                       <div class="flex items-center gap-2 text-xs text-gray-400">
@@ -1686,13 +851,14 @@
                       </div>
                     </div>
                   </div>
-                  
+
                   <!-- CTA -->
                   <div class="mt-6 pt-6 border-t border-gray-700/50">
                     <div class="flex items-center justify-center gap-2 text-violet-400 text-sm font-medium">
                       <span>Launch Now</span>
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                       </svg>
                     </div>
                   </div>
@@ -1704,723 +870,41 @@
 
         <!-- Bottom CTA -->
         <div class="text-center mt-16">
-          <div class="inline-flex items-center gap-4 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-2xl p-6 border border-purple-500/20">
+          <div
+            class="inline-flex items-center gap-4 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-2xl p-6 border border-purple-500/20">
             <div class="text-left">
               <h5 class="text-lg font-bold text-white mb-2">Ready to Start Building?</h5>
               <p class="text-gray-300 text-sm">Join thousands of developers using NexusBot</p>
             </div>
-            <a href="{{ url_for('bot_builder') }}" class="inline-flex items-center justify-center bg-purple-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-purple-700 transition-colors duration-300">
+            <a href="{{ url_for('bot_builder') }}"
+              class="inline-flex items-center justify-center bg-purple-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-purple-700 transition-colors duration-300">
               Get Started
               <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
+                </path>
               </svg>
             </a>
           </div>
-        </div>
-      </div>
-    </section>
         </div>
       </div>
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="py-20 bg-gradient-to-b from-black via-gray-900/50 to-black section-fade-in">
-      <div class="w-full mx-auto px-6 lg:px-12">
-        <!-- Section Header -->
-        <div class="text-center mb-16">
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 mb-6">
-            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            <span class="text-green-400 font-semibold text-sm">Core Features</span>
-          </div>
-          <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-            Powerful <span class="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Features</span> for Modern AI
-          </h3>
-          <p class="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Explore the advanced capabilities that make NexusBot the ideal choice for developers and businesses.
-          </p>
-        </div>
-
-        <!-- Features Grid -->
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          <!-- Feature 1: Multi-Platform Support -->
-          <div class="group">
-            <div class="relative h-full">
-              <!-- Glow Effect -->
-              <div class="absolute -inset-4 bg-gradient-to-r from-green-500/10 via-emerald-500/10 to-teal-500/10 blur-xl rounded-2xl group-hover:from-green-500/20 group-hover:via-emerald-500/20 group-hover:to-teal-500/20 transition-all duration-500"></div>
-              
-              <!-- Main Card -->
-              <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-green-500/20 h-full flex flex-col hover:border-green-400/40 transition-all duration-300">
-                <!-- Icon -->
-                <div class="w-16 h-16 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 5.523-4.477 10-10 10S1 17.523 1 12 5.477 2 11 2s10 4.477 10 10z"></path>
-                  </svg>
-                </div>
-                
-                <!-- Content -->
-                <div class="flex-1">
-                  <h4 class="text-xl font-bold text-white mb-3">Multi-Platform Support</h4>
-                  <p class="text-gray-400 text-sm leading-relaxed mb-4">Integrate with websites, mobile apps, and messaging platforms seamlessly.</p>
-                  
-                  <!-- Features -->
-                  <div class="space-y-2">
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
-                      <span>Web Integration</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
-                      <span>Mobile Apps</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
-                      <span>API Access</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Feature 2: Advanced Analytics -->
-          <div class="group">
-            <div class="relative h-full">
-              <!-- Glow Effect -->
-              <div class="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 via-green-500/10 to-teal-500/10 blur-xl rounded-2xl group-hover:from-emerald-500/20 group-hover:via-green-500/20 group-hover:to-teal-500/20 transition-all duration-500"></div>
-              
-              <!-- Main Card -->
-              <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20 h-full flex flex-col hover:border-emerald-400/40 transition-all duration-300">
-                <!-- Icon -->
-                <div class="w-16 h-16 bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 16v-2m0-10v2m0 6v2M6 12H4m16 0h-2m-10 0h2m6 0h2M9 18l-2-2m10-10l2 2m-2 10l-2-2m-6-6l-2-2"></path>
-                  </svg>
-                </div>
-                
-                <!-- Content -->
-                <div class="flex-1">
-                  <h4 class="text-xl font-bold text-white mb-3">Advanced Analytics</h4>
-                  <p class="text-gray-400 text-sm leading-relaxed mb-4">Gain insights into user interactions and bot performance with comprehensive analytics.</p>
-                  
-                  <!-- Features -->
-                  <div class="space-y-2">
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                      <span>Real-time Metrics</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                      <span>User Behavior</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                      <span>Performance Reports</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Feature 3: Easy Customization -->
-          <div class="group">
-            <div class="relative h-full">
-              <!-- Glow Effect -->
-              <div class="absolute -inset-4 bg-gradient-to-r from-teal-500/10 via-green-500/10 to-emerald-500/10 blur-xl rounded-2xl group-hover:from-teal-500/20 group-hover:via-green-500/20 group-hover:to-emerald-500/20 transition-all duration-500"></div>
-              
-              <!-- Main Card -->
-              <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-teal-500/20 h-full flex flex-col hover:border-teal-400/40 transition-all duration-300">
-                <!-- Icon -->
-                <div class="w-16 h-16 bg-gradient-to-br from-teal-500/20 to-green-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg class="w-8 h-8 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                  </svg>
-                </div>
-                
-                <!-- Content -->
-                <div class="flex-1">
-                  <h4 class="text-xl font-bold text-white mb-3">Easy Customization</h4>
-                  <p class="text-gray-400 text-sm leading-relaxed mb-4">Tailor personality, responses, and appearance to match your brand perfectly.</p>
-                  
-                  <!-- Features -->
-                  <div class="space-y-2">
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-teal-400 rounded-full"></div>
-                      <span>Brand Colors</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-teal-400 rounded-full"></div>
-                      <span>Custom Responses</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-teal-400 rounded-full"></div>
-                      <span>Personality Settings</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Feature 4: Local Processing -->
-          <div class="group">
-            <div class="relative h-full">
-              <!-- Glow Effect -->
-              <div class="absolute -inset-4 bg-gradient-to-r from-green-500/10 via-teal-500/10 to-emerald-500/10 blur-xl rounded-2xl group-hover:from-green-500/20 group-hover:via-teal-500/20 group-hover:to-emerald-500/20 transition-all duration-500"></div>
-              
-              <!-- Main Card -->
-              <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-green-500/20 h-full flex flex-col hover:border-green-400/40 transition-all duration-300">
-                <!-- Icon -->
-                <div class="w-16 h-16 bg-gradient-to-br from-green-500/20 to-teal-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                  </svg>
-                </div>
-                
-                <!-- Content -->
-                <div class="flex-1">
-                  <h4 class="text-xl font-bold text-white mb-3">Local Processing</h4>
-                  <p class="text-gray-400 text-sm leading-relaxed mb-4">Complete data privacy with on-premise processing and no external dependencies.</p>
-                  
-                  <!-- Features -->
-                  <div class="space-y-2">
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
-                      <span>Data Privacy</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
-                      <span>Offline Mode</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
-                      <span>Secure Storage</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Feature 5: LLaMA Integration -->
-          <div class="group">
-            <div class="relative h-full">
-              <!-- Glow Effect -->
-              <div class="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 via-green-500/10 to-teal-500/10 blur-xl rounded-2xl group-hover:from-emerald-500/20 group-hover:via-green-500/20 group-hover:to-teal-500/20 transition-all duration-500"></div>
-              
-              <!-- Main Card -->
-              <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20 h-full flex flex-col hover:border-emerald-400/40 transition-all duration-300">
-                <!-- Icon -->
-                <div class="w-16 h-16 bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                  </svg>
-                </div>
-                
-                <!-- Content -->
-                <div class="flex-1">
-                  <h4 class="text-xl font-bold text-white mb-3">LLaMA Integration</h4>
-                  <p class="text-gray-400 text-sm leading-relaxed mb-4">Powered by Meta's LLaMA for advanced natural language understanding.</p>
-                  
-                  <!-- Features -->
-                  <div class="space-y-2">
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                      <span>Advanced NLP</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                      <span>Context Awareness</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                      <span>Human-like Responses</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Feature 6: Developer Friendly -->
-          <div class="group">
-            <div class="relative h-full">
-              <!-- Glow Effect -->
-              <div class="absolute -inset-4 bg-gradient-to-r from-teal-500/10 via-emerald-500/10 to-green-500/10 blur-xl rounded-2xl group-hover:from-teal-500/20 group-hover:via-emerald-500/20 group-hover:to-green-500/20 transition-all duration-500"></div>
-              
-              <!-- Main Card -->
-              <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-teal-500/20 h-full flex flex-col hover:border-teal-400/40 transition-all duration-300">
-                <!-- Icon -->
-                <div class="w-16 h-16 bg-gradient-to-br from-teal-500/20 to-emerald-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg class="w-8 h-8 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-                  </svg>
-                </div>
-                
-                <!-- Content -->
-                <div class="flex-1">
-                  <h4 class="text-xl font-bold text-white mb-3">Developer Friendly</h4>
-                  <p class="text-gray-400 text-sm leading-relaxed mb-4">Clean APIs, comprehensive documentation, and easy integration.</p>
-                  
-                  <!-- Features -->
-                  <div class="space-y-2">
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-teal-400 rounded-full"></div>
-                      <span>REST API</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-teal-400 rounded-full"></div>
-                      <span>SDK Support</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs text-gray-400">
-                      <div class="w-1.5 h-1.5 bg-teal-400 rounded-full"></div>
-                      <span>Code Examples</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bottom CTA -->
-        <div class="text-center mt-16">
-          <div class="inline-flex items-center gap-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl p-6 border border-green-500/20">
-            <div class="text-left">
-              <h5 class="text-lg font-bold text-white mb-2">Explore All Features</h5>
-              <p class="text-gray-300 text-sm">Discover everything NexusBot can do for your project</p>
-            </div>
-            <a href="{{ url_for('bot_builder') }}" class="inline-flex items-center justify-center bg-green-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-green-700 transition-colors duration-300">
-              View Features
-              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- Testimonials Section -->
-    <section id="testimonials" class="py-20 bg-gradient-to-b from-black via-gray-900/50 to-black section-fade-in">
-      <div class="w-full mx-auto px-6 lg:px-12">
-        <!-- Section Header -->
-        <div class="text-center mb-16">
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6">
-            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-            </svg>
-            <span class="text-blue-400 font-semibold text-sm">Testimonials</span>
-          </div>
-          <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-            What Our <span class="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">Users Say</span>
-          </h3>
-          <p class="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Trusted by students, developers, and businesses for their innovative AI projects.
-          </p>
-        </div>
 
-        <!-- Testimonials Grid -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          <!-- Testimonial 1 -->
-          <div class="group">
-            <div class="relative h-full">
-              <!-- Glow Effect -->
-              <div class="absolute -inset-4 bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 blur-xl rounded-2xl group-hover:from-blue-500/20 group-hover:via-indigo-500/20 group-hover:to-purple-500/20 transition-all duration-500"></div>
-              
-              <!-- Main Card -->
-              <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-blue-500/20 h-full flex flex-col hover:border-blue-400/40 transition-all duration-300">
-                <!-- Quote Icon -->
-                <div class="w-12 h-12 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 5.523-4.477 10-10 10S1 17.523 1 12 5.477 2 11 2s10 4.477 10 10z"></path>
-                  </svg>
-                </div>
-                
-                <!-- Content -->
-                <div class="flex-1">
-                  <p class="text-gray-300 text-sm leading-relaxed mb-6">"NexusBot was incredibly easy to set up for our final year project. The data-driven bot saved us weeks of work. Highly recommended!"</p>
-                  
-                  <!-- Rating -->
-                  <div class="flex gap-1 mb-6">
-                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                  </div>
-                </div>
-                
-                <!-- User Info -->
-                <div class="flex items-center pt-6 border-t border-gray-700/50">
-                  <img src="https://placehold.co/48x48/c084fc/ffffff?text=AV" alt="User Avatar" class="w-12 h-12 rounded-full mr-4">
-                  <div>
-                    <h5 class="text-white font-bold">Alex Vance</h5>
-                    <p class="text-sm text-gray-400">Computer Science Student</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Testimonial 2 -->
-          <div class="group">
-            <div class="relative h-full">
-              <!-- Glow Effect -->
-              <div class="absolute -inset-4 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-blue-500/10 blur-xl rounded-2xl group-hover:from-indigo-500/20 group-hover:via-purple-500/20 group-hover:to-blue-500/20 transition-all duration-500"></div>
-              
-              <!-- Main Card -->
-              <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-indigo-500/20 h-full flex flex-col hover:border-indigo-400/40 transition-all duration-300">
-                <!-- Quote Icon -->
-                <div class="w-12 h-12 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 5.523-4.477 10-10 10S1 17.523 1 12 5.477 2 11 2s10 4.477 10 10z"></path>
-                  </svg>
-                </div>
-                
-                <!-- Content -->
-                <div class="flex-1">
-                  <p class="text-gray-300 text-sm leading-relaxed mb-6">"The customization options are fantastic. We built a customer service bot that perfectly matched our brand's voice. The documentation is clear and helpful."</p>
-                  
-                  <!-- Rating -->
-                  <div class="flex gap-1 mb-6">
-                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                  </div>
-                </div>
-                
-                <!-- User Info -->
-                <div class="flex items-center pt-6 border-t border-gray-700/50">
-                  <img src="https://placehold.co/48x48/38bdf8/ffffff?text=JS" alt="User Avatar" class="w-12 h-12 rounded-full mr-4">
-                  <div>
-                    <h5 class="text-white font-bold">Jenna Smith</h5>
-                    <p class="text-sm text-gray-400">Freelance Developer</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Testimonial 3 -->
-          <div class="group">
-            <div class="relative h-full">
-              <!-- Glow Effect -->
-              <div class="absolute -inset-4 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-indigo-500/10 blur-xl rounded-2xl group-hover:from-purple-500/20 group-hover:via-blue-500/20 group-hover:to-indigo-500/20 transition-all duration-500"></div>
-              
-              <!-- Main Card -->
-              <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-purple-500/20 h-full flex flex-col hover:border-purple-400/40 transition-all duration-300">
-                <!-- Quote Icon -->
-                <div class="w-12 h-12 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 5.523-4.477 10-10 10S1 17.523 1 12 5.477 2 11 2s10 4.477 10 10z"></path>
-                  </svg>
-                </div>
-                
-                <!-- Content -->
-                <div class="flex-1">
-                  <p class="text-gray-300 text-sm leading-relaxed mb-6">"As a learning tool, NexusBot is unparalleled. The free tier gave me everything I needed to experiment with AI and NLP for my personal projects."</p>
-                  
-                  <!-- Rating -->
-                  <div class="flex gap-1 mb-6">
-                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                  </div>
-                </div>
-                
-                <!-- User Info -->
-                <div class="flex items-center pt-6 border-t border-gray-700/50">
-                  <img src="https://placehold.co/48x48/818cf8/ffffff?text=MK" alt="User Avatar" class="w-12 h-12 rounded-full mr-4">
-                  <div>
-                    <h5 class="text-white font-bold">Mike Chen</h5>
-                    <p class="text-sm text-gray-400">AI Hobbyist</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bottom CTA -->
-        <div class="text-center mt-16">
-          <div class="inline-flex items-center gap-4 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-2xl p-6 border border-blue-500/20">
-            <div class="text-left">
-              <h5 class="text-lg font-bold text-white mb-2">Join Our Community</h5>
-              <p class="text-gray-300 text-sm">See what thousands of developers are building with NexusBot</p>
-            </div>
-            <a href="{{ url_for('bot_builder') }}" class="inline-flex items-center justify-center bg-blue-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-blue-700 transition-colors duration-300">
-              Get Started
-              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="py-20 bg-gradient-to-b from-black via-gray-900/50 to-black section-fade-in">
-      <div class="w-full mx-auto px-6 lg:px-12">
-        <!-- Section Header -->
-        <div class="text-center mb-16">
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/20 mb-6">
-            <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            <span class="text-orange-400 font-semibold text-sm">Pricing</span>
-          </div>
-          <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-            <span class="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">Flexible Pricing</span> for Every Need
-          </h3>
-          <p class="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Choose the perfect plan for your project. Start free and scale as you grow!
-          </p>
-        </div>
-
-        <!-- Pricing Grid -->
-        <div class="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          <!-- Pricing Plan 1: Free -->
-          <div class="group">
-            <div class="relative h-full">
-              <!-- Glow Effect -->
-              <div class="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 via-green-500/10 to-teal-500/10 blur-xl rounded-2xl group-hover:from-emerald-500/20 group-hover:via-green-500/20 group-hover:to-teal-500/20 transition-all duration-500"></div>
-              
-              <!-- Main Card -->
-              <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20 h-full flex flex-col hover:border-emerald-400/40 transition-all duration-300">
-                <!-- Plan Icon -->
-                <div class="w-16 h-16 bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12z"></path>
-                  </svg>
-                </div>
-                
-                <!-- Content -->
-                <div class="flex-1">
-                  <h3 class="text-xl font-bold text-emerald-400 mb-2">Free</h3>
-                  <div class="text-3xl font-bold text-white mb-4">$0<span class="text-lg text-gray-400">/month</span></div>
-                  <p class="text-gray-300 text-sm leading-relaxed mb-6">Perfect for students and small projects</p>
-                  
-                  <!-- Features -->
-                  <ul class="space-y-3 mb-6 text-gray-300">
-                    <li class="flex items-center">
-                      <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg>
-                      <span class="text-sm">1000 messages/month</span>
-                    </li>
-                    <li class="flex items-center">
-                      <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg>
-                      <span class="text-sm">Basic chatbot features</span>
-                    </li>
-                    <li class="flex items-center">
-                      <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg>
-                      <span class="text-sm">Community support</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <!-- CTA -->
-                <button class="w-full bg-emerald-600 text-white font-semibold py-3 px-6 rounded-xl hover:bg-emerald-700 transition-colors duration-300">
-                  Get Started
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Pricing Plan 2: Pro -->
-          <div class="group">
-            <div class="relative h-full">
-              <!-- Glow Effect -->
-              <div class="absolute -inset-4 bg-gradient-to-r from-sky-500/10 via-blue-500/10 to-indigo-500/10 blur-xl rounded-2xl group-hover:from-sky-500/20 group-hover:via-blue-500/20 group-hover:to-indigo-500/20 transition-all duration-500"></div>
-              
-              <!-- Popular Badge -->
-              <div class="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-                <div class="bg-gradient-to-r from-sky-500 to-indigo-500 text-white text-xs font-bold px-4 py-1 rounded-full">
-                  MOST POPULAR
-                </div>
-              </div>
-              
-              <!-- Main Card -->
-              <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-sky-500/20 h-full flex flex-col hover:border-sky-400/40 transition-all duration-300">
-                <!-- Plan Icon -->
-                <div class="w-16 h-16 bg-gradient-to-br from-sky-500/20 to-blue-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                  </svg>
-                </div>
-                
-                <!-- Content -->
-                <div class="flex-1">
-                  <h3 class="text-xl font-bold text-sky-400 mb-2">Pro</h3>
-                  <div class="text-3xl font-bold text-white mb-4">$29<span class="text-lg text-gray-400">/month</span></div>
-                  <p class="text-gray-300 text-sm leading-relaxed mb-6">For growing teams and businesses</p>
-                  
-                  <!-- Features -->
-                  <ul class="space-y-3 mb-6 text-gray-300">
-                    <li class="flex items-center">
-                      <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg>
-                      <span class="text-sm">Unlimited messages</span>
-                    </li>
-                    <li class="flex items-center">
-                      <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg>
-                      <span class="text-sm">Advanced AI features</span>
-                    </li>
-                    <li class="flex items-center">
-                      <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg>
-                      <span class="text-sm">Priority support</span>
-                    </li>
-                    <li class="flex items-center">
-                      <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg>
-                      <span class="text-sm">Custom integrations</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <!-- CTA -->
-                <button class="w-full bg-sky-600 text-white font-semibold py-3 px-6 rounded-xl hover:bg-sky-700 transition-colors duration-300">
-                  Start Free Trial
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Pricing Plan 3: Enterprise -->
-          <div class="group">
-            <div class="relative h-full">
-              <!-- Glow Effect -->
-              <div class="absolute -inset-4 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-indigo-500/10 blur-xl rounded-2xl group-hover:from-purple-500/20 group-hover:via-pink-500/20 group-hover:to-indigo-500/20 transition-all duration-500"></div>
-              
-              <!-- Main Card -->
-              <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-purple-500/20 h-full flex flex-col hover:border-purple-400/40 transition-all duration-300">
-                <!-- Plan Icon -->
-                <div class="w-16 h-16 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                  </svg>
-                </div>
-                
-                <!-- Content -->
-                <div class="flex-1">
-                  <h3 class="text-xl font-bold text-purple-400 mb-2">Enterprise</h3>
-                  <div class="text-3xl font-bold text-white mb-4">Custom</div>
-                  <p class="text-gray-300 text-sm leading-relaxed mb-6">Tailored solutions for large organizations</p>
-                  
-                  <!-- Features -->
-                  <ul class="space-y-3 mb-6 text-gray-300">
-                    <li class="flex items-center">
-                      <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg>
-                      <span class="text-sm">Everything in Pro</span>
-                    </li>
-                    <li class="flex items-center">
-                      <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg>
-                      <span class="text-sm">Custom AI models</span>
-                    </li>
-                    <li class="flex items-center">
-                      <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg>
-                      <span class="text-sm">Dedicated support</span>
-                    </li>
-                    <li class="flex items-center">
-                      <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg>
-                      <span class="text-sm">SLA guarantee</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <!-- CTA -->
-                <button class="w-full bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl hover:bg-purple-700 transition-colors duration-300">
-                  Contact Sales
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bottom CTA -->
-        <div class="text-center mt-16">
-          <div class="inline-flex items-center gap-4 bg-gradient-to-r from-orange-500/10 to-amber-500/10 rounded-2xl p-6 border border-orange-500/20">
-            <div class="text-left">
-              <h5 class="text-lg font-bold text-white mb-2">Not sure which plan?</h5>
-              <p class="text-gray-300 text-sm">Start with our free plan and upgrade anytime</p>
-            </div>
-            <a href="{{ url_for('bot_builder') }}" class="inline-flex items-center justify-center bg-orange-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-orange-700 transition-colors duration-300">
-              Start Free
-              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-    </section>
 
     <!-- Contact Section -->
     <section id="contact" class="py-20 bg-gradient-to-b from-black via-gray-900/50 to-black section-fade-in">
       <div class="w-full mx-auto px-6 lg:px-12">
         <!-- Section Header -->
         <div class="text-center mb-16">
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-500/10 border border-pink-500/20 mb-6">
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-500/10 border border-pink-500/20 mb-6">
             <svg class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+              </path>
             </svg>
             <span class="text-pink-400 font-semibold text-sm">Get in Touch</span>
           </div>
@@ -2436,10 +920,13 @@
         <div class="max-w-2xl mx-auto">
           <div class="relative">
             <!-- Glow Effect -->
-            <div class="absolute -inset-8 bg-gradient-to-r from-pink-500/10 via-rose-500/10 to-red-500/10 blur-2xl rounded-3xl"></div>
-            
+            <div
+              class="absolute -inset-8 bg-gradient-to-r from-pink-500/10 via-rose-500/10 to-red-500/10 blur-2xl rounded-3xl">
+            </div>
+
             <!-- Main Form Card -->
-            <div class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-3xl p-8 border border-pink-500/20">
+            <div
+              class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-3xl p-8 border border-pink-500/20">
               <form class="space-y-6">
                 <div class="grid md:grid-cols-2 gap-6">
                   <div>
@@ -2453,25 +940,28 @@
                       class="block w-full bg-gray-800/50 border-gray-600 rounded-xl shadow-sm py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-300">
                   </div>
                 </div>
-                
+
                 <div>
                   <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Message</label>
                   <textarea id="message" name="message" rows="4"
                     class="block w-full bg-gray-800/50 border-gray-600 rounded-xl shadow-sm py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-300 resize-none"></textarea>
                 </div>
-                
+
                 <div class="flex items-center justify-between">
                   <div class="text-sm text-gray-400">
-                    <svg class="w-4 h-4 inline mr-1 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <svg class="w-4 h-4 inline mr-1 text-green-400" fill="none" stroke="currentColor"
+                      viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                     We'll respond within 24 hours
                   </div>
                   <button type="submit"
-                    class="bg-gradient-to-r from-pink-600 to-rose-600 text-white font-semibold py-3 px-8 rounded-xl hover:from-pink-700 hover:to-rose-700 transition-all duration-300 transform hover:scale-105">
+                    class="bg-gradient-to-r from-pink-600 to-rose-600 text-white font-semibold py-3 px-8 rounded-xl hover:from-pink-700 hover:to-rose-700 transition-all duration-300 transform hover:scale-105 send-message-btn">
                     Send Message
                     <svg class="w-4 h-4 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                     </svg>
                   </button>
                 </div>
@@ -2480,38 +970,7 @@
           </div>
 
           <!-- Contact Info -->
-          <div class="grid md:grid-cols-3 gap-8 mt-16 max-w-4xl mx-auto">
-            <div class="text-center">
-              <div class="w-12 h-12 bg-gradient-to-br from-pink-500/20 to-rose-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <svg class="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
-              </div>
-              <h4 class="text-white font-semibold mb-2">Email</h4>
-              <p class="text-gray-400 text-sm">support@nexusbot.ai</p>
-            </div>
-            
-            <div class="text-center">
-              <div class="w-12 h-12 bg-gradient-to-br from-rose-500/20 to-red-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <svg class="w-6 h-6 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                </svg>
-              </div>
-              <h4 class="text-white font-semibold mb-2">Location</h4>
-              <p class="text-gray-400 text-sm">Global Remote Team</p>
-            </div>
-            
-            <div class="text-center">
-              <div class="w-12 h-12 bg-gradient-to-br from-red-500/20 to-pink-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-              </div>
-              <h4 class="text-white font-semibold mb-2">Response Time</h4>
-              <p class="text-gray-400 text-sm">Within 24 hours</p>
-            </div>
-          </div>
+
         </div>
       </div>
     </section>
@@ -2519,22 +978,57 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-black border-t border-gray-800" id="footer">
-    <div class="w-full mx-auto px-6 lg:px-12 py-8">
-      <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-        <h2 class="text-2xl font-bold text-white mb-4 md:mb-0">
-          Nexus<span class="text-sky-400">Bot</span>
-        </h2>
-        <div class="flex space-x-6 mb-4 md:mb-0">
-          <a href="#about" class="text-gray-400 hover:text-white">About</a>
-          <a href="#services" class="text-gray-400 hover:text-white">Services</a>
-          <a href="#features" class="text-gray-400 hover:text-white">Features</a>
-          <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
+  <footer class="bg-black border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-10">
+
+      <!-- Top Section -->
+      <div class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between text-center md:text-left">
+
+        <!-- Brand -->
+        <div>
+          <h2 class="text-2xl font-semibold text-white">
+            Vizchat
+          </h2>
+          <p class="mt-2 text-sm text-gray-400 max-w-xs mx-auto md:mx-0">
+            Smart AI-powered chatbots & data visualization tools.
+          </p>
         </div>
-        <p class="text-gray-500">&copy; 2024 NexusBot. All rights reserved.</p>
+
+        <!-- Navigation -->
+        <nav class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm">
+          <a href="#about" class="text-gray-400 hover:text-white transition">
+            About
+          </a>
+          <a href="#services" class="text-gray-400 hover:text-white transition">
+            Services
+          </a>
+          <a href="#features" class="text-gray-400 hover:text-white transition">
+            Features
+          </a>
+          <a href="#privacy" class="text-gray-400 hover:text-white transition">
+            Privacy Policy
+          </a>
+        </nav>
+
       </div>
+
+      <!-- Divider -->
+      <div class="my-8 border-t border-gray-800"></div>
+
+      <!-- Bottom Section -->
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-center text-sm">
+        <p class="text-gray-500">
+          © 2024 Vizchat. All rights reserved.
+        </p>
+
+        <p class="text-gray-500">
+          Built with ❤️ using AI
+        </p>
+      </div>
+
     </div>
   </footer>
+
 
   <!-- Login Modal -->
   <div id="loginModal" class="fixed inset-0 z-50 items-center justify-center hidden">
@@ -2542,7 +1036,7 @@
     <div class="bg-gray-800 text-white rounded-lg shadow-xl p-8 w-full max-w-md m-4 relative border border-gray-700">
       <button id="closeModal"
         class="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
-      <h3 class="text-2xl font-bold text-center mb-6">Login to NexusBot</h3>
+      <h3 class="text-2xl font-bold text-center mb-6">Login to Vizchat</h3>
       <form>
         <div class="mb-4">
           <label for="login-email" class="block text-sm font-medium text-gray-300 mb-1">Email Address</label>

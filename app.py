@@ -169,11 +169,9 @@ def logout():
     flash('You have been logged out.', 'info')
     return redirect(url_for('signup_page'))
 
-# Home / Index Route - Redirect to signup if not logged in
+# Home / Index Route - Allow access without login
 @app.route("/")
 def index():
-    if 'user_id' not in session:
-        return redirect(url_for('signup_page'))
     username = session.get('username', 'Guest')
     return render_template("home.html", username=username)
 
