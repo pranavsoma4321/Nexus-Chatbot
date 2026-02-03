@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NexusBot - Your AI Assistant</title>
+  <title>Your AI Assistant</title>
   <meta name="description"
     content="Build conversational and data-driven chatbots with a modern UI, fast setup, and local-first privacy." />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -178,7 +178,7 @@
 
             <div id="nexus-badge"
               class="inline-flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 px-3 py-2 rounded-full bg-white/5 border border-white/10 text-xs text-gray-200">
-              <span class="text-sky-400 font-semibold">NexusBot</span>
+              <span class="text-sky-400 font-semibold"></span>
               <span class="text-gray-400">Local AI + Data Bots</span>
             </div>
 
@@ -187,11 +187,10 @@
 
             <h2
               class="mt-5 text-4xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold hero-gradient-text leading-tight">
-              Build chatbots people actually want to use.
+              Build Chatbots People actually want to use.
             </h2>
             <p class="mt-5 text-lg sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0">
-              Create conversational and data-driven assistants <br> with a clean UI, fast setup, and seamless
-              navigation.
+              Upload data, ask questions, and see clear <br> visual results.
             </p>
             <div class="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
               <a href="{{ url_for('bot_builder') }}"
@@ -204,17 +203,13 @@
               </a>
             </div>
             <div class="mt-10 grid grid-cols-3 gap-3 max-w-xl mx-auto lg:mx-0">
-              <div class="soft-ring rounded-xl bg-black/60 border border-gray-800 p-4">
+              <div class="soft-ring rounded-xl bg-black/60 border border-gray-400 p-4">
                 <div class="text-white font-semibold">Fast setup</div>
                 <div class="text-xs text-gray-400 mt-1">Start in minutes</div>
               </div>
-              <div class="soft-ring rounded-xl bg-black/60 border border-gray-800 p-4">
+              <div class="soft-ring rounded-xl bg-black/60 border border-gray-400 p-4">
                 <div class="text-white font-semibold">Modern UI</div>
                 <div class="text-xs text-gray-400 mt-1">Responsive design</div>
-              </div>
-              <div class="soft-ring rounded-xl bg-black/60 border border-gray-800 p-4">
-                <div class="text-white font-semibold">Local AI</div>
-                <div class="text-xs text-gray-400 mt-1">LLaMA ready</div>
               </div>
             </div>
             <div id="recentBotsSection" class="mt-8 hidden max-w-xl mx-auto lg:mx-0">
@@ -229,14 +224,6 @@
                 </div>
                 <div id="recentBotsList" class="mt-4 space-y-3"></div>
               </div>
-            </div>
-            <div class="mt-8 flex flex-wrap gap-2 justify-center lg:justify-start">
-              <span class="px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-gray-200">Flask</span>
-              <span
-                class="px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-gray-200">Tailwind</span>
-              <span class="px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-gray-200">Firebase
-                Auth</span>
-              <span class="px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-gray-200">LLaMA</span>
             </div>
           </div>
           <div class="relative">
@@ -277,407 +264,7 @@
       </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-32 bg-gradient-to-b from-black via-gray-900/50 to-black section-fade-in">
-      <div class="w-full mx-auto px-6 lg:px-12">
-        <!-- Section Header -->
-        <div class="text-center mb-16">
-          <div
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
-            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
-              </path>
-            </svg>
-            <span class="text-emerald-400 font-semibold text-sm">Why Choose NexusBot</span>
-          </div>
-          <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-            The <span class="bg-gradient-to-r from-emerald-400 to-sky-400 bg-clip-text text-transparent">Smart
-              Choice</span> for Modern AI
-          </h3>
-          <p class="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Discover the perfect blend of cutting-edge technology and powerful capabilities that set NexusBot apart.
-          </p>
-        </div>
-
-        <!-- Main Content Grid -->
-        <div class="grid lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
-          <!-- Left Side - Simple Content -->
-          <div class="relative order-2 lg:order-1">
-            <div
-              class="bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-12 border border-emerald-500/20 min-h-[400px] flex items-center">
-              <div class="text-center w-full">
-                <div
-                  class="w-24 h-24 bg-gradient-to-br from-emerald-500 to-sky-500 rounded-2xl flex items-center justify-center mx-auto mb-8">
-                  <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
-                    </path>
-                  </svg>
-                </div>
-                <h4 class="text-2xl font-bold text-emerald-400 mb-6">AI-Powered Intelligence</h4>
-                <p class="text-gray-300 text-base leading-relaxed mb-8">
-                  Built with advanced LLaMA integration and Python excellence, delivering smart, efficient, and private
-                  AI solutions.
-                </p>
-                <div class="flex flex-wrap gap-3 justify-center">
-                  <span
-                    class="px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-sm text-emerald-400">LLaMA
-                    AI</span>
-                  <span
-                    class="px-4 py-2 bg-sky-500/10 border border-sky-500/20 rounded-full text-sm text-sky-400">Python</span>
-                  <span
-                    class="px-4 py-2 bg-purple-500/10 border border-purple-500/20 rounded-full text-sm text-purple-400">Local
-                    Processing</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Side - Content -->
-          <div class="order-1 lg:order-2 space-y-8">
-            <!-- Main Heading -->
-            <div>
-              <h4 class="text-2xl lg:text-3xl font-bold text-white mb-6">
-                Engineering Excellence <span class="text-emerald-400">Meets</span> Simplicity
-              </h4>
-              <p class="text-base text-gray-300 leading-relaxed mb-8">
-                NexusBot combines advanced AI technology with intuitive design. Built on Python with LLaMA integration,
-                it delivers human-like conversations with exceptional performance and privacy.
-              </p>
-            </div>
-
-            <!-- Key Features Grid -->
-            <div class="grid sm:grid-cols-2 gap-6">
-              <div class="group">
-                <div class="flex items-start gap-4">
-                  <div
-                    class="flex-shrink-0 w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors duration-300">
-                    <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
-                      </path>
-                    </svg>
-                  </div>
-                  <div>
-                    <h5 class="text-lg font-semibold text-white mb-2">Intelligent Processing</h5>
-                    <p class="text-gray-400 text-sm leading-relaxed">Advanced NLP with context awareness and adaptive
-                      learning.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="group">
-                <div class="flex items-start gap-4">
-                  <div
-                    class="flex-shrink-0 w-12 h-12 bg-sky-500/10 rounded-xl flex items-center justify-center group-hover:bg-sky-500/20 transition-colors duration-300">
-                    <svg class="w-6 h-6 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
-                      </path>
-                    </svg>
-                  </div>
-                  <div>
-                    <h5 class="text-lg font-semibold text-white mb-2">Privacy First</h5>
-                    <p class="text-gray-400 text-sm leading-relaxed">Local processing ensures complete data
-                      confidentiality and security.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="group">
-                <div class="flex items-start gap-4">
-                  <div
-                    class="flex-shrink-0 w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center group-hover:bg-purple-500/20 transition-colors duration-300">
-                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
-                  </div>
-                  <div>
-                    <h5 class="text-lg font-semibold text-white mb-2">Lightning Fast</h5>
-                    <p class="text-gray-400 text-sm leading-relaxed">Sub-second response times with optimized
-                      performance.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="group">
-                <div class="flex items-start gap-4">
-                  <div
-                    class="flex-shrink-0 w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center group-hover:bg-green-500/20 transition-colors duration-300">
-                    <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
-                      </path>
-                    </svg>
-                  </div>
-                  <div>
-                    <h5 class="text-lg font-semibold text-white mb-2">Easy Integration</h5>
-                    <p class="text-gray-400 text-sm leading-relaxed">Simple API with comprehensive documentation for
-                      seamless setup.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- CTA Section -->
-            <style>
-              @media (min-width: 350px) and (max-width: 500px) {
-                #cta-card {
-                  padding: 2rem;
-                  /* equivalent to Tailwind p-8 */
-                }
-              }
-            </style>
-
-            <div id="cta-card"
-              class="bg-gradient-to-r from-emerald-500/10 to-sky-500/10 rounded-2xl p-6 sm:p-8 border border-emerald-500/20">
-
-              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
-
-                <!-- Text Section -->
-                <div class="flex-1 pr-0 sm:pr-4">
-                  <h5 class="text-lg sm:text-xl font-bold text-white mb-2">
-                    Ready to Get Started?
-                  </h5>
-                  <p class="text-gray-300 text-sm sm:text-base">
-                    Join thousands of developers building with NexusBot
-                  </p>
-                </div>
-
-                <!-- Button Section -->
-                <a href="{{ url_for('bot_builder') }}"
-                  class="inline-flex items-center justify-center w-full sm:w-auto bg-emerald-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-emerald-700 transition-colors duration-300 mt-3 sm:mt-0">
-                  Start Building
-                  <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
-                    </path>
-                  </svg>
-                </a>
-
-              </div>
-            </div>
-
-
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Services Section (Chatbot Types) -->
-    <section id="services" class="py-20 bg-gradient-to-b from-black via-gray-900/50 to-black section-fade-in">
-      <div class="w-full mx-auto px-6 lg:px-12">
-        <!-- Section Header -->
-        <div class="text-center mb-16">
-          <div
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/20 mb-6">
-            <svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
-              </path>
-            </svg>
-            <span class="text-sky-400 font-semibold text-sm">AI Solutions</span>
-          </div>
-          <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-            Powerful <span class="bg-gradient-to-r from-sky-400 to-purple-400 bg-clip-text text-transparent">AI
-              Tools</span> for Modern Projects
-          </h3>
-          <p class="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Complete suite of AI solutions for conversation, data analysis, and image processing - all running locally
-            on your infrastructure.
-          </p>
-        </div>
-
-        <!-- Services Grid -->
-        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <!-- Custom Chatbot -->
-          <div class="group">
-            <div class="relative h-full">
-              <!-- Glow Effect -->
-              <div
-                class="absolute -inset-4 bg-gradient-to-r from-sky-500/10 via-blue-500/10 to-purple-500/10 blur-xl rounded-2xl group-hover:from-sky-500/20 group-hover:via-blue-500/20 group-hover:to-purple-500/20 transition-all duration-500">
-              </div>
-
-              <!-- Main Card -->
-              <div
-                class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-sky-500/20 h-full flex flex-col">
-                <!-- Icon -->
-                <div
-                  class="w-16 h-16 bg-gradient-to-br from-sky-500/20 to-blue-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V10a2 2 0 012-2h8z"></path>
-                  </svg>
-                </div>
-
-                <!-- Content -->
-                <div class="flex-1">
-                  <h4 class="text-xl font-bold text-white mb-3">Custom Conversational Bot</h4>
-                  <p class="text-gray-400 text-sm leading-relaxed mb-6">Perfect for user engagement, customer support,
-                    and brand interaction with unique personality.</p>
-                </div>
-
-                <!-- Features -->
-                <div class="space-y-2 mb-6">
-
-                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
-                    <span class="w-2 h-2 mt-1 bg-sky-400 rounded-full"></span>
-                    <span class="break-words">Natural Conversations</span>
-                  </div>
-
-                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
-                    <span class="w-2 h-2 mt-1 bg-sky-400 rounded-full"></span>
-                    <span class="break-words">Custom Personality</span>
-                  </div>
-
-                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
-                    <span class="w-2 h-2 mt-1 bg-sky-400 rounded-full"></span>
-                    <span class="break-words">Context Aware</span>
-                  </div>
-
-                </div>
-
-
-                <!-- CTA -->
-                <a href="{{ url_for('customize_chatbot') }}"
-                  class="inline-flex items-center justify-center w-full bg-sky-600/20 text-sky-400 font-semibold py-3 px-4 rounded-xl hover:bg-sky-600/30 transition-colors duration-300 border border-sky-500/30">
-                  Build Chatbot
-                  <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
-                    </path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Data Analysis -->
-          <div class="group">
-            <div class="relative h-full">
-              <!-- Glow Effect -->
-              <div
-                class="absolute -inset-4 bg-gradient-to-r from-violet-500/10 via-purple-500/10 to-pink-500/10 blur-xl rounded-2xl group-hover:from-violet-500/20 group-hover:via-purple-500/20 group-hover:to-pink-500/20 transition-all duration-500">
-              </div>
-
-              <!-- Main Card -->
-              <div
-                class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-violet-500/20 h-full flex flex-col">
-                <!-- Icon -->
-                <div
-                  class="w-16 h-16 bg-gradient-to-br from-violet-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg class="w-8 h-8 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V7a2 2 0 012-2h5l2 2h5a2 2 0 012 2v5a2 2 0 01-2 2z">
-                    </path>
-                  </svg>
-                </div>
-
-                <!-- Content -->
-                <div class="flex-1">
-                  <h4 class="text-xl font-bold text-white mb-3">Data Analysis</h4>
-                  <p class="text-gray-400 text-sm leading-relaxed mb-6">Transform Excel, CSV files into insights with
-                    instant analysis and visualizations.</p>
-                </div>
-
-                <!-- Features -->
-                <div class="space-y-2 mb-6">
-
-                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
-                    <span class="w-2 h-2 mt-1 bg-violet-400 rounded-full"></span>
-                    <span class="break-words">Excel/CSV Support</span>
-                  </div>
-
-                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
-                    <span class="w-2 h-2 mt-1 bg-violet-400 rounded-full"></span>
-                    <span class="break-words">Statistical Analysis</span>
-                  </div>
-
-                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
-                    <span class="w-2 h-2 mt-1 bg-violet-400 rounded-full"></span>
-                    <span class="break-words">Visual Reports</span>
-                  </div>
-
-                </div>
-
-
-                <!-- CTA -->
-                <a href="{{ url_for('customize_upload') }}"
-                  class="inline-flex items-center justify-center w-full bg-violet-600/20 text-violet-400 font-semibold py-3 px-4 rounded-xl hover:bg-violet-600/30 transition-colors duration-300 border border-violet-500/30">
-                  Analyze Data
-                  <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
-                    </path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Image Processing -->
-          <div class="group">
-            <div class="relative h-full">
-              <!-- Glow Effect -->
-              <div
-                class="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 via-green-500/10 to-teal-500/10 blur-xl rounded-2xl group-hover:from-emerald-500/20 group-hover:via-green-500/20 group-hover:to-teal-500/20 transition-all duration-500">
-              </div>
-
-              <!-- Main Card -->
-              <div
-                class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20 h-full flex flex-col">
-                <!-- Icon -->
-                <div
-                  class="w-16 h-16 bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                    </path>
-                  </svg>
-                </div>
-
-                <!-- Content -->
-                <div class="flex-1">
-                  <h4 class="text-xl font-bold text-white mb-3">Image Processing Upcomming.</h4>
-                  <p class="text-gray-400 text-sm leading-relaxed mb-6">Advanced image editing with filters, object
-                    detection, and enhancement - all locally.</p>
-                </div>
-
-                <!-- Features -->
-                <div class="space-y-2 mb-6">
-
-                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
-                    <span class="w-2 h-2 mt-1 bg-emerald-400 rounded-full"></span>
-                    <span class="break-words">Smart Filters</span>
-                  </div>
-
-                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
-                    <span class="w-2 h-2 mt-1 bg-emerald-400 rounded-full"></span>
-                    <span class="break-words">Object Detection</span>
-                  </div>
-
-                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
-                    <span class="w-2 h-2 mt-1 bg-emerald-400 rounded-full"></span>
-                    <span class="break-words">Batch Processing</span>
-                  </div>
-
-                </div>
-
-
-                <!-- CTA -->
-                <a href="{{ url_for('image_processor') }}"
-                  class="inline-flex items-center justify-center w-full bg-emerald-600/20 text-emerald-400 font-semibold py-3 px-4 rounded-xl hover:bg-emerald-600/30 transition-colors duration-300 border border-emerald-500/30">
-                  Process Images upcomming.
-                  <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
-                    </path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    
     <!-- How It Works Section -->
     <section id="how-it-works" class="py-20 bg-gradient-to-b from-black via-gray-900/50 to-black section-fade-in">
       <div class="w-full mx-auto px-6 lg:px-12">
@@ -696,7 +283,7 @@
               Easy Steps</span>
           </h3>
           <p class="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Launch your powerful AI chatbot with our simple and intuitive process designed for developers.
+            Chat with AI and explore your data through clear visuals.
           </p>
         </div>
 
@@ -978,9 +565,411 @@
 
           </div>
         </div>
-
       </div>
     </section>
+
+    <!-- Services Section (Chatbot Types) -->
+    <section id="services" class="py-20 bg-gradient-to-b from-black via-gray-900/50 to-black section-fade-in">
+      <div class="w-full mx-auto px-6 lg:px-12">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/20 mb-6">
+            <svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+              </path>
+            </svg>
+            <span class="text-sky-400 font-semibold text-sm">AI Solutions</span>
+          </div>
+          <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+            Powerful <span class="bg-gradient-to-r from-sky-400 to-purple-400 bg-clip-text text-transparent">AI
+              Tools</span> for Modern Projects
+          </h3>
+          <p class="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Complete suite of AI solutions for conversation, data analysis, and image processing - all running locally
+            on your infrastructure.
+          </p>
+        </div>
+
+        <!-- Services Grid -->
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <!-- Custom Chatbot -->
+          <div class="group">
+            <div class="relative h-full">
+              <!-- Glow Effect -->
+              <div
+                class="absolute -inset-4 bg-gradient-to-r from-sky-500/10 via-blue-500/10 to-purple-500/10 blur-xl rounded-2xl group-hover:from-sky-500/20 group-hover:via-blue-500/20 group-hover:to-purple-500/20 transition-all duration-500">
+              </div>
+
+              <!-- Main Card -->
+              <div
+                class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-sky-500/20 h-full flex flex-col">
+                <!-- Icon -->
+                <div
+                  class="w-16 h-16 bg-gradient-to-br from-sky-500/20 to-blue-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V10a2 2 0 012-2h8z"></path>
+                  </svg>
+                </div>
+
+                <!-- Content -->
+                <div class="flex-1">
+                  <h4 class="text-xl font-bold text-white mb-3">Custom Conversational Bot</h4>
+                  <p class="text-gray-400 text-sm leading-relaxed mb-6">Perfect for user engagement, customer support,
+                    and brand interaction with unique personality.</p>
+                </div>
+
+                <!-- Features -->
+                <div class="space-y-2 mb-6">
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-sky-400 rounded-full"></span>
+                    <span class="break-words">Natural Conversations</span>
+                  </div>
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-sky-400 rounded-full"></span>
+                    <span class="break-words">Custom Personality</span>
+                  </div>
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-sky-400 rounded-full"></span>
+                    <span class="break-words">Context Aware</span>
+                  </div>
+
+                </div>
+
+
+                <!-- CTA -->
+                <a href="{{ url_for('customize_chatbot') }}"
+                  class="inline-flex items-center justify-center w-full bg-sky-600/20 text-sky-400 font-semibold py-3 px-4 rounded-xl hover:bg-sky-600/30 transition-colors duration-300 border border-sky-500/30">
+                  Build Chatbot
+                  <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
+                    </path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Data Analysis -->
+          <div class="group">
+            <div class="relative h-full">
+              <!-- Glow Effect -->
+              <div
+                class="absolute -inset-4 bg-gradient-to-r from-violet-500/10 via-purple-500/10 to-pink-500/10 blur-xl rounded-2xl group-hover:from-violet-500/20 group-hover:via-purple-500/20 group-hover:to-pink-500/20 transition-all duration-500">
+              </div>
+
+              <!-- Main Card -->
+              <div
+                class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-violet-500/20 h-full flex flex-col">
+                <!-- Icon -->
+                <div
+                  class="w-16 h-16 bg-gradient-to-br from-violet-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-8 h-8 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V7a2 2 0 012-2h5l2 2h5a2 2 0 012 2v5a2 2 0 01-2 2z">
+                    </path>
+                  </svg>
+                </div>
+
+                <!-- Content -->
+                <div class="flex-1">
+                  <h4 class="text-xl font-bold text-white mb-3">Data Analysis</h4>
+                  <p class="text-gray-400 text-sm leading-relaxed mb-6">Transform Excel, CSV files into insights with
+                    instant analysis and visualizations.</p>
+                </div>
+
+                <!-- Features -->
+                <div class="space-y-2 mb-6">
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-violet-400 rounded-full"></span>
+                    <span class="break-words">Excel/CSV Support</span>
+                  </div>
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-violet-400 rounded-full"></span>
+                    <span class="break-words">Statistical Analysis</span>
+                  </div>
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-violet-400 rounded-full"></span>
+                    <span class="break-words">Visual Reports</span>
+                  </div>
+
+                </div>
+
+
+                <!-- CTA -->
+                <a href="{{ url_for('customize_upload') }}"
+                  class="inline-flex items-center justify-center w-full bg-violet-600/20 text-violet-400 font-semibold py-3 px-4 rounded-xl hover:bg-violet-600/30 transition-colors duration-300 border border-violet-500/30">
+                  Analyze Data
+                  <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
+                    </path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image Processing -->
+          <div class="group">
+            <div class="relative h-full">
+              <!-- Glow Effect -->
+              <div
+                class="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 via-green-500/10 to-teal-500/10 blur-xl rounded-2xl group-hover:from-emerald-500/20 group-hover:via-green-500/20 group-hover:to-teal-500/20 transition-all duration-500">
+              </div>
+
+              <!-- Main Card -->
+              <div
+                class="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20 h-full flex flex-col">
+                <!-- Icon -->
+                <div
+                  class="w-16 h-16 bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                    </path>
+                  </svg>
+                </div>
+
+                <!-- Content -->
+                <div class="flex-1">
+                  <h4 class="text-xl font-bold text-white mb-3">Image Processing Upcomming.</h4>
+                  <p class="text-gray-400 text-sm leading-relaxed mb-6">Advanced image editing with filters, object
+                    detection, and enhancement - all locally.</p>
+                </div>
+
+                <!-- Features -->
+                <div class="space-y-2 mb-6">
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-emerald-400 rounded-full"></span>
+                    <span class="break-words">Smart Filters</span>
+                  </div>
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-emerald-400 rounded-full"></span>
+                    <span class="break-words">Object Detection</span>
+                  </div>
+
+                  <div class="grid grid-cols-[8px_1fr] gap-x-2 text-xs text-gray-400">
+                    <span class="w-2 h-2 mt-1 bg-emerald-400 rounded-full"></span>
+                    <span class="break-words">Batch Processing</span>
+                  </div>
+
+                </div>
+
+
+                <!-- CTA -->
+                <a href="{{ url_for('image_processor') }}"
+                  class="inline-flex items-center justify-center w-full bg-emerald-600/20 text-emerald-400 font-semibold py-3 px-4 rounded-xl hover:bg-emerald-600/30 transition-colors duration-300 border border-emerald-500/30">
+                  Process Images upcomming.
+                  <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
+                    </path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 bg-gradient-to-b from-black via-gray-900/50 to-black section-fade-in">
+      <div class="w-full mx-auto px-6 lg:px-12">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
+              </path>
+            </svg>
+            <span class="text-emerald-400 font-semibold text-sm">Why Choose NexusBot</span>
+          </div>
+          <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+            The <span class="bg-gradient-to-r from-emerald-400 to-sky-400 bg-clip-text text-transparent">Smart
+              Choice</span> for Modern AI
+          </h3>
+          <p class="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Discover the perfect blend of cutting-edge technology and powerful capabilities that set NexusBot apart.
+          </p>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
+          <!-- Left Side - Simple Content -->
+          <div class="relative order-2 lg:order-1">
+            <div
+              class="bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-2xl p-12 border border-emerald-500/20 min-h-[400px] flex items-center">
+              <div class="text-center w-full">
+                <div
+                  class="w-24 h-24 bg-gradient-to-br from-emerald-500 to-sky-500 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                  <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                    </path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-bold text-emerald-400 mb-6">AI-Powered Intelligence</h4>
+                <p class="text-gray-300 text-base leading-relaxed mb-8">
+                  Built with advanced LLaMA integration and Python excellence, delivering smart, efficient, and private
+                  AI solutions.
+                </p>
+                <div class="flex flex-wrap gap-3 justify-center">
+                  <span
+                    class="px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-sm text-emerald-400">LLaMA
+                    AI</span>
+                  <span
+                    class="px-4 py-2 bg-sky-500/10 border border-sky-500/20 rounded-full text-sm text-sky-400">Python</span>
+                  <span
+                    class="px-4 py-2 bg-purple-500/10 border border-purple-500/20 rounded-full text-sm text-purple-400">Local
+                    Processing</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Side - Content -->
+          <div class="order-1 lg:order-2 space-y-8">
+            <!-- Main Heading -->
+            <div>
+              <h4 class="text-2xl lg:text-3xl font-bold text-white mb-6">
+                Engineering Excellence <span class="text-emerald-400">Meets</span> Simplicity
+              </h4>
+              <p class="text-base text-gray-300 leading-relaxed mb-8">
+                NexusBot combines advanced AI technology with intuitive design. Built on Python with LLaMA integration,
+                it delivers human-like conversations with exceptional performance and privacy.
+              </p>
+            </div>
+
+            <!-- Key Features Grid -->
+            <div class="grid sm:grid-cols-2 gap-6">
+              <div class="group">
+                <div class="flex items-start gap-4">
+                  <div
+                    class="flex-shrink-0 w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors duration-300">
+                    <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                      </path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h5 class="text-lg font-semibold text-white mb-2">Intelligent Processing</h5>
+                    <p class="text-gray-400 text-sm leading-relaxed">Advanced NLP with context awareness and adaptive
+                      learning.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="group">
+                <div class="flex items-start gap-4">
+                  <div
+                    class="flex-shrink-0 w-12 h-12 bg-sky-500/10 rounded-xl flex items-center justify-center group-hover:bg-sky-500/20 transition-colors duration-300">
+                    <svg class="w-6 h-6 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                      </path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h5 class="text-lg font-semibold text-white mb-2">Privacy First</h5>
+                    <p class="text-gray-400 text-sm leading-relaxed">Local processing ensures complete data
+                      confidentiality and security.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="group">
+                <div class="flex items-start gap-4">
+                  <div
+                    class="flex-shrink-0 w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center group-hover:bg-purple-500/20 transition-colors duration-300">
+                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h5 class="text-lg font-semibold text-white mb-2">Lightning Fast</h5>
+                    <p class="text-gray-400 text-sm leading-relaxed">Sub-second response times with optimized
+                      performance.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="group">
+                <div class="flex items-start gap-4">
+                  <div
+                    class="flex-shrink-0 w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center group-hover:bg-green-500/20 transition-colors duration-300">
+                    <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                      </path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h5 class="text-lg font-semibold text-white mb-2">Easy Integration</h5>
+                    <p class="text-gray-400 text-sm leading-relaxed">Simple API with comprehensive documentation for
+                      seamless setup.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CTA Section -->
+            <style>
+              @media (min-width: 350px) and (max-width: 500px) {
+                #cta-card {
+                  padding: 2rem;
+                  /* equivalent to Tailwind p-8 */
+                }
+              }
+            </style>
+
+            <div id="cta-card"
+              class="bg-gradient-to-r from-emerald-500/10 to-sky-500/10 rounded-2xl p-6 sm:p-8 border border-emerald-500/20">
+
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
+
+                <!-- Text Section -->
+                <div class="flex-1 pr-0 sm:pr-4">
+                  <h5 class="text-lg sm:text-xl font-bold text-white mb-2">
+                    Ready to Get Started?
+                  </h5>
+                  <p class="text-gray-300 text-sm sm:text-base">
+                    Join thousands of developers building with NexusBot
+                  </p>
+                </div>
+
+                <!-- Button Section -->
+                <a href="{{ url_for('bot_builder') }}"
+                  class="inline-flex items-center justify-center w-full sm:w-auto bg-emerald-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-emerald-700 transition-colors duration-300 mt-3 sm:mt-0">
+                  Start Building
+                  <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
+                    </path>
+                  </svg>
+                </a>
+
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+
 
     <!-- Features Section -->
 
