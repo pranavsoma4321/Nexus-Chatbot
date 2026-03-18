@@ -14,13 +14,13 @@ A responsive Flask-based AI chatbot application with data visualization capabili
 ## Quick Start
 
 1. Clone the repository
-2. Install dependencies: pip install -r requirements.txt
+2. Install dependencies: npm i
 3. Run the application: node backend/server.js
 4. Open http://localhost:5000
 
 ## Project Structure
 
-├── requirements.txt    # Python dependencies
+├── requirements.txt  
 ├── templates/         # HTML templates
 ├── static/           # CSS, JavaScript, images
 └── instance/         # Database files
